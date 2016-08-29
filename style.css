@@ -1,0 +1,26 @@
+div.homepage{
+	margin: auto;
+	text-align: center;
+
+}
+
+div.ng-scope{
+	height:100%;
+}
+
+
+input[type=text] {
+	color:black;
+	font-weight:bold;
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 3px solid #ccc;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    outline: none;
+}
+input[type=text]:focus {
+    border: 3px solid #555;
+}
