@@ -11,6 +11,7 @@ import { Environment, OrbitControls } from "@react-three/drei";
 import Box from './components/Box';
 import Model from './components/Airpods';
 import Sleeves from './components/Sleeves';
+import Base_01 from './components/Base_01';
 
 
 function App() {
@@ -25,8 +26,9 @@ function App() {
 
 
         <Suspense fallback={null}>
-          <Model />
-          <Sleeves />
+          {/* <Model /> */}
+          {/* <Sleeves /> */}
+          <Base_01 />
           <OrbitControls />
           <Environment preset="forest" background />
         </Suspense>

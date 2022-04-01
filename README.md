@@ -1,3 +1,37 @@
+# MaxwellVolz.com
+
+Personal Website for yours truly.
+
+## TODO
+
+### Model / ThreeJS Specific
+
+- Interactive pieces
+- Camera control
+    - Directed transition on clicking certain elements
+    - Restrict going below ground
+    - Fly in on load
+- Fix door (excludes don't export to jsx)
+- Neon lights
+- Replace arcade to avoid CC attribution
+- Rooftop
+    - Skylight
+    - Billboards
+- Cables
+- Live text loading from somewhere
+- Skybox
+
+### General Web
+
+- Favicon
+- Complete all header fields
+- Links to whatever
+- 
+
+
+
+---
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
