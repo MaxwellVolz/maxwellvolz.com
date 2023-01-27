@@ -26,7 +26,35 @@ Personal Website for yours truly.
 - Favicon
 - Complete all header fields
 - Links to whatever
-- 
+
+# 3d Models
+
+## About
+
+1. Models are made and skinned in *Sketchup* and exported as **.dae**
+2. Import to *Blender* and exported as **.glb**
+3. Compiled to **.jsx** using [gltfjsx](https://github.com/pmndrs/gltfjsx) for interactability with *ThreeJS*
+    - Small rewrite required for integration with *React*
+4. Models are kept in the **public** folder
+
+### Making Models
+
+- Sketchup
+    - 
+- Blender
+    - Export **.glb**
+- Compile to **.jsx**
+
+```sh
+npx gltfjsx model.glb
+```
+
+
+### Hut Ideas
+
+- Coffee Bar
+- Halfpipe on roof
+- Ladder to roof
 
 
 
