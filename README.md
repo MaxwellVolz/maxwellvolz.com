@@ -21,6 +21,11 @@ Personal Website for yours truly.
 - Live text loading from somewhere
 - Skybox
 
+### Integrate
+
+[Examples](https://docs.pmnd.rs/react-three-fiber/getting-started/examples)
+[neon lights](https://codesandbox.io/s/pbwi6i)
+
 ### General Web
 
 - Favicon
