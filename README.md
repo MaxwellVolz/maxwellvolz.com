@@ -25,6 +25,8 @@ Personal Website for yours truly.
 
 [Examples](https://docs.pmnd.rs/react-three-fiber/getting-started/examples)
 [neon lights](https://codesandbox.io/s/pbwi6i)
+[spotlights](https://codesandbox.io/s/tx1pq)
+[ball scene](https://codesandbox.io/s/pj7zjq)
 
 ### General Web
 
