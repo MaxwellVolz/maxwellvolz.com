@@ -160,6 +160,13 @@ export default function HutModel() {
                     <mesh geometry={nodes.group_64.geometry} material={materials['material.001']} position={[1, 24, -1]} />
                     <mesh geometry={nodes.group_65.geometry} material={materials['material.001']} position={[1, 24, -33]} />
 
+                    <mesh geometry={nodes.group_66.geometry} material={materials['material.001']} position={[3, 1, -1]} >
+                        <Suspense fallback={<FallbackMaterial url="10.jpg" />}>
+                            <VideoMaterial url="static.mp4" />
+                        </Suspense>
+                    </mesh>
+
+                    {/* 
                     <group position={[3.75, 12, -18]} rotation={[Math.PI, Math.PI / 2, 0]} scale={[0.9, 1.05, 0]}>
 
                         <mesh scale={size}>
@@ -168,7 +175,7 @@ export default function HutModel() {
                                 <VideoMaterial url="static.mp4" />
                             </Suspense>
                         </mesh>
-                    </group>
+                    </group> */}
 
 
                     <mesh ref={billboard_screen_01} geometry={nodes.group_66.geometry} material={materials['material.001']} position={[3, 1, -1]} />
