@@ -102,7 +102,7 @@ export default function HutModel() {
                         <mesh scale={size}>
                             <planeGeometry />
                             <Suspense fallback={<FallbackMaterial url="10.jpg" />}>
-                                <VideoMaterial url="10.mp4" />
+                                <VideoMaterial url="world.mp4" />
                             </Suspense>
                         </mesh>
                     </group>

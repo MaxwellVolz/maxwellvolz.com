@@ -23,7 +23,9 @@ export default function HutModel() {
 
     useFrame((state, delta) => {
         const t = (1 + Math.sin(state.clock.elapsedTime * 2)) / 2;
-        easing.dampE(logo_ref.current.rotation, [0, state.pointer.x * (state.camera.position.z > 1 ? 1 : -1), 0], 0.4, delta)
+        easing.dampE(logo_ref.current.rotation, [0, t * Math.PI * 2.5, 0], 0.4, delta)
+
+        // easing.dampE(logo_ref.current.rotation, [0, -state.pointer.x * (state.camera.position.z > 1 ? 1 : -1), 0], 0.4, delta)
     })
 
     return (

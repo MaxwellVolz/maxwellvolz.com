@@ -23,11 +23,13 @@ export default function HutModel() {
 
     useFrame((state, delta) => {
         const t = (1 + Math.sin(state.clock.elapsedTime * 2)) / 2;
-        easing.dampE(logo_ref.current.rotation, [0, -state.pointer.x * (state.camera.position.z > 1 ? 1 : -1), 0], 0.4, delta)
+        easing.dampE(logo_ref.current.rotation, [0, -t * Math.PI * 2.5, 0], 0.4, delta)
+
+        // easing.dampE(logo_ref.current.rotation, [0, state.pointer.x * (state.camera.position.z > 1 ? 1 : -1), 0], 0.4, delta)
     })
 
     return (
-        <group ref={logo_ref} dispose={null} rotation={[0, 0, 0]}>
+        <group ref={logo_ref} dispose={null} rotation={[0, 0, 0]} >
             <mesh geometry={nodes.Cube.geometry} material={materials['Material.001']} position={[-0.01, 0, 0.03]} rotation={[-0.36, 1.53, 0.35]} scale={[0.84, 1, 1]} />
             <mesh geometry={nodes.Text.geometry} material={materials['Material.002']} position={[0, -0.05, 0]} rotation={[1.57, 0.01, -3.11]} scale={0.1} />
         </group>

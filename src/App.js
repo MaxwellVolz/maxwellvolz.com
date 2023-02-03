@@ -1,6 +1,6 @@
-import { useState, useTransition, useRef } from 'react';
+import { useState, useTransition, useRef, useMemo } from 'react';
 import { useControls } from 'leva';
-import { Canvas, useLoader, useFrame, useThree } from '@react-three/fiber';
+import { Canvas, useLoader, useFrame, useThree, extend } from '@react-three/fiber';
 import { Vector3 } from 'three'
 import {
   AccumulativeShadows,
@@ -16,77 +16,95 @@ import {
 } from '@react-three/drei';
 import { TextureLoader } from 'three/src/loaders/TextureLoader'
 import { RectAreaLightHelper } from 'three/addons/helpers/RectAreaLightHelper'
+import * as THREE from 'three'
 
 // import HutModel from './components/Hut';
 // import HutModel from './components/Hut3';
 // import HutModel from './components/Hut5';
 // import HutModel from './components/Hut6';
 import HutModel from './components/Hut8';
+import Seabar from './components/Seabar';
 
 import LogoJS from './components/logo_js';
 import LogoPY from './components/logo_py';
 
 
+import { Water } from 'three-stdlib'
+
+
+extend({ Water })
+
+
+function Ocean() {
+  const ref = useRef()
+  const gl = useThree((state) => state.gl)
+  const waterNormals = useLoader(THREE.TextureLoader, '/textures/water_normal.jpeg')
+  waterNormals.wrapS = waterNormals.wrapT = THREE.RepeatWrapping
+  const geom = useMemo(() => new THREE.PlaneGeometry(10000, 10000), [])
+  const config = useMemo(
+    () => ({
+      textureWidth: 512,
+      textureHeight: 512,
+      waterNormals,
+      sunDirection: new THREE.Vector3(),
+      sunColor: 0xffffff,
+      waterColor: 0x001e0f,
+      distortionScale: 3.7,
+      fog: false,
+      format: gl.encoding
+    }),
+    [waterNormals]
+  )
+  useFrame((state, delta) => (ref.current.material.uniforms.time.value += delta))
+  return <water ref={ref} args={[geom, config]} rotation-x={-Math.PI / 2} />
+}
+
+
 export default function App() {
-  const { camera_position_x } = useControls({ camera_position_x: { value: 0, min: -20, max: 20 } })
+  const { group_x } = useControls({ group_x: { value: 0, min: -20, max: 20 } })
 
 
   return (
     <Canvas shadows flat dpr={[1, 2]} camera={{ fov: 25, position: [0, 10, 30] }}>
 
-      <ambientLight intensity={0.025} />
+      <ambientLight intensity={0.125} />
 
-      <PresentationControls snap global zoom={0.8} position={[camera_position_x, 0, 0]} rotation={[0, -Math.PI / 4, 0]} polar={[0, Math.PI / 4]} azimuth={[-Math.PI / 4, Math.PI / 4]}>
+      <group position={[0, 0.13, 0]}>
+
+        <Ocean />
+      </group>
+
+      <PresentationControls snap global zoom={0.8} rotation={[0, -Math.PI / 4, 0]} polar={[0, 0]} azimuth={[-Math.PI, Math.PI]}>
+
+        <pointLight position={[100, 100, 100]} intensity={.2} />
+        <pointLight position={[-100, -100, -100]} intensity={.2} />
 
         <color attach="background" args={['black']} />
-        <group position={[0, 0, 0]}>
-          <Sphere />
-          <Hut />
+        <group position={[group_x, 0, 0]}>
+          {/* <Sphere /> */}
+          {/* <Hut /> */}
+          <Seabar />
 
-          <group position={[1.4, 1.7, 1]} scale={1}>
 
-            <group position={[0.2, .3, -1.7]} rotation={[0, -Math.PI / 2, 0]} scale={5}>
+          <group position={[.2, 2.5, -.2]} scale={1}>
+
+            <group position={[-.6, .3, 0.7]} rotation={[0, -Math.PI / 2, 0]} scale={5}>
               <group>
                 <LogoJS />
 
               </group>
             </group>
-            <group position={[0, .3, .2]} rotation={[0, Math.PI / 2, 0]} scale={.4}>
+            <group position={[.2, .3, -0.1]} rotation={[0, Math.PI / 2, 0]} scale={.4}>
               <LogoPY />
 
             </group>
           </group>
 
-          {/* <AccumulativeShadows temporal frames={200} color="purple" colorBlend={0.5} opacity={1} scale={30} alphaTest={0.85}>
-          <RandomizedLight amount={8} radius={5} ambient={0.5} position={[5, 3, 2]} bias={0.001} />
-        </AccumulativeShadows> */}
         </group>
-        {/* <fog attach="fog" args={['#202020', 5, 20]} /> */}
-
-
-
-
-        {/* <Env /> */}
-
-        {/* <OrbitControls autoRotate={false} autoRotateSpeed={1} enablePan={false} enableZoom={true} minPolarAngle={Math.PI / 4} maxPolarAngle={Math.PI / 2.1} /> */}
-
-        {/* <DopeLights /> */}
-
-
-        {/* Lights */}
-        {/* <directionalLight position={[1, 5, 1]} color="red" />
-      <directionalLight position={[1, 10, 1]} color="blue" /> */}
-
 
         <CrazyLight />
-        {/* <Lightformer form="circle" intensity={10} position={[1, 2.5, 1]} /> */}
 
-
-        {/* <mesh receiveShadow position={[0, 0, 0]} rotation-x={-Math.PI / 2}>
-        <planeGeometry args={[50, 50]} />
-        <meshPhongMaterial />
-      </mesh> */}
-        <ReflectiveGround />
+        {/* <ReflectiveGround /> */}
 
       </PresentationControls>
     </Canvas>

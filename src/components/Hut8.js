@@ -31,16 +31,11 @@ export default function HutModel() {
     const spotlight_01 = useRef();
     const spotlight_02 = useRef();
 
-    const billboard_screen_01 = useRef();
-    const billboard_screen_02 = useRef();
-
     const toggle_light = (light_ref) => {
         // light_ref.current.distance = light_ref.current.intensity == 0 ? 0 : 0;
 
         light_ref.current.intensity = light_ref.current.intensity == 0 ? 1 : 0;
     }
-
-    const size = useAspect(1800, 1000)
 
 
     return (
@@ -51,6 +46,7 @@ export default function HutModel() {
                     <mesh geometry={nodes.group_2001.geometry} material={materials.material} />
                     <mesh geometry={nodes.group_3.geometry} material={materials.Color_M00} position={[1, 1, -1]} />
                 </group>
+
                 <group position={[-18.88, 148, 50.45]} rotation={[Math.PI, 1.57, 0]}>
                     <mesh geometry={nodes.group_12.geometry} material={materials.material} />
                     <mesh geometry={nodes.group_12001.geometry} material={materials.material} />
@@ -66,7 +62,6 @@ export default function HutModel() {
                             </Suspense>
                         </mesh>
                     </group>
-
 
                 </group>
                 <group position={[-63.67, 7.44, -61.55]} rotation={[0, -1.57, 0]}>
@@ -122,8 +117,8 @@ export default function HutModel() {
                     <mesh geometry={nodes.group_45.geometry} material={materials.material} position={[2, 0, -8]} />
                 </group>
 
-                <group position={[62.1, 0, 150.01]} rotation={[0, -1.57, 0]} >
-                    <group position={[-5.47, 0, -23.07]} rotation={[Math.PI / 2, 0, 0.96]} scale={3} onClick={() => toggle_light(spotlight_01)} >
+                <group position={[62.1, 0, 150.01]} rotation={[0, -1.57, 0]} onClick={() => toggle_light(spotlight_01)}  >
+                    <group position={[-5.47, 0, -23.07]} rotation={[Math.PI / 2, 0, 0.96]} scale={3}>
 
                         <mesh geometry={nodes.group_48.geometry} material={materials.Color_M08} />
                         <mesh geometry={nodes.group_49.geometry} material={materials.Color_A05} position={[0.5, 0.5, -2]} />
@@ -158,7 +153,7 @@ export default function HutModel() {
                     <mesh geometry={nodes.group_60001.geometry} material={materials.Color_G03} position={[1, 1, -2.5]} />
                 </group>
 
-                <group position={[-55.67, 0, 59.45]}>
+                <group position={[-55.67, 0, 59.45]} >
                     <mesh geometry={nodes.group_64.geometry} material={materials.material} position={[108, 0, -6]} rotation={[0, -1.57, 0]} />
                     <mesh geometry={nodes.group_65.geometry} material={materials.material} position={[0, 82.03, -2]} rotation={[0, -1.57, 0]} />
                     <mesh geometry={nodes.group_66.geometry} material={materials.material} position={[0, 0, -4]} rotation={[0, -1.57, 0]} />
