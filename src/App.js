@@ -12,7 +12,9 @@ import {
   Lightformer,
   useDepthBuffer,
   MeshReflectorMaterial,
-  PresentationControls
+  ScrollControls,
+  Sky,
+  useScroll,
 } from '@react-three/drei';
 import { TextureLoader } from 'three/src/loaders/TextureLoader'
 import { RectAreaLightHelper } from 'three/addons/helpers/RectAreaLightHelper'
@@ -63,6 +65,22 @@ function Ocean() {
   useFrame((state, delta) => (ref.current.material.uniforms.time.value += delta / 4))
   return <water ref={ref} args={[geom, config]} rotation-x={-Math.PI / 2} />
 }
+function ControlTheScroll() {
+
+  const scroll = useScroll()
+
+  useFrame((state, delta) => {
+    const offset = 1.1 - scroll.offset
+
+    // state.camera.position.set(Math.sin(offset) * -10, Math.atan(offset * Math.PI * 2) * 5, Math.cos((offset * Math.PI) / 3) * 10)
+    state.camera.position.set(Math.sin(offset) * 20, Math.atan(offset * Math.PI * 2) * 8, Math.cos((offset * Math.PI) / 3) * 20)
+
+    // state.camera.position.set(Math.sin(offset) * 20, offset * 10, Math.sin((offset * Math.PI) / 3) * 20)
+
+    state.camera.lookAt(offset * 4, offset * 9, 0)
+  })
+  return <></>
+}
 
 
 export default function App() {
@@ -70,7 +88,7 @@ export default function App() {
 
 
   return (
-    <Canvas shadows flat dpr={[1, 2]} camera={{ fov: 25, position: [0, 10, 30] }}>
+    <Canvas shadows flat dpr={[1, 2]} camera={{ fov: 35, position: [0, 10, 30] }}>
 
       <ambientLight intensity={0.125} />
 
@@ -79,25 +97,31 @@ export default function App() {
         <Ocean />
       </group>
 
-      <PresentationControls snap global zoom={0.3} rotation={[0, -Math.PI / 4, 0]} polar={[0, 0]} azimuth={[-Math.PI, Math.PI]}>
+      <pointLight position={[100, 100, 100]} intensity={.2} />
+      <pointLight position={[-100, -100, -100]} intensity={.2} />
 
-        <pointLight position={[100, 100, 100]} intensity={.2} />
-        <pointLight position={[-100, -100, -100]} intensity={.2} />
+      <color attach="background" args={['black']} />
+      <group position={[group_x, 0, 0]}>
 
-        <color attach="background" args={['black']} />
-        <group position={[group_x, 0, 0]}>
-          {/* <Sphere /> */}
-          {/* <Hut /> */}
-          {/* <Seabar /> */}
-          <Maxtower />
+        <ScrollControls pages={3}>
+          <ControlTheScroll />
+        </ScrollControls>
 
-          <Snowboard />
+        <Maxtower />
 
-          {/* Temp Tower Stuff */}
-          <pointLight position={[5, 10, 5]} intensity={.8} />
-          {/* <pointLight position={[3, 20, -2]} intensity={.8} /> */}
+        <Snowboard />
 
-          {/* 
+
+        {/* <Sphere /> */}
+        {/* <Hut /> */}
+        {/* <Seabar /> */}
+
+
+        {/* Temp Tower Stuff */}
+        <pointLight position={[5, 10, 5]} intensity={.8} />
+        {/* <pointLight position={[3, 20, -2]} intensity={.8} /> */}
+
+        {/* 
 
           <group position={[.2, 2.5, -.2]} scale={1}>
             <group position={[-.6, .3, 0.7]} rotation={[0, -Math.PI / 2, 0]} scale={5}>
@@ -110,13 +134,12 @@ export default function App() {
             </group>
           </group> */}
 
-        </group>
+      </group>
 
-        <CrazyLight />
+      <CrazyLight />
 
-        {/* <ReflectiveGround /> */}
+      {/* <ReflectiveGround /> */}
 
-      </PresentationControls>
     </Canvas>
   )
 }
