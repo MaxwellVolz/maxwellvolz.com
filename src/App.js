@@ -65,9 +65,11 @@ function Ocean() {
   useFrame((state, delta) => (ref.current.material.uniforms.time.value += delta / 4))
   return <water ref={ref} args={[geom, config]} rotation-x={-Math.PI / 2} />
 }
+
 function ControlTheScroll() {
 
   const scroll = useScroll()
+
 
   useFrame((state, delta) => {
     const offset = 1.1 - scroll.offset
@@ -103,7 +105,7 @@ export default function App() {
       <color attach="background" args={['black']} />
       <group position={[group_x, 0, 0]}>
 
-        <ScrollControls pages={3}>
+        <ScrollControls pages={2}>
           <ControlTheScroll />
         </ScrollControls>
 
