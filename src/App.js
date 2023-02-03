@@ -22,8 +22,10 @@ import * as THREE from 'three'
 // import HutModel from './components/Hut3';
 // import HutModel from './components/Hut5';
 // import HutModel from './components/Hut6';
-import HutModel from './components/Hut8';
-import Seabar from './components/Seabar';
+// import HutModel from './components/Hut8';
+// import Seabar from './components/Seabar';
+
+import Maxtower from './components/Maxtower';
 
 import LogoJS from './components/logo_js';
 import LogoPY from './components/logo_py';
@@ -69,12 +71,12 @@ export default function App() {
 
       <ambientLight intensity={0.125} />
 
-      <group position={[0, 0.13, 0]}>
+      <group position={[0, 0.0, 0]}>
 
         <Ocean />
       </group>
 
-      <PresentationControls snap global zoom={0.8} rotation={[0, -Math.PI / 4, 0]} polar={[0, 0]} azimuth={[-Math.PI, Math.PI]}>
+      <PresentationControls snap global zoom={0.3} rotation={[0, -Math.PI / 4, 0]} polar={[0, 0]} azimuth={[-Math.PI, Math.PI]}>
 
         <pointLight position={[100, 100, 100]} intensity={.2} />
         <pointLight position={[-100, -100, -100]} intensity={.2} />
@@ -83,22 +85,20 @@ export default function App() {
         <group position={[group_x, 0, 0]}>
           {/* <Sphere /> */}
           {/* <Hut /> */}
-          <Seabar />
-
+          {/* <Seabar /> */}
+          <Maxtower />
+          {/* 
 
           <group position={[.2, 2.5, -.2]} scale={1}>
-
             <group position={[-.6, .3, 0.7]} rotation={[0, -Math.PI / 2, 0]} scale={5}>
               <group>
                 <LogoJS />
-
               </group>
             </group>
             <group position={[.2, .3, -0.1]} rotation={[0, Math.PI / 2, 0]} scale={.4}>
               <LogoPY />
-
             </group>
-          </group>
+          </group> */}
 
         </group>
 
