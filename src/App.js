@@ -31,6 +31,9 @@ import LogoJS from './components/logo_js';
 import LogoPY from './components/logo_py';
 
 
+import Snowboard from './components/snowboard';
+
+
 import { Water } from 'three-stdlib'
 
 
@@ -87,6 +90,13 @@ export default function App() {
           {/* <Hut /> */}
           {/* <Seabar /> */}
           <Maxtower />
+
+          <Snowboard />
+
+          {/* Temp Tower Stuff */}
+          <pointLight position={[5, 10, 5]} intensity={.8} />
+          {/* <pointLight position={[3, 20, -2]} intensity={.8} /> */}
+
           {/* 
 
           <group position={[.2, 2.5, -.2]} scale={1}>

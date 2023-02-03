@@ -63,6 +63,15 @@ npx gltfjsx model.glb
 - Halfpipe on roof
 - Ladder to roof
 
+### Good sites for free models
+
+- [free models here!](https://www.cgtrader.com/)
+- [free models here!](https://free3d.com/)
+- [free models here!](https://www.turbosquid.com/Search/3D-Models/free)
+- [free models here!](https://3dmdb.com/)
+- [free models here!](http://www.yeggi.com/)
+- [free models here!](https://www.myminifactory.com/)
+- [free models here!](https://www.3dfindit.com/?lang=en_US)
 
 
 ---
