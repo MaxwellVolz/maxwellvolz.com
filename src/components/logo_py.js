@@ -7,6 +7,7 @@ import { useLoader, useFrame } from '@react-three/fiber';
 import { useGLTF, SpotLight, useVideoTexture, useTexture, useAspect } from '@react-three/drei';
 import { TextureLoader } from 'three/src/loaders/TextureLoader'
 import { easing } from 'maath'
+import { useSpring, animated, config } from '@react-spring/three'
 
 // import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 // import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass'
@@ -15,21 +16,18 @@ import Effects from './Effects'
 
 
 export default function HutModel() {
-    const group = useRef();
+
     const { nodes, materials } = useGLTF("./py.glb");
 
-    const logo_ref = useRef();
-    let logojs_rotation = 0
+    const mesh_ref = useRef();
 
-    useFrame((state, delta) => {
-        const t = (1 + Math.sin(state.clock.elapsedTime * 2)) / 2;
-        easing.dampE(logo_ref.current.rotation, [0, t * Math.PI * 2.5, 0], 0.4, delta)
-
-        // easing.dampE(logo_ref.current.rotation, [0, -state.pointer.x * (state.camera.position.z > 1 ? 1 : -1), 0], 0.4, delta)
-    })
+    useFrame(({ clock }) => {
+        const a = clock.getElapsedTime();
+        mesh_ref.current.rotation.x = a;
+    });
 
     return (
-        <group ref={logo_ref} dispose={null} rotation={[logojs_rotation, 0, 0]}>
+        <group ref={mesh_ref} dispose={null} rotation={[logojs_rotation, 0, 0]}>
             <mesh geometry={nodes.D.geometry} material={materials.orange} position={[-0.03, 0.29, 0]} rotation={[-Math.PI / 2, 0, Math.PI]} scale={1.76} />
             <mesh geometry={nodes.Top_snake.geometry} material={materials.blue} position={[0.01, -0.08, 0]} rotation={[Math.PI / 2, 0, 0]} scale={1.76} />
         </group>

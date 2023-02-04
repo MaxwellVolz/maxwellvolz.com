@@ -13,6 +13,8 @@ import { useSpring, animated, config } from '@react-spring/three'
 // import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass'
 import Effects from './Effects'
 
+import ResumePDF from '../mvolz_resume.pdf'
+
 
 
 function VideoMaterial({ url }) {
@@ -25,9 +27,7 @@ function FallbackMaterial({ url }) {
     return <meshBasicMaterial map={texture} toneMapped={false} />
 }
 
-function GarageDoor() {
 
-}
 // make it glow - insert in mesh
 {/* <meshStandardMaterial emissive={[0.5, 0.5, 0.5]} color={[0, 0, 0]} /> */ }
 
@@ -38,7 +38,10 @@ export default function HutModel() {
     const spotlight_01 = useRef();
     const spotlight_02 = useRef();
     const light_inside = useRef();
+
     const garage_door = useRef();
+    const js_logo = useRef();
+    const py_logo = useRef();
 
     const [active, setActive] = useState(false);
 
@@ -49,19 +52,26 @@ export default function HutModel() {
 
     useFrame(({ clock }) => {
         const a = clock.getElapsedTime();
-        console.log(a)
-
         let decimals = a % 1
 
+        // garage door
         if (!active && garage_door.current.position.y < 100) garage_door.current.position.y += decimals * .1;
-
         if (active && garage_door.current.position.y > 0) garage_door.current.position.y -= 2;
+
+
+        // logos
+        js_logo.current.rotation.y = -a
+        py_logo.current.rotation.y = a
     });
 
 
     const toggle_light = (light_ref) => {
         // light_ref.current.distance = light_ref.current.intensity == 0 ? 0 : 0;
         light_ref.current.intensity = light_ref.current.intensity == 0 ? 1 : 0;
+    }
+
+    const download_pdf = () => {
+        window.open(ResumePDF)
     }
 
     return (
@@ -129,6 +139,8 @@ export default function HutModel() {
                         <mesh geometry={nodes.instance_5016.geometry} material={materials['material.002']} position={[2.81, 0, 0]} />
                     </group>
                 </group>
+
+                {/* TV Stand */}
                 <group position={[105.99, 144, -89.26]} rotation={[0, 0, -Math.PI]}>
                     <mesh geometry={nodes.group_14.geometry} material={materials['Color_M02.001']} />
                     <mesh geometry={nodes.group_14001.geometry} material={materials['Color_M02.001']} />
@@ -139,6 +151,8 @@ export default function HutModel() {
                     <mesh geometry={nodes.group_19.geometry} material={materials['Color_M02.001']} position={[0, 12, 0]} />
                     <mesh geometry={nodes.group_19001.geometry} material={materials['Color_M02.001']} position={[0, 12, 0]} />
                 </group>
+
+                {/* TV */}
                 <group position={[58.99, 144, -100.57]}>
                     <mesh geometry={nodes.group_21.geometry} material={materials['Color_M07.001']} position={[11, 0, 0]} />
                     <mesh geometry={nodes.group_22.geometry} material={materials['Color_M07.001']} position={[15, 1, -2]} />
@@ -169,17 +183,21 @@ export default function HutModel() {
                     <mesh geometry={nodes.group_37002.geometry} material={materials.afternoon_4} position={[1, 19.38, 0.32]} scale={0.32} />
                     <mesh geometry={nodes.group_37003.geometry} material={materials.afternoon_4} position={[1, 19.38, 0.32]} scale={0.32} />
                 </group>
+
                 <group position={[66, 126, -6]}>
                     <mesh geometry={nodes.group_5.geometry} material={materials['Color_M02.001']} />
-                    <mesh geometry={nodes.group_6.geometry} material={materials._0020_Red} position={[2.88, 12.36, -2.88]} scale={[0.88, 0.44, 0.88]} />
-                    <mesh geometry={nodes.group_7.geometry} material={materials['material.002']} position={[13.44, 17.64, -5.2]} />
-                    <mesh geometry={nodes.instance_6.geometry} material={materials['material.002']} position={[4.23, 17.64, -22.04]} scale={[0.64, 0.64, 0.88]} />
-                    <mesh geometry={nodes.instance_6001.geometry} material={materials['material.002']} position={[4.23, 17.64, -22.04]} scale={[0.64, 0.64, 0.88]} />
-                    <mesh geometry={nodes.instance_6002.geometry} material={materials['material.002']} position={[4.23, 17.64, -22.04]} scale={[0.64, 0.64, 0.88]} />
-                    <mesh geometry={nodes.instance_6003.geometry} material={materials['material.002']} position={[4.23, 17.64, -22.04]} scale={[0.64, 0.64, 0.88]} />
-                    <mesh geometry={nodes.instance_6004.geometry} material={materials['material.002']} position={[4.23, 17.64, -22.04]} scale={[0.64, 0.64, 0.88]} />
-                    <mesh geometry={nodes.instance_6005.geometry} material={materials['material.002']} position={[4.23, 17.64, -22.04]} scale={[0.64, 0.64, 0.88]} />
-                    <mesh geometry={nodes.instance_6006.geometry} material={materials['material.002']} position={[4.23, 17.64, -22.04]} scale={[0.64, 0.64, 0.88]} />
+                    {/* PDF Download */}
+                    <group onClick={() => download_pdf()} >
+                        <mesh geometry={nodes.group_6.geometry} material={materials._0020_Red} position={[2.88, 12.36, -2.88]} scale={[0.88, 0.44, 0.88]} />
+                        <mesh geometry={nodes.group_7.geometry} material={materials['material.002']} position={[13.44, 17.64, -5.2]} />
+                        <mesh geometry={nodes.instance_6.geometry} material={materials['material.002']} position={[4.23, 17.64, -22.04]} scale={[0.64, 0.64, 0.88]} />
+                        <mesh geometry={nodes.instance_6001.geometry} material={materials['material.002']} position={[4.23, 17.64, -22.04]} scale={[0.64, 0.64, 0.88]} />
+                        <mesh geometry={nodes.instance_6002.geometry} material={materials['material.002']} position={[4.23, 17.64, -22.04]} scale={[0.64, 0.64, 0.88]} />
+                        <mesh geometry={nodes.instance_6003.geometry} material={materials['material.002']} position={[4.23, 17.64, -22.04]} scale={[0.64, 0.64, 0.88]} />
+                        <mesh geometry={nodes.instance_6004.geometry} material={materials['material.002']} position={[4.23, 17.64, -22.04]} scale={[0.64, 0.64, 0.88]} />
+                        <mesh geometry={nodes.instance_6005.geometry} material={materials['material.002']} position={[4.23, 17.64, -22.04]} scale={[0.64, 0.64, 0.88]} />
+                        <mesh geometry={nodes.instance_6006.geometry} material={materials['material.002']} position={[4.23, 17.64, -22.04]} scale={[0.64, 0.64, 0.88]} />
+                    </group>
                 </group>
                 <group position={[-37.36, 6, 15.54]}>
                     <mesh geometry={nodes.group_47.geometry} material={materials._0136_Charcoal} position={[-10.19, 34.92, -7.99]} rotation={[0, -1.57, 0]} scale={[2, 1.5, 1.32]} />
@@ -189,13 +207,12 @@ export default function HutModel() {
                     <mesh geometry={nodes.group_49001.geometry} material={materials['material.002']} position={[-0.99, 30.49, -1.78]} />
                     <mesh geometry={nodes.group_50.geometry} material={materials._0020_Red} position={[-9.65, 38.56, 0.2]} />
                 </group>
+
+                {/* Garage Door */}
                 <group position={[-12, 6, 124]}>
                     <mesh geometry={nodes.group_53.geometry} material={materials.afternoon_5} />
                     <animated.mesh scale={scale} onClick={() => setActive(!active)} ref={garage_door}>
-
                         <mesh geometry={nodes.group_54.geometry} material={materials.afternoon_1} position={[0, 0, -62.01]} />
-
-                        {/* <GarageDoor /> */}
                         <mesh geometry={nodes.group_55.geometry} material={materials.Translucent_Glass_Gray} position={[-.1, 3.98, -65.99]}>
                             <meshStandardMaterial transparent={true} opacity={0.8} />
                         </mesh>
@@ -220,10 +237,20 @@ export default function HutModel() {
                 <mesh geometry={nodes.group_45.geometry} material={materials.afternoon_5} position={[95.12, 32.81, 104.24]} />
                 <mesh geometry={nodes.group_51.geometry} material={materials._0129_WhiteSmoke} position={[-120, 0, 120]} />
                 <mesh geometry={nodes.group_56.geometry} material={materials.afternoon_3} position={[28, 6, 118]} />
-                <mesh geometry={nodes.group_8.geometry} material={materials.js} position={[95.29, 147.88, -99.64]} scale={0.62}>
-                    <mesh geometry={nodes.instance_7.geometry} material={materials['Color_M07.001']} position={[17.37, 2.76, 0]} rotation={[Math.PI / 2, 0, 0]} scale={[0.24, 0.24, 0.23]} />
-                    <mesh geometry={nodes.instance_7001.geometry} material={materials['Color_M07.001']} position={[17.37, 2.76, 0]} rotation={[Math.PI / 2, 0, 0]} scale={[0.24, 0.24, 0.23]} />
-                </mesh>
+
+                {/* js_logo */}
+                <group position={[106.29, 147.88, -102.64]}>
+
+                    <animated.mesh scale={scale} onClick={() => setActive(!active)} ref={js_logo}>
+
+                        <mesh geometry={nodes.group_8.geometry} material={materials.js} position={[-12, 0, 0]} scale={0.62}>
+                            <mesh geometry={nodes.instance_7.geometry} material={materials['Color_M07.001']} position={[17.37, 2.76, 0]} rotation={[Math.PI / 2, 0, 0]} scale={[0.24, 0.24, 0.23]} />
+                            <mesh geometry={nodes.instance_7001.geometry} material={materials['Color_M07.001']} position={[17.37, 2.76, 0]} rotation={[Math.PI / 2, 0, 0]} scale={[0.24, 0.24, 0.23]} />
+
+                        </mesh>
+                    </animated.mesh>
+                </group>
+
                 <mesh geometry={nodes.image_0.geometry} material={materials['material_0.002']} position={[51.5, 43.36, 5.2]} rotation={[Math.PI / 2, 0, 0]} scale={[0.04, 1, 0.04]} />
                 <mesh geometry={nodes.instance_10.geometry} material={materials['material.002']} position={[-85.19, 257.33, -4.83]} rotation={[1.31, 0.26, -Math.PI / 4]} scale={0.74} />
                 <mesh geometry={nodes.instance_10001.geometry} material={materials['material.002']} position={[-85.19, 257.33, -4.83]} rotation={[1.31, 0.26, -Math.PI / 4]} scale={0.74} />
@@ -253,11 +280,17 @@ export default function HutModel() {
                 <mesh geometry={nodes.instance_8012.geometry} material={materials['Chris_Shoe.002']} position={[71.14, 6, 97.99]} rotation={[0, 0.52, 0]} />
                 <mesh geometry={nodes.instance_8013.geometry} material={materials['Chris_Pants.002']} position={[71.14, 6, 97.99]} rotation={[0, 0.52, 0]} />
                 <mesh geometry={nodes.instance_8014.geometry} material={materials['Chris_Skin.002']} position={[71.14, 6, 97.99]} rotation={[0, 0.52, 0]} />
-                <mesh geometry={nodes.instance_9.geometry} material={materials['__auto_.002']} position={[45.61, 158.96, -103.22]} scale={0.3} />
-                <mesh geometry={nodes.instance_9001.geometry} material={materials['__auto_.002']} position={[45.61, 158.96, -103.22]} scale={0.3} />
-                <mesh geometry={nodes.instance_9002.geometry} material={materials['__auto_1.002']} position={[45.61, 158.96, -103.22]} scale={0.3} />
-                <mesh geometry={nodes.instance_9003.geometry} material={materials['__auto_1.002']} position={[45.61, 158.96, -103.22]} scale={0.3} />
+
+                <group position={[44.61, 158.96, -103.22]}>
+
+                    <animated.mesh scale={scale} onClick={() => setActive(!active)} ref={py_logo}>
+                        <mesh geometry={nodes.instance_9.geometry} material={materials['__auto_.002']} position={[0, 0, 0]} scale={0.3} />
+                        <mesh geometry={nodes.instance_9001.geometry} material={materials['__auto_.002']} position={[0, 0, 0]} scale={0.3} />
+                        <mesh geometry={nodes.instance_9002.geometry} material={materials['__auto_1.002']} position={[0, 0, 0]} scale={0.3} />
+                        <mesh geometry={nodes.instance_9003.geometry} material={materials['__auto_1.002']} position={[0, 0, 0]} scale={0.3} />
+                    </animated.mesh>
+                </group>
             </group>
-        </group>
+        </group >
     );
 }
