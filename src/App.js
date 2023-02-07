@@ -1,4 +1,4 @@
-import { useState, useTransition, useRef, useMemo } from 'react';
+import { useState, useEffect, useTransition, useRef, useMemo } from 'react';
 import { useControls } from 'leva';
 import { Canvas, useLoader, useFrame, useThree, extend } from '@react-three/fiber';
 import { Vector3 } from 'three'
@@ -27,7 +27,10 @@ import * as THREE from 'three'
 // import HutModel from './components/Hut8';
 // import Seabar from './components/Seabar';
 
-import Maxtower from './components/Maxtower';
+import Maxtower_base from './components/Maxtower_base';
+import Maxtower_01 from './components/Maxtower_01';
+import Maxtower_02 from './components/Maxtower_02';
+import Maxtower_03 from './components/Maxtower_03';
 
 import LogoJS from './components/logo_js';
 import LogoPY from './components/logo_py';
@@ -66,50 +69,91 @@ function Ocean() {
   return <water ref={ref} args={[geom, config]} rotation-x={-Math.PI / 2} />
 }
 
-function ControlTheScroll() {
 
-  const scroll = useScroll()
+function Rig(clicked) {
+  const { camera, mouse } = useThree()
+  const vec = new Vector3()
 
+  return useFrame(() => {
+    // camera.position.lerp(vec.set(mouse.x, mouse.y, camera.position.z), 0.05)
+    // console.log(clicked)
 
-  useFrame((state, delta) => {
-    const offset = 1.1 - scroll.offset
+    if (clicked.clicked == true) {
+      camera.lookAt(-20, 5, -20)
+      camera.position.lerp(vec.set(1, 15, 1), 0.05)
+      // console.log(clicked)
 
-    // state.camera.position.set(Math.sin(offset) * -10, Math.atan(offset * Math.PI * 2) * 5, Math.cos((offset * Math.PI) / 3) * 10)
-    state.camera.position.set(Math.sin(offset) * 20, Math.atan(offset * Math.PI * 2) * 8, Math.cos((offset * Math.PI) / 3) * 20)
-
-    // state.camera.position.set(Math.sin(offset) * 20, offset * 10, Math.sin((offset * Math.PI) / 3) * 20)
-
-    state.camera.lookAt(offset * 4, offset * 9, 0)
+    }
+    else {
+      camera.lookAt(0, 0, 0)
+    }
   })
-  return <></>
 }
+
+const Camera = (props) => {
+  const ref = useRef();
+  const set = useThree((state) => state.set);
+  useEffect(() => void set({ camera: ref.current }), []);
+  useFrame(() => {
+    ref.current.updateMatrixWorld()
+    ref.current.lookAt(0, 5, 0)
+
+    console.log(state)
+  });
+  return <perspectiveCamera ref={ref} {...props} />;
+};
 
 
 export default function App() {
-  const { group_x } = useControls({ group_x: { value: 0, min: -20, max: 20 } })
 
+  const { group_x } = useControls({ group_x: { value: 0, min: -20, max: 20 } });
+  const [camera_position, setCameraPosition] = useState([0, 40, 0])
+  const [camera_lookat, setCameraLookat] = useState([0, 0, 0])
+  const [camera_fov, setCameraFov] = useState(35)
+
+  const [clicked, setClicked] = useState(false);
+
+  function move_look() {
+    // setCameraPosition(([0, 60, 0]))
+    setCameraLookat([0, 20, 0])
+  }
+
+  // useFrame(state => {
+  //   if (clicked) {
+  //     state.camera.position.lerp(0, 30, 10)
+  //   }
+  //   return null;
+  // })
 
   return (
-    <Canvas shadows flat dpr={[1, 2]} camera={{ fov: 35, position: [0, 10, 30] }}>
-
+    // <Canvas shadows flat dpr={[1, 2]} camera={{ fov: 35, position: [0, 10, 30] }}>
+    <Canvas shadows flat dpr={[1, 2]} >
+      {/* <Camera fov={35} position={camera_position} /> */}
       <ambientLight intensity={0.125} />
 
       <group position={[0, 0.0, 0]}>
 
         <Ocean />
       </group>
+      <OrbitControls autoRotate autoRotateSpeed={-0.05} enableZoom={true} makeDefault minPolarAngle={Math.PI / 5} maxPolarAngle={Math.PI / 2.1} />
 
       <pointLight position={[100, 100, 100]} intensity={.2} />
       <pointLight position={[-100, -100, -100]} intensity={.2} />
 
       <color attach="background" args={['black']} />
       <group position={[group_x, 0, 0]}>
-
+        {/* 
         <ScrollControls pages={2}>
           <ControlTheScroll />
-        </ScrollControls>
+        </ScrollControls> */}
+        <Rig clicked={clicked} />
+        <Maxtower_base />
+        <group onClick={() => setClicked(true)}>
+          <Maxtower_01 />
 
-        <Maxtower />
+        </group>
+        <Maxtower_02 />
+        <Maxtower_03 />
 
         <Snowboard />
 
@@ -118,23 +162,10 @@ export default function App() {
         {/* <Hut /> */}
         {/* <Seabar /> */}
 
-
         {/* Temp Tower Stuff */}
         <pointLight position={[5, 10, 5]} intensity={.8} />
         {/* <pointLight position={[3, 20, -2]} intensity={.8} /> */}
 
-        {/* 
-
-          <group position={[.2, 2.5, -.2]} scale={1}>
-            <group position={[-.6, .3, 0.7]} rotation={[0, -Math.PI / 2, 0]} scale={5}>
-              <group>
-                <LogoJS />
-              </group>
-            </group>
-            <group position={[.2, .3, -0.1]} rotation={[0, Math.PI / 2, 0]} scale={.4}>
-              <LogoPY />
-            </group>
-          </group> */}
 
       </group>
 
@@ -175,78 +206,6 @@ function CrazyLight() {
   )
 }
 
-function ReflectiveGround() {
-  const { roughness } = useControls({ roughness: { value: 1, min: 0, max: 1 } })
-  return (
-    <mesh receiveShadow rotation={[-Math.PI / 2, 0, 0]}>
-      <planeGeometry args={[50, 50]} />
-      <MeshReflectorMaterial
-        blur={[300, 30]}
-        resolution={2048}
-        mixBlur={1}
-        mixStrength={80}
-        roughness={1}
-        depthScale={1.2}
-        minDepthThreshold={0.4}
-        maxDepthThreshold={1.4}
-        color="#202020"
-        metalness={0.8}
-      />
-    </mesh>
-  )
-}
-
-function Sphere() {
-  const { roughness } = useControls({ roughness: { value: 1, min: 0, max: 1 } })
-  return (
-    <Center top>
-      <mesh castShadow>
-        <sphereGeometry args={[0.75, 64, 64]} />
-        <meshStandardMaterial metalness={1} roughness={roughness} />
-      </mesh>
-    </Center>
-  )
-}
-
-function DopeLights() {
-  const depthBuffer = useDepthBuffer({ frames: 1 })
-
-  const pos = useControls({
-    x: { value: -1.6, min: -10, max: 10 },
-    y: { value: 5.7, min: -10, max: 10 },
-    z: { value: -1.3, min: -10, max: 10 }
-  })
-
-  return (
-    <mesh>
-      <MovingSpot depthBuffer={depthBuffer} color="#0c8cbf" position={[pos.x, pos.y, pos.z]} />
-      <MovingSpot depthBuffer={depthBuffer} color="#b00c3f" position={[pos.x - .05, pos.y, pos.z - .05]} />
-    </mesh>
-  )
-}
-
-function Hut() {
-  return < HutModel />
-}
-
-function Env() {
-  const [preset, setPreset] = useState('park')
-  // You can use the "inTransition" boolean to react to the loading in-between state,
-  // For instance by showing a message
-  const [inTransition, startTransition] = useTransition()
-  const { blur } = useControls({
-    blur: { value: 0.65, min: 0, max: 1 },
-    preset: {
-      value: preset,
-      options: ['sunset', 'dawn', 'night', 'warehouse', 'forest', 'apartment', 'studio', 'city', 'park', 'lobby'],
-      // If onChange is present the value will not be reactive, see https://github.com/pmndrs/leva/blob/main/docs/advanced/controlled-inputs.md#onchange
-      // Instead we transition the preset value, which will prevents the suspense bound from triggering its fallback
-      // That way we can hang onto the current environment until the new one has finished loading ...
-      onChange: (value) => startTransition(() => setPreset(value))
-    }
-  })
-  return <Environment preset={preset} background blur={blur} />
-}
 
 function MovingSpot({ vec = new Vector3(), ...props }) {
   const light = useRef()

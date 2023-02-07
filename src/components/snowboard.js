@@ -12,7 +12,7 @@ import Effects from './Effects'
 export default function Snowboard() {
     const { nodes, materials } = useGLTF('/snowboard.glb')
     return (
-        <group dispose={null} scale={0.01} position={[1, 1, 0.2]} rotation={[-.1, 0, 0]}>
+        <group dispose={null} scale={0.01} position={[-2.8, 8.2, -3.25]} rotation={[-.1, 0, 0]}>
             <mesh geometry={nodes['10535_Snowboard_v1_L3'].geometry} material={materials['10535_Snowboard_v1_SG']} rotation={[Math.PI / 2, 0, 0]} />
         </group>
     );
