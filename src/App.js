@@ -20,8 +20,20 @@ import { TextureLoader } from 'three/src/loaders/TextureLoader'
 import { RectAreaLightHelper } from 'three/addons/helpers/RectAreaLightHelper'
 import * as THREE from 'three'
 
-import Button from '@mui/material/Button';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
 
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
+import BottomNavigation from '@mui/material/BottomNavigation';
+import BottomNavigationAction from '@mui/material/BottomNavigationAction';
+import RestoreIcon from '@mui/icons-material/Restore';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import HomeRepairServiceIcon from '@mui/icons-material/HomeRepairService';
+import InfoIcon from '@mui/icons-material/Info';
+import EmojiObjectsIcon from '@mui/icons-material/EmojiObjects';
+import ZoomOutMapIcon from '@mui/icons-material/ZoomOutMap';
 
 // import HutModel from './components/Hut';
 // import HutModel from './components/Hut3';
@@ -44,9 +56,13 @@ import Snowboard from './components/snowboard';
 
 import { Water } from 'three-stdlib'
 
-
 extend({ Water })
 
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+  },
+});
 
 function Ocean() {
   const ref = useRef()
@@ -108,9 +124,12 @@ export default function App() {
 
   const [camera_focus, setFocus] = useState("0");
 
+  const [value, setValue] = useState(0);
+
   return (
     // <Canvas shadows flat dpr={[1, 2]} camera={{ fov: 35, position: [0, 10, 30] }}>
     <div className='full_vh'>
+
 
       <Canvas shadows flat dpr={[1, 2]}>
         {/* <Camera fov={35} position={camera_position} /> */}
@@ -137,18 +156,18 @@ export default function App() {
             <Maxtower_base />
           </group>
 
-          <group onClick={() => setFocus(1)}>
-            <Maxtower_01 />
+          {/* <group onClick={() => setFocus(1)}> */}
+          <Maxtower_01 />
 
-          </group>
-          <group onClick={() => setFocus(2)}>
+          {/* </group> */}
+          {/* <group onClick={() => setFocus(2)}> */}
 
-            <Maxtower_02 />
-          </group>
-          <group onClick={() => setFocus(3)}>
+          <Maxtower_02 />
+          {/* </group> */}
+          {/* <group onClick={() => setFocus(3)}> */}
 
-            <Maxtower_03 />
-          </group>
+          <Maxtower_03 />
+          {/* </group> */}
 
           <Snowboard />
 
@@ -164,10 +183,28 @@ export default function App() {
         {/* <ReflectiveGround /> */}
 
       </Canvas>
-      <div className='ui_layer'>
-        <Button variant="contained">Hello World</Button>
+      <ThemeProvider theme={darkTheme}>
+        <CssBaseline />
+        <div className='ui_layer'>
+          {/* <Button variant="contained">Hello World</Button> */}
 
-      </div>
+          <Box sx={{ width: 500 }} className={'bottom_nav'}>
+            <BottomNavigation
+              showLabels
+              value={value}
+              onChange={(event, newValue) => {
+                setValue(newValue);
+              }}
+            >
+              <BottomNavigationAction label="Zoom Out" icon={<ZoomOutMapIcon />} onClick={() => setFocus(4)} />
+
+              <BottomNavigationAction label="About" icon={<InfoIcon />} onClick={() => setFocus(1)} />
+              <BottomNavigationAction label="Work" icon={<HomeRepairServiceIcon />} onClick={() => setFocus(2)} />
+              <BottomNavigationAction label="Projects" icon={<EmojiObjectsIcon />} onClick={() => setFocus(3)} />
+            </BottomNavigation>
+          </Box>
+        </div>
+      </ThemeProvider>
     </div>
 
   )
