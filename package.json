@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "author": "Maxwell Volz",
   "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@mui/material": "^5.11.8",
     "@react-spring/three": "^9.6.1",
     "@react-three/drei": "9.38.1",
     "@react-three/fiber": "8.8.10",

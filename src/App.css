@@ -15,7 +15,7 @@ body,
 
 canvas {
   width: 100%;
-  height: 100%;
+  height: 100vh !important;
   top: 0;
   overflow: hidden;
 }

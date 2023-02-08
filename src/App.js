@@ -20,6 +20,9 @@ import { TextureLoader } from 'three/src/loaders/TextureLoader'
 import { RectAreaLightHelper } from 'three/addons/helpers/RectAreaLightHelper'
 import * as THREE from 'three'
 
+import Button from '@mui/material/Button';
+
+
 // import HutModel from './components/Hut';
 // import HutModel from './components/Hut3';
 // import HutModel from './components/Hut5';
@@ -107,58 +110,66 @@ export default function App() {
 
   return (
     // <Canvas shadows flat dpr={[1, 2]} camera={{ fov: 35, position: [0, 10, 30] }}>
-    <Canvas shadows flat dpr={[1, 2]} >
-      {/* <Camera fov={35} position={camera_position} /> */}
-      <ambientLight intensity={0.125} />
+    <div className='full_vh'>
 
-      <group position={[0, 0.0, 0]}>
+      <Canvas shadows flat dpr={[1, 2]}>
+        {/* <Camera fov={35} position={camera_position} /> */}
+        <ambientLight intensity={0.125} />
 
-        <Ocean />
-      </group>
-      <OrbitControls autoRotate={false} autoRotateSpeed={0} enableZoom={true} makeDefault minPolarAngle={Math.PI / 5} maxPolarAngle={Math.PI / 2.1} />
+        <group position={[0, 0.0, 0]}>
 
-      <pointLight position={[100, 100, 100]} intensity={.2} />
-      <pointLight position={[-100, -100, -100]} intensity={.2} />
+          <Ocean />
+        </group>
+        <OrbitControls autoRotate={false} autoRotateSpeed={0} enableZoom={true} makeDefault minPolarAngle={Math.PI / 5} maxPolarAngle={Math.PI / 2.1} />
 
-      <color attach="background" args={['black']} onClick={() => setFocus(4)} />
-      <group position={[group_x, 0, 0]}>
-        {/* 
+        <pointLight position={[100, 100, 100]} intensity={.2} />
+        <pointLight position={[-100, -100, -100]} intensity={.2} />
+
+        <color attach="background" args={['black']} onClick={() => setFocus(4)} />
+        <group position={[group_x, 0, 0]}>
+          {/* 
         <ScrollControls pages={2}>
           <ControlTheScroll />
         </ScrollControls> */}
-        <Rig camera_focus={camera_focus} />
+          <Rig camera_focus={camera_focus} />
 
-        <group >
-          <Maxtower_base />
+          <group >
+            <Maxtower_base />
+          </group>
+
+          <group onClick={() => setFocus(1)}>
+            <Maxtower_01 />
+
+          </group>
+          <group onClick={() => setFocus(2)}>
+
+            <Maxtower_02 />
+          </group>
+          <group onClick={() => setFocus(3)}>
+
+            <Maxtower_03 />
+          </group>
+
+          <Snowboard />
+
+          {/* Temp Tower Stuff */}
+          <pointLight position={[5, 10, 5]} intensity={.8} />
+          {/* <pointLight position={[3, 20, -2]} intensity={.8} /> */}
+
+
         </group>
 
-        <group onClick={() => setFocus(1)}>
-          <Maxtower_01 />
+        <CrazyLight />
 
-        </group>
-        <group onClick={() => setFocus(2)}>
+        {/* <ReflectiveGround /> */}
 
-          <Maxtower_02 />
-        </group>
-        <group onClick={() => setFocus(3)}>
+      </Canvas>
+      <div className='ui_layer'>
+        <Button variant="contained">Hello World</Button>
 
-          <Maxtower_03 />
-        </group>
+      </div>
+    </div>
 
-        <Snowboard />
-
-        {/* Temp Tower Stuff */}
-        <pointLight position={[5, 10, 5]} intensity={.8} />
-        {/* <pointLight position={[3, 20, -2]} intensity={.8} /> */}
-
-
-      </group>
-
-      <CrazyLight />
-
-      {/* <ReflectiveGround /> */}
-
-    </Canvas>
   )
 }
 
