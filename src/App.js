@@ -120,7 +120,7 @@ function Rig(camera_focus) {
 
 export default function App() {
 
-  const { group_x } = useControls({ group_x: { value: 0, min: -20, max: 20 } });
+  // const { group_x } = useControls({ group_x: { value: 0, min: -20, max: 20 } });
 
   const [camera_focus, setFocus] = useState("0");
 
@@ -145,7 +145,7 @@ export default function App() {
         <pointLight position={[-100, -100, -100]} intensity={.2} />
 
         <color attach="background" args={['black']} onClick={() => setFocus(4)} />
-        <group position={[group_x, 0, 0]}>
+        <group position={[0, 0, 0]}>
           {/* 
         <ScrollControls pages={2}>
           <ControlTheScroll />
