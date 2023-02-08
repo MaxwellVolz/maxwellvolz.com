@@ -70,60 +70,40 @@ function Ocean() {
 }
 
 
-function Rig(clicked) {
+function Rig(camera_focus) {
   const { camera, mouse } = useThree()
   const vec = new Vector3()
 
   return useFrame(() => {
     // camera.position.lerp(vec.set(mouse.x, mouse.y, camera.position.z), 0.05)
-    // console.log(clicked)
+    // console.log(camera_focus)
 
-    if (clicked.clicked == true) {
-      camera.lookAt(-20, 5, -20)
-      camera.position.lerp(vec.set(1, 15, 1), 0.05)
-      // console.log(clicked)
-
+    if (camera_focus.camera_focus == 1) {
+      camera.lookAt(-2, 9, -2)
+      camera.position.lerp(vec.set(0.2, 18, 0.2), 0.01)
+    }
+    else if (camera_focus.camera_focus == 2) {
+      camera.lookAt(1.5, 5, -2)
+      camera.position.lerp(vec.set(7, 7, 4), 0.01)
+    }
+    else if (camera_focus.camera_focus == 3) {
+      camera.lookAt(0, 5, -1)
+      camera.position.lerp(vec.set(6, 1, 9), 0.01)
     }
     else {
-      camera.lookAt(0, 0, 0)
+      camera.lookAt(0, 6, 0)
+      camera.position.lerp(vec.set(8, 8, 12), 0.05)
+
     }
   })
 }
-
-const Camera = (props) => {
-  const ref = useRef();
-  const set = useThree((state) => state.set);
-  useEffect(() => void set({ camera: ref.current }), []);
-  useFrame(() => {
-    ref.current.updateMatrixWorld()
-    ref.current.lookAt(0, 5, 0)
-
-    console.log(state)
-  });
-  return <perspectiveCamera ref={ref} {...props} />;
-};
 
 
 export default function App() {
 
   const { group_x } = useControls({ group_x: { value: 0, min: -20, max: 20 } });
-  const [camera_position, setCameraPosition] = useState([0, 40, 0])
-  const [camera_lookat, setCameraLookat] = useState([0, 0, 0])
-  const [camera_fov, setCameraFov] = useState(35)
 
-  const [clicked, setClicked] = useState(false);
-
-  function move_look() {
-    // setCameraPosition(([0, 60, 0]))
-    setCameraLookat([0, 20, 0])
-  }
-
-  // useFrame(state => {
-  //   if (clicked) {
-  //     state.camera.position.lerp(0, 30, 10)
-  //   }
-  //   return null;
-  // })
+  const [camera_focus, setFocus] = useState("0");
 
   return (
     // <Canvas shadows flat dpr={[1, 2]} camera={{ fov: 35, position: [0, 10, 30] }}>
@@ -135,32 +115,37 @@ export default function App() {
 
         <Ocean />
       </group>
-      <OrbitControls autoRotate autoRotateSpeed={-0.05} enableZoom={true} makeDefault minPolarAngle={Math.PI / 5} maxPolarAngle={Math.PI / 2.1} />
+      <OrbitControls autoRotate={false} autoRotateSpeed={0} enableZoom={true} makeDefault minPolarAngle={Math.PI / 5} maxPolarAngle={Math.PI / 2.1} />
 
       <pointLight position={[100, 100, 100]} intensity={.2} />
       <pointLight position={[-100, -100, -100]} intensity={.2} />
 
-      <color attach="background" args={['black']} />
+      <color attach="background" args={['black']} onClick={() => setFocus(4)} />
       <group position={[group_x, 0, 0]}>
         {/* 
         <ScrollControls pages={2}>
           <ControlTheScroll />
         </ScrollControls> */}
-        <Rig clicked={clicked} />
-        <Maxtower_base />
-        <group onClick={() => setClicked(true)}>
+        <Rig camera_focus={camera_focus} />
+
+        <group >
+          <Maxtower_base />
+        </group>
+
+        <group onClick={() => setFocus(1)}>
           <Maxtower_01 />
 
         </group>
-        <Maxtower_02 />
-        <Maxtower_03 />
+        <group onClick={() => setFocus(2)}>
+
+          <Maxtower_02 />
+        </group>
+        <group onClick={() => setFocus(3)}>
+
+          <Maxtower_03 />
+        </group>
 
         <Snowboard />
-
-
-        {/* <Sphere /> */}
-        {/* <Hut /> */}
-        {/* <Seabar /> */}
 
         {/* Temp Tower Stuff */}
         <pointLight position={[5, 10, 5]} intensity={.8} />
