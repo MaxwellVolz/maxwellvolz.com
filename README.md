@@ -76,6 +76,27 @@ npx gltfjsx model.glb
 
 ---
 
+## AWS
+
+### Setup
+
+1. [Install AWS CLI]()
+2. Add credentials from **IAM** with *aws configure* in **terminal**
+
+
+### Common Commands
+
+```shell
+# Delete local file
+$ rm ./MyFile1.txt
+
+# Attempt sync without --delete option - nothing happens
+$ aws s3 sync build s3://wassuh.com/
+
+# Sync with deletion - object is deleted from bucket
+$ aws s3 sync build s3://wassuh.com/ --delete
+delete: s3://wassuh.com/MyDirectory/MyFile1.txt
+```
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

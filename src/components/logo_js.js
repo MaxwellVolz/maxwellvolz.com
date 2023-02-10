@@ -7,31 +7,41 @@ import { useLoader, useFrame } from '@react-three/fiber';
 import { useGLTF, SpotLight, useVideoTexture, useTexture, useAspect } from '@react-three/drei';
 import { TextureLoader } from 'three/src/loaders/TextureLoader'
 import { easing } from 'maath'
-
+import { useControls } from 'leva';
 // import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 // import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass'
 import Effects from './Effects'
 
 
 
-export default function HutModel() {
+export default function HutModel(props) {
     const group = useRef();
     const { nodes, materials } = useGLTF("./js.glb");
 
     const logo_ref = useRef();
     let logojs_rotation = 0
+    const mesh_ref = useRef();
 
-    useFrame((state, delta) => {
-        const t = (1 + Math.sin(state.clock.elapsedTime * 2)) / 2;
-        easing.dampE(logo_ref.current.rotation, [0, -t * Math.PI * 2.5, 0], 0.4, delta)
+
+    const open_github = () => {
+        window.open("https://github.com/MaxwellVolz")
+    }
+
+
+    useFrame(({ clock }) => {
+
+        const a = clock.getElapsedTime();
+        mesh_ref.current.rotation.y = a;
 
         // easing.dampE(logo_ref.current.rotation, [0, state.pointer.x * (state.camera.position.z > 1 ? 1 : -1), 0], 0.4, delta)
     })
 
     return (
-        <group ref={logo_ref} dispose={null} rotation={[0, 0, 0]} >
-            <mesh geometry={nodes.Cube.geometry} material={materials['Material.001']} position={[-0.01, 0, 0.03]} rotation={[-0.36, 1.53, 0.35]} scale={[0.84, 1, 1]} />
-            <mesh geometry={nodes.Text.geometry} material={materials['Material.002']} position={[0, -0.05, 0]} rotation={[1.57, 0.01, -3.11]} scale={0.1} />
+        <group {...props} ref={logo_ref} dispose={null} rotation={[0, 0, 0]} scale={4} >
+            <group ref={mesh_ref} position={[.01, 0, -.03]}>
+                <mesh geometry={nodes.Cube.geometry} material={materials['Material.001']} position={[-0.01, 0, 0.03]} rotation={[-0.36, 1.53, 0.35]} scale={[0.84, 1, 1]} />
+                <mesh geometry={nodes.Text.geometry} material={materials['Material.002']} position={[0, -0.05, 0]} rotation={[1.57, 0.01, -3.11]} scale={0.1} />
+            </group>
         </group>
     );
 }

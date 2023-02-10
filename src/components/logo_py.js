@@ -15,7 +15,7 @@ import Effects from './Effects'
 
 
 
-export default function HutModel() {
+export default function HutModel(props) {
 
     const { nodes, materials } = useGLTF("./py.glb");
 
@@ -23,13 +23,21 @@ export default function HutModel() {
 
     useFrame(({ clock }) => {
         const a = clock.getElapsedTime();
-        mesh_ref.current.rotation.x = a;
+        mesh_ref.current.rotation.y = a;
     });
 
+    const open_github = () => {
+        window.open("https://github.com/MaxwellVolz")
+    }
+
     return (
-        <group ref={mesh_ref} dispose={null} rotation={[logojs_rotation, 0, 0]}>
-            <mesh geometry={nodes.D.geometry} material={materials.orange} position={[-0.03, 0.29, 0]} rotation={[-Math.PI / 2, 0, Math.PI]} scale={1.76} />
-            <mesh geometry={nodes.Top_snake.geometry} material={materials.blue} position={[0.01, -0.08, 0]} rotation={[Math.PI / 2, 0, 0]} scale={1.76} />
-        </group>
+        <group {...props} scale={.35}>
+            {/* <animated.mesh scale={scale} onClick={() => open_github()} ref={py_logo}> */}
+            <group ref={mesh_ref} dispose={null} rotation={[.1, 0, 0]} >
+                <mesh geometry={nodes.D.geometry} material={materials.orange} position={[-0.03, 0.29, 0]} rotation={[-Math.PI / 2, 0, Math.PI]} scale={1.76} />
+                <mesh geometry={nodes.Top_snake.geometry} material={materials.blue} position={[0.01, -0.08, 0]} rotation={[Math.PI / 2, 0, 0]} scale={1.76} />
+            </group>
+            {/* </animated.mesh > */}
+        </group >
     );
 }

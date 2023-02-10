@@ -13,6 +13,7 @@ import { useSpring, animated, config } from '@react-spring/three'
 // import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass'
 import Effects from './Effects'
 
+import ResumePDF from '../mvolz_resume.pdf'
 
 
 export default function HutModel() {
@@ -20,8 +21,6 @@ export default function HutModel() {
     const { nodes, materials } = useGLTF('/maxtower_02.glb')
     const [active, setActive] = useState(false);
 
-    const js_logo = useRef();
-    const py_logo = useRef();
 
     const { scale } = useSpring({
         scale: active ? 1 : 1,
@@ -36,14 +35,10 @@ export default function HutModel() {
         window.open("https://github.com/MaxwellVolz")
     }
 
-
     useFrame(({ clock }) => {
         const a = clock.getElapsedTime();
         let decimals = a % 1
 
-        // logos
-        js_logo.current.rotation.y = -a
-        py_logo.current.rotation.y = a
     });
 
     return (
@@ -71,19 +66,22 @@ export default function HutModel() {
                     </group>
                     <group position={[60, 0.1, 0]}>
                         <mesh geometry={nodes.group_7.geometry} material={materials.noon1} />
-                        <mesh geometry={nodes.group_8.geometry} material={materials.noon_5} position={[45.12, 12.36, -2.88]} />
-                        <mesh geometry={nodes.instance_1.geometry} material={materials.noon_3} position={[3.78, 17.55, -26.55]} scale={[1.19, 1.19, 2.07]} />
-                        <mesh geometry={nodes.instance_1001.geometry} material={materials.noon_3} position={[3.78, 17.55, -26.55]} scale={[1.19, 1.19, 2.07]} />
-                        <mesh geometry={nodes.instance_1002.geometry} material={materials.noon_3} position={[3.78, 17.55, -26.55]} scale={[1.19, 1.19, 2.07]} />
-                        <mesh geometry={nodes.instance_1003.geometry} material={materials.noon_3} position={[3.78, 17.55, -26.55]} scale={[1.19, 1.19, 2.07]} />
-                        <mesh geometry={nodes.instance_1004.geometry} material={materials.noon_3} position={[3.78, 17.55, -26.55]} scale={[1.19, 1.19, 2.07]} />
-                        <mesh geometry={nodes.instance_1005.geometry} material={materials.noon_3} position={[3.78, 17.55, -26.55]} scale={[1.19, 1.19, 2.07]} />
-                        <mesh geometry={nodes.instance_1006.geometry} material={materials.noon_3} position={[3.78, 17.55, -26.55]} scale={[1.19, 1.19, 2.07]} />
-                        <mesh geometry={nodes.instance_2.geometry} material={materials.noon_3} position={[2.67, 17.49, -7.73]} scale={1.3} />
-                        <mesh geometry={nodes.instance_2001.geometry} material={materials.noon_3} position={[2.67, 17.49, -7.73]} scale={1.3} />
-                        <mesh geometry={nodes.instance_2002.geometry} material={materials.noon_3} position={[2.67, 17.49, -7.73]} scale={1.3} />
-                        <mesh geometry={nodes.instance_2003.geometry} material={materials.noon_3} position={[2.67, 17.49, -7.73]} scale={1.3} />
-                        <mesh geometry={nodes.instance_2004.geometry} material={materials.noon_3} position={[2.67, 17.49, -7.73]} scale={1.3} />
+                        <group onClick={() => download_pdf()} >
+                            <mesh geometry={nodes.group_8.geometry} material={materials.noon_5} position={[45.12, 12.36, -2.88]} />
+                            <mesh geometry={nodes.instance_1.geometry} material={materials.noon_3} position={[3.78, 17.55, -26.55]} scale={[1.19, 1.19, 2.07]} />
+                            <mesh geometry={nodes.instance_1001.geometry} material={materials.noon_3} position={[3.78, 17.55, -26.55]} scale={[1.19, 1.19, 2.07]} />
+                            <mesh geometry={nodes.instance_1002.geometry} material={materials.noon_3} position={[3.78, 17.55, -26.55]} scale={[1.19, 1.19, 2.07]} />
+                            <mesh geometry={nodes.instance_1003.geometry} material={materials.noon_3} position={[3.78, 17.55, -26.55]} scale={[1.19, 1.19, 2.07]} />
+                            <mesh geometry={nodes.instance_1004.geometry} material={materials.noon_3} position={[3.78, 17.55, -26.55]} scale={[1.19, 1.19, 2.07]} />
+                            <mesh geometry={nodes.instance_1005.geometry} material={materials.noon_3} position={[3.78, 17.55, -26.55]} scale={[1.19, 1.19, 2.07]} />
+                            <mesh geometry={nodes.instance_1006.geometry} material={materials.noon_3} position={[3.78, 17.55, -26.55]} scale={[1.19, 1.19, 2.07]} />
+                            <mesh geometry={nodes.instance_2.geometry} material={materials.noon_3} position={[2.67, 17.49, -7.73]} scale={1.3} />
+                            <mesh geometry={nodes.instance_2001.geometry} material={materials.noon_3} position={[2.67, 17.49, -7.73]} scale={1.3} />
+                            <mesh geometry={nodes.instance_2002.geometry} material={materials.noon_3} position={[2.67, 17.49, -7.73]} scale={1.3} />
+                            <mesh geometry={nodes.instance_2003.geometry} material={materials.noon_3} position={[2.67, 17.49, -7.73]} scale={1.3} />
+                            <mesh geometry={nodes.instance_2004.geometry} material={materials.noon_3} position={[2.67, 17.49, -7.73]} scale={1.3} />
+                        </group>
+
                     </group>
                     <group position={[99.99, 18.1, -83.26]} rotation={[0, 0, -Math.PI]}>
                         <mesh geometry={nodes.group_10.geometry} material={materials.Translucent_Glass_Gray} />
@@ -97,40 +95,6 @@ export default function HutModel() {
                     </group>
                     <mesh geometry={nodes.group_24.geometry} material={materials.noon_2} position={[0.12, 0, 3.71]} />
 
-                    {/* js_logo */}
-                    <group position={[103.29, 21.88, -93.64]}>
-                        <animated.mesh scale={scale} onClick={() => open_github()} ref={js_logo}>
-                            <mesh geometry={nodes.group_5.geometry} material={materials.Color_E05} position={[-10, 0, 0]} scale={0.62}>
-                                <mesh geometry={nodes.instance_0.geometry} material={materials.Color_M09} position={[17.37, 2.76, 0]} rotation={[Math.PI / 2, 0, 0]} scale={[0.24, 0.24, 0.23]} />
-                                <mesh geometry={nodes.instance_0001.geometry} material={materials.Color_M09} position={[17.37, 2.76, 0]} rotation={[Math.PI / 2, 0, 0]} scale={[0.24, 0.24, 0.23]} />
-                            </mesh>
-                        </animated.mesh>
-                    </group>
-
-
-                    {/* py_logo */}
-                    <group position={[39.61, 32.96, -97.22]}>
-                        <animated.mesh scale={scale} onClick={() => open_github()} ref={py_logo}>
-
-
-                            <group position={[0, 0, 0]} scale={0.3}>
-                                <mesh geometry={nodes.ID280.geometry} material={materials.noon_5} />
-                                <mesh geometry={nodes.ID280_1.geometry} material={materials.__auto_} />
-                            </group>
-                            <group position={[0, 0, 0]} scale={0.3}>
-                                <mesh geometry={nodes.ID288.geometry} material={materials.noon_5} />
-                                <mesh geometry={nodes.ID288_1.geometry} material={materials.__auto_} />
-                            </group>
-                            <group position={[0, 0, 0]} scale={0.3}>
-                                <mesh geometry={nodes.ID294.geometry} material={materials.noon_5} />
-                                <mesh geometry={nodes.ID294_1.geometry} material={materials.__auto_1} />
-                            </group>
-                            <group position={[0, 0, 0]} scale={0.3}>
-                                <mesh geometry={nodes.ID302.geometry} material={materials.noon_5} />
-                                <mesh geometry={nodes.ID302_1.geometry} material={materials.__auto_1} />
-                            </group>
-                        </animated.mesh>
-                    </group>
                 </group>
                 <group position={[4, 203.78, -4.11]} rotation={[Math.PI / 2, 0, -Math.PI / 2]}>
                     <mesh geometry={nodes.instance_4.geometry} material={materials.noon_3} position={[-1.49, 0, -11.83]} />

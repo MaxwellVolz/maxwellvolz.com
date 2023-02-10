@@ -1,4 +1,4 @@
-import { useState, useEffect, useTransition, useRef, useMemo } from 'react';
+import { useState, useEffect, useTransition, useRef, useMemo, Suspense } from 'react';
 import { useControls } from 'leva';
 import { Canvas, useLoader, useFrame, useThree, extend } from '@react-three/fiber';
 import { Vector3 } from 'three'
@@ -15,18 +15,28 @@ import {
   ScrollControls,
   Sky,
   useScroll,
+  Bounds, useBounds, ContactShadows
 } from '@react-three/drei';
 import { TextureLoader } from 'three/src/loaders/TextureLoader'
 import { RectAreaLightHelper } from 'three/addons/helpers/RectAreaLightHelper'
 import * as THREE from 'three'
 
+// Material Base
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 
+// Material Components
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+
+// Material Icons
 import RestoreIcon from '@mui/icons-material/Restore';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
@@ -34,23 +44,17 @@ import HomeRepairServiceIcon from '@mui/icons-material/HomeRepairService';
 import InfoIcon from '@mui/icons-material/Info';
 import EmojiObjectsIcon from '@mui/icons-material/EmojiObjects';
 import ZoomOutMapIcon from '@mui/icons-material/ZoomOutMap';
+import TravelExploreIcon from '@mui/icons-material/TravelExplore';
+import SwipeIcon from '@mui/icons-material/Swipe';
+import TouchAppIcon from '@mui/icons-material/TouchApp';
 
-// import HutModel from './components/Hut';
-// import HutModel from './components/Hut3';
-// import HutModel from './components/Hut5';
-// import HutModel from './components/Hut6';
-// import HutModel from './components/Hut8';
-// import Seabar from './components/Seabar';
-
+// Models
 import Maxtower_base from './components/Maxtower_base';
 import Maxtower_01 from './components/Maxtower_01';
 import Maxtower_02 from './components/Maxtower_02';
 import Maxtower_03 from './components/Maxtower_03';
-
 import LogoJS from './components/logo_js';
 import LogoPY from './components/logo_py';
-
-
 import Snowboard from './components/snowboard';
 
 
@@ -98,21 +102,20 @@ function Rig(camera_focus) {
     // console.log(camera_focus)
 
     if (camera_focus.camera_focus == 1) {
-      camera.lookAt(-2, 9, -2)
-      camera.position.lerp(vec.set(0.2, 18, 0.2), 0.01)
+      camera.lookAt(-2, 7, -2)
+      camera.position.lerp(vec.set(.01, 15, 2), 0.005)
     }
     else if (camera_focus.camera_focus == 2) {
-      camera.lookAt(1.5, 5, -2)
-      camera.position.lerp(vec.set(7, 7, 4), 0.01)
+      camera.lookAt(0.9, 4, -2)
+      camera.position.lerp(vec.set(6.5, 8, 1.5), 0.008)
     }
     else if (camera_focus.camera_focus == 3) {
-      camera.lookAt(0, 5, -1)
-      camera.position.lerp(vec.set(6, 1, 9), 0.01)
+      camera.lookAt(0, 1, -1)
+      camera.position.lerp(vec.set(6, 3, 9), 0.008)
     }
     else {
-      camera.lookAt(0, 6, 0)
-      camera.position.lerp(vec.set(8, 8, 12), 0.05)
-
+      camera.lookAt(0, 4, 0)
+      camera.position.lerp(vec.set(8, 8, 12), 0.005)
     }
   })
 }
@@ -125,6 +128,29 @@ export default function App() {
   const [camera_focus, setFocus] = useState("0");
 
   const [value, setValue] = useState(0);
+
+  const [open, setOpen] = useState(true);
+  const [openGithub, setGithubOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleOpenGithub = () => {
+    setGithubOpen(true);
+  };
+  const handleCloseGithub = () => {
+    setGithubOpen(false);
+  };
+  const handleCloseGithubLink = () => {
+    setGithubOpen(false);
+
+    window.open("https://github.com/MaxwellVolz")
+  }
+
 
   return (
     // <Canvas shadows flat dpr={[1, 2]} camera={{ fov: 35, position: [0, 10, 30] }}>
@@ -139,10 +165,10 @@ export default function App() {
 
           <Ocean />
         </group>
-        <OrbitControls autoRotate={false} autoRotateSpeed={0} enableZoom={true} makeDefault minPolarAngle={Math.PI / 5} maxPolarAngle={Math.PI / 2.1} />
+        <OrbitControls autoRotate={false} enableZoom={true} makeDefault minPolarAngle={Math.PI / 5} maxPolarAngle={Math.PI / 2.1} />
 
         <pointLight position={[100, 100, 100]} intensity={.2} />
-        <pointLight position={[-100, -100, -100]} intensity={.2} />
+        {/* <pointLight position={[-100, -100, -100]} intensity={.2} /> */}
 
         <color attach="background" args={['black']} onClick={() => setFocus(4)} />
         <group position={[0, 0, 0]}>
@@ -150,26 +176,25 @@ export default function App() {
         <ScrollControls pages={2}>
           <ControlTheScroll />
         </ScrollControls> */}
-          <Rig camera_focus={camera_focus} />
+          {/* <Rig camera_focus={camera_focus} /> */}
 
-          <group >
-            <Maxtower_base />
-          </group>
+          <Suspense fallback={null}>
+            <Bounds fit clip observe margin={1.2}>
+              <SelectToZoom>
+                <Maxtower_base />
+                <Maxtower_01 />
+                <Maxtower_02 />
+                <Maxtower_03 />
+              </SelectToZoom>
+            </Bounds>
+            <ContactShadows rotation-x={Math.PI / 2} position={[0, -35, 0]} opacity={0.2} width={200} height={200} blur={1} far={50} />
+          </Suspense>
 
-          {/* <group onClick={() => setFocus(1)}> */}
-          <Maxtower_01 />
-
-          {/* </group> */}
-          {/* <group onClick={() => setFocus(2)}> */}
-
-          <Maxtower_02 />
-          {/* </group> */}
-          {/* <group onClick={() => setFocus(3)}> */}
-
-          <Maxtower_03 />
-          {/* </group> */}
 
           <Snowboard />
+
+          <LogoJS position={[3.2, 4.7, -3]} onClick={handleOpenGithub} />
+          <LogoPY position={[1.3, 4.7, -3]} onClick={handleOpenGithub} />
 
           {/* Temp Tower Stuff */}
           <pointLight position={[5, 10, 5]} intensity={.8} />
@@ -178,7 +203,7 @@ export default function App() {
 
         </group>
 
-        <CrazyLight />
+        {/* <CrazyLight /> */}
 
         {/* <ReflectiveGround /> */}
 
@@ -188,7 +213,47 @@ export default function App() {
         <div className='ui_layer'>
           {/* <Button variant="contained">Hello World</Button> */}
 
-          <Box sx={{ width: 500 }} className={'bottom_nav'}>
+          <div className='dialog'>
+            <Dialog
+              open={openGithub}
+              onClose={handleCloseGithub}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+            >
+              <DialogTitle id="alert-dialog-title">{"Open link to GitHub?"}</DialogTitle>
+              <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleCloseGithub}>Maybe Later</Button>
+                <Button onClick={handleCloseGithubLink} autoFocus >Ok</Button>
+              </DialogActions>
+            </Dialog>
+          </div>
+
+          <div className='dialog'>
+            <Dialog
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+            >
+              <DialogTitle id="alert-dialog-title">{"Welcome :)"}</DialogTitle>
+              <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                  Use <SwipeIcon /> to orbit and <TouchAppIcon /> to focus on objects in the scene. Hope you like the site.
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleClose} autoFocus>Ok</Button>
+              </DialogActions>
+            </Dialog>
+          </div>
+
+          {/* Bottom Nav */}
+          {/* <Box className={'bottom_nav'}>
             <BottomNavigation
               showLabels
               value={value}
@@ -196,13 +261,13 @@ export default function App() {
                 setValue(newValue);
               }}
             >
-              <BottomNavigationAction label="Zoom Out" icon={<ZoomOutMapIcon />} onClick={() => setFocus(4)} />
+              <BottomNavigationAction label="Zoom Out" icon={<TravelExploreIcon />} onClick={() => setFocus(4)} />
 
               <BottomNavigationAction label="About" icon={<InfoIcon />} onClick={() => setFocus(1)} />
               <BottomNavigationAction label="Work" icon={<HomeRepairServiceIcon />} onClick={() => setFocus(2)} />
               <BottomNavigationAction label="Projects" icon={<EmojiObjectsIcon />} onClick={() => setFocus(3)} />
             </BottomNavigation>
-          </Box>
+          </Box> */}
         </div>
       </ThemeProvider>
     </div>
@@ -248,4 +313,15 @@ function MovingSpot({ vec = new Vector3(), ...props }) {
     light.current.target.updateMatrixWorld()
   })
   return <SpotLight castShadow ref={light} penumbra={1} distance={6} angle={0.35} attenuation={5} anglePower={4} intensity={3} {...props} />
+}
+
+// This component wraps children in a group with a click handler
+// Clicking any object will refresh and fit bounds
+function SelectToZoom({ children }) {
+  const api = useBounds()
+  return (
+    <group onClick={(e) => (e.stopPropagation(), e.delta <= 2 && api.refresh(e.object).fit())} onPointerMissed={(e) => e.button === 0 && api.refresh().fit()}>
+      {children}
+    </group>
+  )
 }
