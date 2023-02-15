@@ -53,6 +53,9 @@ import Maxtower_base from './components/Maxtower_base';
 import Maxtower_01 from './components/Maxtower_01';
 import Maxtower_02 from './components/Maxtower_02';
 import Maxtower_03 from './components/Maxtower_03';
+
+import Maxtower_01_interactive from './components/Maxtower_01_interactive';
+
 import LogoJS from './components/logo_js';
 import LogoPY from './components/logo_py';
 import Snowboard from './components/snowboard';
@@ -179,7 +182,7 @@ export default function App() {
           {/* <Rig camera_focus={camera_focus} /> */}
 
           <Suspense fallback={null}>
-            <Bounds fit clip observe margin={1.2}>
+            <Bounds fit clip observe damping={6} margin={1.2}>
               <SelectToZoom>
                 <Maxtower_base />
                 <Maxtower_01 />
@@ -190,11 +193,13 @@ export default function App() {
             <ContactShadows rotation-x={Math.PI / 2} position={[0, -35, 0]} opacity={0.2} width={200} height={200} blur={1} far={50} />
           </Suspense>
 
+          <Maxtower_01_interactive />
+
 
           <Snowboard />
 
-          <LogoJS position={[3.2, 4.7, -3]} onClick={handleOpenGithub} />
-          <LogoPY position={[1.3, 4.7, -3]} onClick={handleOpenGithub} />
+          <LogoJS position={[3.2, 4.7, -3]} />
+          <LogoPY position={[1.3, 4.7, -3]} />
 
           {/* Temp Tower Stuff */}
           <pointLight position={[5, 10, 5]} intensity={.8} />

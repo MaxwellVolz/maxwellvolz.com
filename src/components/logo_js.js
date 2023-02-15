@@ -23,16 +23,10 @@ export default function HutModel(props) {
     const mesh_ref = useRef();
 
 
-    const open_github = () => {
-        window.open("https://github.com/MaxwellVolz")
-    }
-
 
     useFrame(({ clock }) => {
-
         const a = clock.getElapsedTime();
         mesh_ref.current.rotation.y = a;
-
         // easing.dampE(logo_ref.current.rotation, [0, state.pointer.x * (state.camera.position.z > 1 ? 1 : -1), 0], 0.4, delta)
     })
 
