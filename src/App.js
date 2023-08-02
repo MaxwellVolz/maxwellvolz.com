@@ -50,21 +50,14 @@ import SwipeIcon from '@mui/icons-material/Swipe';
 import TouchAppIcon from '@mui/icons-material/TouchApp';
 
 // Models
-import Maxtower_base from './components/Maxtower_base';
-import Maxtower_01 from './components/Maxtower_01';
-import Maxtower_02 from './components/Maxtower_02';
-import Maxtower_03 from './components/Maxtower_03';
-
-import Maxtower_01_interactive from './components/Maxtower_01_interactive';
 
 import LogoJS from './components/logo_js';
 import LogoPY from './components/logo_py';
 import LogoGithub from './components/logo_github';
-import Snowboard from './components/snowboard';
 
 import RayBans from './components/Raybans'
 import Drone from './components/Drone'
-import Terragraph from './components/terragraph'
+import Tower from './components/tower'
 
 
 import { Water } from 'three-stdlib'
@@ -101,36 +94,9 @@ function Ocean() {
   return <water ref={ref} args={[geom, config]} rotation-x={-Math.PI / 2} />
 }
 
-
-function Rig(camera_focus) {
-  const { camera, mouse } = useThree()
-  const vec = new Vector3()
-
-  const cameraPositions = {
-    1: { position: new THREE.Vector3(0.01, 15, 2), target: new THREE.Vector3(-2, 7, -2) },
-    2: { position: new THREE.Vector3(6.5, 8, 1.5), target: new THREE.Vector3(0.9, 4, -2) },
-    3: { position: new THREE.Vector3(6, 3, 9), target: new THREE.Vector3(0, 1, -1) },
-    default: { position: new THREE.Vector3(8, 8, 12), target: new THREE.Vector3(0, 4, 0) }
-  };
-
-  return useFrame(() => {
-    // camera.position.lerp(vec.set(mouse.x, mouse.y, camera.position.z), 0.05)
-    // console.log(camera_focus)
-
-    const { position, target } = cameraPositions[camera_focus.camera_focus] || cameraPositions.default;
-    camera.lookAt(target);
-    camera.position.lerp(position, 0.005);
-  })
-}
-
-
 export default function App() {
 
-  // const { group_x } = useControls({ group_x: { value: 0, min: -20, max: 20 } });
-
   const [camera_focus, setFocus] = useState("0");
-
-  const [value, setValue] = useState(0);
 
   const [open, setOpen] = useState(true);
   const [openGithub, setGithubOpen] = useState(false);
@@ -162,9 +128,7 @@ export default function App() {
     // <Canvas shadows flat dpr={[1, 2]} camera={{ fov: 35, position: [0, 10, 30] }}>
     <div className='full_vh'>
 
-
       <Canvas shadows flat dpr={[1, 2]}>
-        {/* <Camera fov={35} position={camera_position} /> */}
 
         <group position={[0, 0.0, 0]}>
 
@@ -172,42 +136,26 @@ export default function App() {
         </group>
         <OrbitControls autoRotate={false} enableZoom={true} makeDefault minPolarAngle={Math.PI / 5} maxPolarAngle={Math.PI / 2.1} />
 
-        {/* <pointLight position={[-100, -100, -100]} intensity={.2} /> */}
-
         <color attach="background" args={['black']} onClick={() => setFocus(4)} />
         <group position={[0, 0, 0]}>
-          {/* 
-        <ScrollControls pages={2}>
-          <ControlTheScroll />
-        </ScrollControls> */}
-          {/* <Rig camera_focus={camera_focus} /> */}
 
           <Suspense fallback={null}>
             <Bounds fit clip observe damping={6} margin={1.2}>
               <SelectToZoom>
-                <Maxtower_base />
-                <Maxtower_01 />
-                <Drone />
+
+                <Tower />
 
               </SelectToZoom>
-              <Maxtower_02 />
-              <Maxtower_03 />
+
 
             </Bounds>
             <ContactShadows rotation-x={Math.PI / 2} position={[0, -35, 0]} opacity={0.2} width={200} height={200} blur={1} far={50} />
           </Suspense>
 
-          <Maxtower_01_interactive />
           <BakeShadows />
 
-          {/* <Snowboard /> */}
-
+          <Drone />
           <RayBans />
-          <Terragraph />
-
-          {/* <LogoJS position={[3.2, 4.7, -3]} /> */}
-          {/* <LogoPY position={[1.3, 4.7, -3]} /> */}
-
           <LogoGithub position={[0, 0, 0]} />
 
           {/* Temp Tower Stuff */}
@@ -217,9 +165,6 @@ export default function App() {
 
         </group>
 
-        {/* <CrazyLight /> */}
-
-        {/* <ReflectiveGround /> */}
 
       </Canvas>
       <ThemeProvider theme={darkTheme}>

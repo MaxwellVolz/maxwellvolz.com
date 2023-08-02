@@ -11,7 +11,6 @@ export function Model(props) {
   return (
     <group {...props} dispose={null}>
       <group name="Scene">
-        <mesh name="group_0" geometry={nodes.group_0.geometry} material={materials['material.001']} position={[-120, 0, 120]} />
         <mesh name="base_floor" geometry={nodes.base_floor.geometry} material={nodes.base_floor.material} scale={[60, 1, 60]} />
         <mesh name="base_backwall" geometry={nodes.base_backwall.geometry} material={nodes.base_backwall.material} position={[0, 61, -59]} scale={[60, 60, 1]} />
         <mesh name="base_01" geometry={nodes.base_01.geometry} material={nodes.base_01.material} position={[30, 31, -30]} scale={30} />

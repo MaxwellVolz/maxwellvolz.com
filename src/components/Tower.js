@@ -7,20 +7,58 @@ import { useRef, Suspense } from 'react';
 import { useLoader, useFrame } from '@react-three/fiber';
 import { useGLTF, SpotLight, useVideoTexture, useTexture, useAspect } from '@react-three/drei';
 import { Object3D } from 'three'; // Import Object3D class from Three.js
+import { RectAreaLightHelper } from 'three/addons/helpers/RectAreaLightHelper.js';
+import { RectAreaLightUniformsLib } from 'three/addons/lights/RectAreaLightUniformsLib.js';
 
+const RectAreaLight = ({
+  debug,
+  color,
+  position,
+  intensity,
+  rotation,
+  visible,
+}) => {
+  return (
+    <>
+      {debug ? <Plane position={position} rotation={rotation} /> : null}
+
+      <rectAreaLight
+        visible={visible}
+        rotation={rotation}
+        color={color}
+        intensity={intensity}
+        position={position}
+      />
+    </>
+  );
+}
 
 export default function Tower(props) {
   const group = useRef();
   const { nodes, materials } = useGLTF('/tower.glb')
-  const mesh_ref = useRef();
+  const spotlight_ref = useRef();
+  const spotlightTarget = useRef();
+
+  RectAreaLightUniformsLib.init();
 
   useFrame(({ clock }) => {
 
   })
+
   return (
     <group {...props} dispose={null}>
+      <group name="lights">
+        <pointLight position={[10, 100, 20]} intensity={.1} />
+        <RectAreaLight position={[35, 60, 0]} intensity={5} />
+        <RectAreaLight position={[44, 60, 0]} intensity={5} />
+        <RectAreaLight position={[17, 70, -5]} intensity={3} color={"red"} />
+
+        <RectAreaLight position={[17, 77, -6]} intensity={3} color={"white"} />
+        {/* <group rotation={[.2, 0, 0]}>
+          <RectAreaLight position={[17, 77, -19]} intensity={3} color={"white"} />
+        </group> */}
+      </group>
       <group name="Scene">
-        <mesh name="group_0" geometry={nodes.group_0.geometry} material={materials['material.001']} position={[-120, 0, 120]} />
         <mesh name="base_floor" geometry={nodes.base_floor.geometry} material={nodes.base_floor.material} scale={[60, 1, 60]} />
         <mesh name="base_backwall" geometry={nodes.base_backwall.geometry} material={nodes.base_backwall.material} position={[0, 61, -59]} scale={[60, 60, 1]} />
         <mesh name="base_01" geometry={nodes.base_01.geometry} material={nodes.base_01.material} position={[30, 31, -30]} scale={30} />
