@@ -15,7 +15,8 @@ import {
   ScrollControls,
   Sky,
   useScroll,
-  Bounds, useBounds, ContactShadows
+  Bounds, useBounds, ContactShadows, BakeShadows
+
 } from '@react-three/drei';
 import { TextureLoader } from 'three/src/loaders/TextureLoader'
 import { RectAreaLightHelper } from 'three/addons/helpers/RectAreaLightHelper'
@@ -58,7 +59,12 @@ import Maxtower_01_interactive from './components/Maxtower_01_interactive';
 
 import LogoJS from './components/logo_js';
 import LogoPY from './components/logo_py';
+import LogoGithub from './components/logo_github';
 import Snowboard from './components/snowboard';
+
+import RayBans from './components/Raybans'
+import Drone from './components/Drone'
+import Terragraph from './components/terragraph'
 
 
 import { Water } from 'three-stdlib'
@@ -100,26 +106,20 @@ function Rig(camera_focus) {
   const { camera, mouse } = useThree()
   const vec = new Vector3()
 
+  const cameraPositions = {
+    1: { position: new THREE.Vector3(0.01, 15, 2), target: new THREE.Vector3(-2, 7, -2) },
+    2: { position: new THREE.Vector3(6.5, 8, 1.5), target: new THREE.Vector3(0.9, 4, -2) },
+    3: { position: new THREE.Vector3(6, 3, 9), target: new THREE.Vector3(0, 1, -1) },
+    default: { position: new THREE.Vector3(8, 8, 12), target: new THREE.Vector3(0, 4, 0) }
+  };
+
   return useFrame(() => {
     // camera.position.lerp(vec.set(mouse.x, mouse.y, camera.position.z), 0.05)
     // console.log(camera_focus)
 
-    if (camera_focus.camera_focus == 1) {
-      camera.lookAt(-2, 7, -2)
-      camera.position.lerp(vec.set(.01, 15, 2), 0.005)
-    }
-    else if (camera_focus.camera_focus == 2) {
-      camera.lookAt(0.9, 4, -2)
-      camera.position.lerp(vec.set(6.5, 8, 1.5), 0.008)
-    }
-    else if (camera_focus.camera_focus == 3) {
-      camera.lookAt(0, 1, -1)
-      camera.position.lerp(vec.set(6, 3, 9), 0.008)
-    }
-    else {
-      camera.lookAt(0, 4, 0)
-      camera.position.lerp(vec.set(8, 8, 12), 0.005)
-    }
+    const { position, target } = cameraPositions[camera_focus.camera_focus] || cameraPositions.default;
+    camera.lookAt(target);
+    camera.position.lerp(position, 0.005);
   })
 }
 
@@ -138,6 +138,7 @@ export default function App() {
   const handleClickOpen = () => {
     setOpen(true);
   };
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -145,9 +146,11 @@ export default function App() {
   const handleOpenGithub = () => {
     setGithubOpen(true);
   };
+
   const handleCloseGithub = () => {
     setGithubOpen(false);
   };
+
   const handleCloseGithubLink = () => {
     setGithubOpen(false);
 
@@ -162,7 +165,6 @@ export default function App() {
 
       <Canvas shadows flat dpr={[1, 2]}>
         {/* <Camera fov={35} position={camera_position} /> */}
-        <ambientLight intensity={0.125} />
 
         <group position={[0, 0.0, 0]}>
 
@@ -170,7 +172,6 @@ export default function App() {
         </group>
         <OrbitControls autoRotate={false} enableZoom={true} makeDefault minPolarAngle={Math.PI / 5} maxPolarAngle={Math.PI / 2.1} />
 
-        <pointLight position={[100, 100, 100]} intensity={.2} />
         {/* <pointLight position={[-100, -100, -100]} intensity={.2} /> */}
 
         <color attach="background" args={['black']} onClick={() => setFocus(4)} />
@@ -186,23 +187,31 @@ export default function App() {
               <SelectToZoom>
                 <Maxtower_base />
                 <Maxtower_01 />
-                <Maxtower_02 />
-                <Maxtower_03 />
+                <Drone />
+
               </SelectToZoom>
+              <Maxtower_02 />
+              <Maxtower_03 />
+
             </Bounds>
             <ContactShadows rotation-x={Math.PI / 2} position={[0, -35, 0]} opacity={0.2} width={200} height={200} blur={1} far={50} />
           </Suspense>
 
           <Maxtower_01_interactive />
+          <BakeShadows />
 
+          {/* <Snowboard /> */}
 
-          <Snowboard />
+          <RayBans />
+          <Terragraph />
 
-          <LogoJS position={[3.2, 4.7, -3]} />
-          <LogoPY position={[1.3, 4.7, -3]} />
+          {/* <LogoJS position={[3.2, 4.7, -3]} /> */}
+          {/* <LogoPY position={[1.3, 4.7, -3]} /> */}
+
+          <LogoGithub position={[0, 0, 0]} />
 
           {/* Temp Tower Stuff */}
-          <pointLight position={[5, 10, 5]} intensity={.8} />
+          <pointLight position={[5, 10, 5]} intensity={.1} />
           {/* <pointLight position={[3, 20, -2]} intensity={.8} /> */}
 
 

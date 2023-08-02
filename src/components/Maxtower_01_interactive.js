@@ -31,27 +31,8 @@ export default function HutModel() {
     const [blueActive, setBlueActive] = useState(false);
 
 
-    const vec = new Vector3()
-
-    const rgb_off = () => {
-        console.log("off")
-    }
-
-    const rgb_red = () => {
-        console.log("red")
-    }
-
-    const rgb_green = () => {
-        console.log("GREEN")
-    }
-
-    const rgb_blue = () => {
-        console.log("blue")
-    }
-
     useFrame(({ clock }) => {
         const a = clock.getElapsedTime();
-        let decimals = a % 1;
 
         let new_color = new Color(`rgb(
             ${redActive ? 255 : 0}, 

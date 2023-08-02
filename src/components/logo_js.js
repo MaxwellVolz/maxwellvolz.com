@@ -23,7 +23,6 @@ export default function HutModel(props) {
     const mesh_ref = useRef();
 
 
-
     useFrame(({ clock }) => {
         const a = clock.getElapsedTime();
         mesh_ref.current.rotation.y = a;

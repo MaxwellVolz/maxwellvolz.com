@@ -18,7 +18,7 @@ import ResumePDF from '../mvolz_resume.pdf'
 
 export default function HutModel() {
 
-    const { nodes, materials } = useGLTF('/maxtower_02.glb')
+    const { nodes, materials } = useGLTF('/floor2.glb')
     const [active, setActive] = useState(false);
 
 
@@ -44,103 +44,126 @@ export default function HutModel() {
     return (
         <group dispose={null}>
             <group scale={0.03}>
-                <group position={[6, 126, -6]}>
-                    <group position={[52.99, 18.1, -94.57]}>
-                        <mesh geometry={nodes.group_2.geometry} material={materials.Color_M06} position={[11, 0, 0]} />
-                        <mesh geometry={nodes.group_3.geometry} material={materials.Color_M06} position={[15, 1, -2]} />
-                        <mesh geometry={nodes.group_4.geometry} material={materials.Color_M06} position={[15, 3, 0]} />
-                        <group position={[15, 3, 0]}>
-                            <mesh geometry={nodes.ID28.geometry} material={materials.Color_M06} />
-                            <mesh geometry={nodes.ID28_1.geometry} material={materials.Color_M09} />
-                        </group>
-                        <mesh geometry={nodes.group_4002.geometry} material={materials.Color_M06} position={[15, 3, 0]} />
-                    </group>
-                    <group position={[0, 0.1, 0]}>
-                        <mesh geometry={nodes.group_13.geometry} material={materials.noon_5} />
-                        <mesh geometry={nodes.group_14.geometry} material={materials.noon_5} position={[4, 0, -51.99]} />
-                        <mesh geometry={nodes.group_15.geometry} material={materials.noon_5} position={[4, 0, 0]} />
-                        <mesh geometry={nodes.group_16.geometry} material={materials.noon_5} position={[4, 0, -51.99]} />
-                        <mesh geometry={nodes.group_17.geometry} material={materials.noon_5} position={[4, 0, -30]} />
-                        <mesh geometry={nodes.group_18.geometry} material={materials.noon_5} position={[4, 15, -51.99]} />
-                        <mesh geometry={nodes.group_19.geometry} material={materials.noon_5} position={[4, 15, -30]} />
-                    </group>
-                    <group position={[99.99, 18.1, -83.26]} rotation={[0, 0, -Math.PI]}>
-                        <mesh geometry={nodes.group_10.geometry} material={materials.noon1} position={[1, 2, -21]} />
-                        <mesh geometry={nodes.group_11.geometry} material={materials.Translucent_Glass_Gray} position={[0, 12, 0]} />
-                        <mesh geometry={nodes.group_11001.geometry} material={materials.Translucent_Glass_Gray} position={[0, 12, 0]} />
-                        <mesh geometry={nodes.group_6.geometry} material={materials.Translucent_Glass_Gray} />
-                        <mesh geometry={nodes.group_6001.geometry} material={materials.Translucent_Glass_Gray} />
-                        <mesh geometry={nodes.group_7.geometry} material={materials.noon1} position={[1, 2, -1]} />
-                        <mesh geometry={nodes.group_8.geometry} material={materials.noon1} position={[57, 2, -1]} />
-                        <mesh geometry={nodes.group_9.geometry} material={materials.noon1} position={[57, 2, -21]} />
-                    </group>
-                    <mesh geometry={nodes.group_20.geometry} material={materials.noon_2} position={[0.12, 0, 3.71]} />
-                </group>
                 <group position={[0, 126, 0]}>
-                    <group position={[4, 77.78, -4.11]} rotation={[Math.PI / 2, 0, -Math.PI / 2]}>
-                        <mesh geometry={nodes.instance_0.geometry} material={materials.noon_3} position={[-1.49, 0, -11.83]} />
-                        <mesh geometry={nodes.instance_0001.geometry} material={materials.noon_3} position={[-1.49, 0, -11.83]} />
-                        <mesh geometry={nodes.instance_0002.geometry} material={materials.noon_3} position={[-1.49, 0, -11.83]} />
-                        <mesh geometry={nodes.instance_0003.geometry} material={materials.noon_3} position={[-1.49, 0, -11.83]} />
-                        <mesh geometry={nodes.instance_0004.geometry} material={materials.noon_3} position={[-1.49, 0, -11.83]} />
-                        <mesh geometry={nodes.instance_1.geometry} material={materials.noon_3} position={[0.21, 2, -0.08]} />
-                        <mesh geometry={nodes.instance_1001.geometry} material={materials.noon_3} position={[0.21, 2, -0.08]} />
-                        <mesh geometry={nodes.instance_1002.geometry} material={materials.noon_3} position={[0.21, 2, -0.08]} />
-                        <mesh geometry={nodes.instance_1003.geometry} material={materials.noon_3} position={[0.21, 2, -0.08]} />
-                        <mesh geometry={nodes.instance_1004.geometry} material={materials.noon_3} position={[0.21, 2, -0.08]} />
-                        <mesh geometry={nodes.instance_1005.geometry} material={materials.noon_3} position={[0.21, 2, -0.08]} />
-                        <mesh geometry={nodes.instance_1006.geometry} material={materials.noon_3} position={[0.21, 2, -0.08]} />
-                        <mesh geometry={nodes.instance_1007.geometry} material={materials.noon_3} position={[0.21, 2, -0.08]} />
-                        <mesh geometry={nodes.instance_1008.geometry} material={materials.noon_3} position={[0.21, 2, -0.08]} />
+                    <group position={[4, 77.777, -4.108]} rotation={[Math.PI / 2, 0, -Math.PI / 2]}>
+                        <mesh geometry={nodes.instance_0.geometry} material={materials['noon_3.002']} position={[-1.491, 0, -11.828]} />
+                        <mesh geometry={nodes.instance_0001.geometry} material={materials['noon_3.002']} position={[-1.491, 0, -11.828]} />
+                        <mesh geometry={nodes.instance_0002.geometry} material={materials['noon_3.002']} position={[-1.491, 0, -11.828]} />
+                        <mesh geometry={nodes.instance_0003.geometry} material={materials['noon_3.002']} position={[-1.491, 0, -11.828]} />
+                        <mesh geometry={nodes.instance_0004.geometry} material={materials['noon_3.002']} position={[-1.491, 0, -11.828]} />
+                        <mesh geometry={nodes.instance_1.geometry} material={materials['noon_3.002']} position={[0.213, 2, -0.085]} />
+                        <mesh geometry={nodes.instance_1001.geometry} material={materials['noon_3.002']} position={[0.213, 2, -0.085]} />
+                        <mesh geometry={nodes.instance_1002.geometry} material={materials['noon_3.002']} position={[0.213, 2, -0.085]} />
+                        <mesh geometry={nodes.instance_1003.geometry} material={materials['noon_3.002']} position={[0.213, 2, -0.085]} />
+                        <mesh geometry={nodes.instance_1004.geometry} material={materials['noon_3.002']} position={[0.213, 2, -0.085]} />
+                        <mesh geometry={nodes.instance_1005.geometry} material={materials['noon_3.002']} position={[0.213, 2, -0.085]} />
+                        <mesh geometry={nodes.instance_1006.geometry} material={materials['noon_3.002']} position={[0.213, 2, -0.085]} />
+                        <mesh geometry={nodes.instance_1007.geometry} material={materials['noon_3.002']} position={[0.213, 2, -0.085]} />
+                        <mesh geometry={nodes.instance_1008.geometry} material={materials['noon_3.002']} position={[0.213, 2, -0.085]} />
                     </group>
-                    <mesh geometry={nodes.group_22.geometry} material={materials.noon1} />
+                    <mesh geometry={nodes.group_1.geometry} material={materials['noon1.002']} />
                 </group>
-                <group position={[10.56, 190.08, -94.36]}>
-                    <group position={[56.75, 0, -19.64]} rotation={[Math.PI / 2, 0, 0]}>
-                        <mesh geometry={nodes.group_26.geometry} material={materials.noon1} />
-                        <group onClick={() => download_pdf()} >
-                            <mesh geometry={nodes.group_27.geometry} material={materials.noon_5} position={[45.12, 12.36, -2.88]} />
-                            <mesh geometry={nodes.instance_2.geometry} material={materials.noon_3} position={[3.78, 17.55, -26.55]} scale={[1.19, 1.19, 2.07]} />
-                            <mesh geometry={nodes.instance_2001.geometry} material={materials.noon_3} position={[3.78, 17.55, -26.55]} scale={[1.19, 1.19, 2.07]} />
-                            <mesh geometry={nodes.instance_2002.geometry} material={materials.noon_3} position={[3.78, 17.55, -26.55]} scale={[1.19, 1.19, 2.07]} />
-                            <mesh geometry={nodes.instance_2003.geometry} material={materials.noon_3} position={[3.78, 17.55, -26.55]} scale={[1.19, 1.19, 2.07]} />
-                            <mesh geometry={nodes.instance_2004.geometry} material={materials.noon_3} position={[3.78, 17.55, -26.55]} scale={[1.19, 1.19, 2.07]} />
-                            <mesh geometry={nodes.instance_2005.geometry} material={materials.noon_3} position={[3.78, 17.55, -26.55]} scale={[1.19, 1.19, 2.07]} />
-                            <mesh geometry={nodes.instance_2006.geometry} material={materials.noon_3} position={[3.78, 17.55, -26.55]} scale={[1.19, 1.19, 2.07]} />
-                            <mesh geometry={nodes.instance_3.geometry} material={materials.noon_3} position={[2.67, 17.49, -7.73]} scale={1.3} />
-                            <mesh geometry={nodes.instance_3001.geometry} material={materials.noon_3} position={[2.67, 17.49, -7.73]} scale={1.3} />
-                            <mesh geometry={nodes.instance_3002.geometry} material={materials.noon_3} position={[2.67, 17.49, -7.73]} scale={1.3} />
-                            <mesh geometry={nodes.instance_3003.geometry} material={materials.noon_3} position={[2.67, 17.49, -7.73]} scale={1.3} />
-                            <mesh geometry={nodes.instance_3004.geometry} material={materials.noon_3} position={[2.67, 17.49, -7.73]} scale={1.3} />
+                <group position={[83.88, 105.9, -69.255]} scale={1.34}>
+                    <group position={[0, 36, 0]}>
+                        <mesh geometry={nodes.group_42003.geometry} material={materials['Color_M01.003']} />
+                        <mesh geometry={nodes.group_43.geometry} material={materials['Color_A05.002']} position={[2.004, 1.625, -2.004]} />
+                        <mesh geometry={nodes.ID499.geometry} material={materials['Color_M01.003']} />
+                        <mesh geometry={nodes.ID499_1.geometry} material={materials['Color_M00.003']} />
+                        <mesh geometry={nodes.ID507001.geometry} material={materials['Color_M01.003']} />
+                        <mesh geometry={nodes.ID507001_1.geometry} material={materials['Color_M00.003']} />
+                        <mesh geometry={nodes.ID513.geometry} material={materials['Color_M01.003']} />
+                        <mesh geometry={nodes.ID513_1.geometry} material={materials['Color_M00.003']} />
+                        <mesh geometry={nodes.ID525001.geometry} material={materials['Color_M01.003']} />
+                        <mesh geometry={nodes.ID525001_1.geometry} material={materials['Color_M00.003']} />
+                    </group>
+                    <mesh geometry={nodes.group_44.geometry} material={materials['material.006']} />
+                </group>
+                <group position={[33.689, 105.9, -69.255]} rotation={[0, -Math.PI / 4, 0]} scale={1.34}>
+                    <group position={[0, 36, 0]}>
+                        <mesh geometry={nodes.group_10.geometry} material={materials['material.006']} position={[9.371, 2.125, -14.022]}>
+                            <mesh geometry={nodes.group_9001.geometry} material={materials['material.006']} position={[0.563, 0.625, 0.125]} />
+                        </mesh>
+                        <mesh geometry={nodes.group_10001.geometry} material={materials['material.006']} position={[9.371, 2.125, -14.022]} />
+                        <mesh geometry={nodes.group_10002.geometry} material={materials['material.006']} position={[9.371, 2.125, -14.022]} />
+                        <mesh geometry={nodes.group_37.geometry} material={materials['material.006']} position={[13.059, 1.625, -2.899]} />
+                        <mesh geometry={nodes.group_37001.geometry} material={materials['material.006']} position={[13.059, 1.625, -2.899]} />
+                        <group position={[15.034, 1.625, -7.367]} scale={0.746}>
+                            <mesh geometry={nodes.ID459001.geometry} material={materials['Color_M01.003']} />
+                            <mesh geometry={nodes.ID459001_1.geometry} material={materials['Color_F01.003']} />
+                        </group>
+                        <group position={[15.034, 1.625, -7.367]} scale={0.746}>
+                            <mesh geometry={nodes.ID469001.geometry} material={materials['Color_M01.003']} />
+                            <mesh geometry={nodes.ID469001_1.geometry} material={materials['Color_F01.003']} />
+                        </group>
+                        <mesh geometry={nodes.group_38002.geometry} material={materials['Color_F01.003']} position={[15.034, 1.625, -7.367]} scale={0.746} />
+                        <group position={[15.034, 1.625, -7.367]} scale={0.746}>
+                            <mesh geometry={nodes.ID481.geometry} material={materials['Color_F01.003']} />
+                            <mesh geometry={nodes.ID481_1.geometry} material={materials['Color_H01.003']} />
+                        </group>
+                        <mesh geometry={nodes.group_7.geometry} material={materials['material.006']} position={[8.996, 1.625, -13.647]} />
+                        <mesh geometry={nodes.group_7001.geometry} material={materials['material.006']} position={[8.996, 1.625, -13.647]} />
+                        <mesh geometry={nodes.group_8.geometry} material={materials['material.006']} position={[13.434, 2.125, -3.274]}>
+                            <mesh geometry={nodes.group_9.geometry} material={materials['material.006']} position={[0.563, 0.625, 0.125]} />
+                        </mesh>
+                        <mesh geometry={nodes.group_8001.geometry} material={materials['material.006']} position={[13.434, 2.125, -3.274]} />
+                        <mesh geometry={nodes.group_8002.geometry} material={materials['material.006']} position={[13.434, 2.125, -3.274]} />
+                        <group position={[10.769, 1.5, -0.937]}>
+                            <group position={[-7.38, 0.125, -3.33]}>
+                                <mesh geometry={nodes.group_15.geometry} material={materials['Color_F06.005']} position={[0, 0.75, 0]} />
+                                <mesh geometry={nodes.group_15001.geometry} material={materials['Color_F06.005']} position={[0, 0.75, 0]} />
+                                <mesh geometry={nodes.group_15002.geometry} material={materials['Color_F06.005']} position={[0, 0.75, 0]} />
+                                <mesh geometry={nodes.group_16.geometry} material={materials['Color_D07.003']} position={[0.417, 0, -0.417]} />
+                            </group>
+                            <group position={[0.489, 0.125, -1.556]}>
+                                <mesh geometry={nodes.group_18.geometry} material={materials['Color_F07.003']} position={[0, 0.75, 0]} />
+                                <mesh geometry={nodes.group_18001.geometry} material={materials['Color_F07.003']} position={[0, 0.75, 0]} />
+                                <mesh geometry={nodes.group_18002.geometry} material={materials['Color_F07.003']} position={[0, 0.75, 0]} />
+                                <mesh geometry={nodes.group_19.geometry} material={materials['Color_D08.003']} position={[0.417, 0, -0.417]} />
+                            </group>
+                            <group position={[-7.955, 0.125, -2.08]}>
+                                <mesh geometry={nodes.group_21.geometry} material={materials['Color_F07.003']} position={[-0.139, 0.749, 0.139]} scale={[1.29, 1.793, 1.29]} />
+                                <mesh geometry={nodes.group_21001.geometry} material={materials['Color_F07.003']} position={[-0.139, 0.749, 0.139]} scale={[1.29, 1.793, 1.29]} />
+                                <mesh geometry={nodes.group_21002.geometry} material={materials['Color_F07.003']} position={[-0.139, 0.749, 0.139]} scale={[1.29, 1.793, 1.29]} />
+                                <mesh geometry={nodes.group_22.geometry} material={materials['Color_D07.003']} position={[0.417, 0, -0.417]} />
+                            </group>
+                            <group position={[-6.902, 0.125, -1.509]}>
+                                <mesh geometry={nodes.group_24.geometry} material={materials['Color_F08.003']} position={[0, 0.75, 0]} />
+                                <mesh geometry={nodes.group_24001.geometry} material={materials['Color_F08.003']} position={[0, 0.75, 0]} />
+                                <mesh geometry={nodes.group_24002.geometry} material={materials['Color_F08.003']} position={[0, 0.75, 0]} />
+                                <mesh geometry={nodes.group_24003.geometry} material={materials['Color_F08.003']} position={[0, 0.75, 0]} />
+                                <mesh geometry={nodes.group_25.geometry} material={materials['Color_D08.003']} position={[0.417, 0, -0.417]} />
+                            </group>
+                            <group position={[-1.002, 0.125, -1.205]}>
+                                <mesh geometry={nodes.group_15003.geometry} material={materials['Color_F06.005']} position={[0, 0.75, 0]} />
+                                <mesh geometry={nodes.group_15004.geometry} material={materials['Color_F06.005']} position={[0, 0.75, 0]} />
+                                <mesh geometry={nodes.group_15005.geometry} material={materials['Color_F06.005']} position={[0, 0.75, 0]} />
+                                <mesh geometry={nodes.group_16001.geometry} material={materials['Color_D07.003']} position={[0.417, 0, -0.417]} />
+                            </group>
+                        </group>
+                        <group position={[6.072, 1.625, -1.669]} rotation={[0, 0.321, 0]}>
+                            <mesh geometry={nodes.group_28.geometry} material={materials['Color_M08.002']} position={[0, 0, -0.938]} />
+                            <mesh geometry={nodes.group_29.geometry} material={materials['Color_E04.002']} position={[2.372, 0.125, -1.688]} />
+                            <mesh geometry={nodes.group_30.geometry} material={materials['Color_E04.002']} position={[2.372, 0.125, -3.688]} />
+                            <mesh geometry={nodes.group_31.geometry} material={materials['Color_E04.002']} position={[2.372, 0.125, -5.688]} />
+                            <mesh geometry={nodes.group_32.geometry} material={materials['Color_E04.002']} position={[2.372, 0.125, -7.688]} />
+                            <mesh geometry={nodes.group_33.geometry} material={materials['Color_E04.002']} position={[2.372, 0.125, -9.688]} />
+                            <mesh geometry={nodes.group_34.geometry} material={materials['Color_E04.002']} position={[2.372, 0.125, -11.688]} />
+                        </group>
+                        <mesh geometry={nodes.group_12.geometry} material={materials['material.006']} />
+                        <mesh geometry={nodes.group_12001.geometry} material={materials['material.006']} />
+                        <mesh geometry={nodes.group_12002.geometry} material={materials['material.006']} />
+                        <mesh geometry={nodes.group_12003.geometry} material={materials['Color_F06.005']} />
+                        <mesh geometry={nodes.group_12004.geometry} material={materials['Color_D08.003']} />
+                        <mesh geometry={nodes.group_35.geometry} material={materials['Color_D01.001']} position={[12.996, 1.625, -15.746]} />
+                        <mesh geometry={nodes.group_35001.geometry} material={materials['Color_D01.001']} position={[12.996, 1.625, -15.746]} />
+                        <group position={[12.996, 1.974, -12.875]}>
+                            <mesh geometry={nodes.ID435.geometry} material={materials['Translucent_Glass_Gray.002']} />
+                            <mesh geometry={nodes.ID435_1.geometry} material={materials['Translucent_Glass_Blue.002']} />
                         </group>
                     </group>
-                    <group position={[0, 0, -19.64]} rotation={[Math.PI / 2, 0, 0]}>
-                        <mesh geometry={nodes.group_29.geometry} material={materials.noon1} />
-                        <group onClick={() => open_github()} >
-                            <mesh geometry={nodes.group_30.geometry} material={materials.noon_5} position={[45.12, 12.36, -2.88]} />
-                            <mesh geometry={nodes.instance_4.geometry} material={materials.noon_3} position={[4.92, 17.64, -20.52]} />
-                            <mesh geometry={nodes.instance_4001.geometry} material={materials.noon_3} position={[4.92, 17.64, -20.52]} />
-                            <mesh geometry={nodes.instance_4002.geometry} material={materials.noon_3} position={[4.92, 17.64, -20.52]} />
-                            <mesh geometry={nodes.instance_4003.geometry} material={materials.noon_3} position={[4.92, 17.64, -20.52]} />
-                            <mesh geometry={nodes.instance_4004.geometry} material={materials.noon_3} position={[4.92, 17.64, -20.52]} />
-                            <mesh geometry={nodes.instance_4005.geometry} material={materials.noon_3} position={[4.92, 17.64, -20.52]} />
-                            <mesh geometry={nodes.instance_4006.geometry} material={materials.noon_3} position={[4.92, 17.64, -20.52]} />
-                            <group position={[4.92, 17.64, -20.52]}>
-                                <mesh geometry={nodes.ID412.geometry} material={materials.noon_2} />
-                                <mesh geometry={nodes.ID412_1.geometry} material={materials.noon_3} />
-                            </group>
-                            <group position={[4.92, 17.64, -20.52]}>
-                                <mesh geometry={nodes.ID418.geometry} material={materials.noon_2} />
-                                <mesh geometry={nodes.ID418_1.geometry} material={materials.noon_3} />
-                            </group>
-                            <group position={[4.92, 17.64, -20.52]}>
-                                <mesh geometry={nodes.ID424.geometry} material={materials.noon_2} />
-                                <mesh geometry={nodes.ID424_1.geometry} material={materials.noon_3} />
-                            </group>
-                            <mesh geometry={nodes.instance_4010.geometry} material={materials.noon_3} position={[4.92, 17.64, -20.52]} />
-                        </group>
-                    </group>
+                    <mesh geometry={nodes.group_39.geometry} material={materials['material.006']} />
                 </group>
+                <mesh geometry={nodes.group_4.geometry} material={materials['material.006']} position={[26.625, 105.9, -12]} scale={1.34} />
             </group>
         </group>
     );
