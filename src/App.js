@@ -139,18 +139,12 @@ export default function App() {
         <color attach="background" args={['black']} onClick={() => setFocus(4)} />
         <group position={[0, 0, 0]}>
 
-          <Suspense fallback={null}>
-            <Bounds fit clip observe damping={6} margin={1.2}>
-              <SelectToZoom>
 
-                <Tower />
-
-              </SelectToZoom>
+          <Tower />
 
 
-            </Bounds>
-            <ContactShadows rotation-x={Math.PI / 2} position={[0, -35, 0]} opacity={0.2} width={200} height={200} blur={1} far={50} />
-          </Suspense>
+
+
 
           <BakeShadows />
 
@@ -159,7 +153,7 @@ export default function App() {
           <LogoGithub position={[0, 0, 0]} />
 
           {/* Temp Tower Stuff */}
-          <pointLight position={[5, 10, 5]} intensity={.1} />
+          {/* <pointLight position={[5, 10, 5]} intensity={.1} /> */}
           {/* <pointLight position={[3, 20, -2]} intensity={.8} /> */}
 
 
@@ -232,46 +226,6 @@ export default function App() {
     </div>
 
   )
-}
-
-function CrazyLight() {
-  const light = useRef()
-  const light_target = useRef()
-  let light_intensity = 0
-
-  useFrame((state, delta) => {
-    const t = (1 + Math.sin(state.clock.elapsedTime * 2)) / 2
-    // stripe.current.color.setRGB(1 + t * 10, 2, 20 + t * 50)
-    // easing.dampE(head.current.rotation, [0, state.pointer.x * (state.camera.position.z > 1 ? 1 : -1), 0], 0.4, delta)
-    light.current.intensity = 1 + t * 6
-    light.current.distance = 5 + t * 1
-    // light_intensity = 1 + t * 2
-    // console.log(light.current.intensity)
-  })
-
-  return (
-    <group>
-      <mesh ref={light_target} position={[3.83, 1.7, -3.27]} />
-
-      <SpotLight ref={light} penumbra={1} distance={5} angle={0.7} anglePower={4} intensity={1} position={[4.6, 20, -2.01]}>
-
-      </SpotLight>
-
-    </group>
-
-
-  )
-}
-
-
-function MovingSpot({ vec = new Vector3(), ...props }) {
-  const light = useRef()
-  const viewport = useThree((state) => state.viewport)
-  useFrame((state) => {
-    light.current.target.position.lerp(vec.set((state.mouse.x * viewport.width) / 2, (state.mouse.y * viewport.height) / 2, 0), 0.1)
-    light.current.target.updateMatrixWorld()
-  })
-  return <SpotLight castShadow ref={light} penumbra={1} distance={6} angle={0.35} attenuation={5} anglePower={4} intensity={3} {...props} />
 }
 
 // This component wraps children in a group with a click handler

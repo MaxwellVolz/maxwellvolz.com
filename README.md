@@ -47,8 +47,9 @@ Personal Website for yours truly.
 ### Making Models
 
 - Sketchup
-    - 
+    - Make the models, or find .dae's online and import
 - Blender
+    - Make new scene, delete everything, import .dae
     - Export **.glb**
 - Compile to **.jsx**
 
