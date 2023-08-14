@@ -60,7 +60,7 @@ const blackMaterial = new THREE.MeshBasicMaterial({ color: 'black' });
 
 export default function Tower(props) {
   const group = useRef();
-  const { nodes, materials } = useGLTF('/tower.glb')
+  const { nodes, materials } = useGLTF('/main.glb')
   RectAreaLightUniformsLib.init();
 
   const [raybansDisplay, setRaybansDisplay] = useState(false);
@@ -197,6 +197,8 @@ export default function Tower(props) {
         <mesh ref={rayban_stand006} name="rayban_stand006" geometry={nodes.rayban_stand006.geometry} material={materials['SVGMat.003']} position={[28.297, 78.517, -27.069]} rotation={[0, Math.PI / 2, 0]} scale={104.388} />
         <mesh ref={rayban_stand007} name="rayban_stand007" geometry={nodes.rayban_stand007.geometry} material={materials['SVGMat.003']} position={[28.297, 78.517, -27.069]} rotation={[0, Math.PI / 2, 0]} scale={104.388} />
         <mesh ref={rayban_stand008} name="rayban_stand008" geometry={nodes.rayban_stand008.geometry} material={materials['SVGMat.003']} position={[28.297, 78.517, -27.069]} rotation={[0, Math.PI / 2, 0]} scale={104.388} />
+
+        {/* new model needs merging */}
         <mesh name="base_floor" geometry={nodes.base_floor.geometry} material={materials['5_human']} scale={[60, 1, 60]} />
         <mesh name="base_backwall" geometry={nodes.base_backwall.geometry} material={materials['04_yellow']} position={[0, 61, -59]} scale={[60, 60, 1]} />
         <mesh name="base_01" geometry={nodes.base_01.geometry} material={materials['03_dark']} position={[30, 31, -30]} scale={30} />
