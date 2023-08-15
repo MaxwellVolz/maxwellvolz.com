@@ -165,49 +165,41 @@ export default function Tower(props) {
           <Bounds fit clip observe damping={6} margin={1.2}>
 
             <SelectToZoom>
-              <mesh name="Terragraph_Display" geometry={nodes.Terragraph_Display.geometry} material={nodes.Terragraph_Display.material} position={[17.007, 62, -13.073]} scale={[6, 1, 6]} />
-              <mesh name="Terrazed_Display002" geometry={nodes.Terrazed_Display002.geometry} material={materials['Material.014']} position={[17.007, 62, -30.256]} scale={[6, 1, 6]} />
-              <mesh name="Rayban_Display001" geometry={nodes.Rayban_Display001.geometry} material={materials['Material.014']} position={[17.007, 62, -47.462]} scale={[6, 1, 6]} />
+              <mesh name="terragraph_base" geometry={nodes.terragraph_base.geometry} material={materials['04_yellow']} position={[10.357, 64, -6.423]} />
+              <mesh name="rayban_base" geometry={nodes.rayban_base.geometry} material={materials['04_blue']} position={[42.069, 64, -51]} rotation={[0, -Math.PI / 2, 0]} />
+              <mesh name="terrazed_base" geometry={nodes.terrazed_base.geometry} material={materials.Color_G07} position={[17.767, 64, -34.47]} rotation={[0, -Math.PI / 4, 0]} />
+              <mesh name="desk" geometry={nodes.desk.geometry} material={materials.wood} position={[-26.566, 135.697, -46.857]} scale={[14.26, 0.437, 7.998]} />
 
-
-              <mesh name="base_floor" geometry={nodes.base_floor.geometry} material={nodes.base_floor.material} scale={[60, 1, 60]} />
-              <mesh name="base_backwall" geometry={nodes.base_backwall.geometry} material={nodes.base_backwall.material} position={[0, 61, -59]} scale={[60, 60, 1]} />
-              <mesh name="base_01" geometry={nodes.base_01.geometry} material={nodes.base_01.material} position={[30, 31, -30]} scale={30} />
-              <mesh name="base_01_1" geometry={nodes.base_01_1.geometry} material={materials.Color_M07} position={[-30, 31, -30]} scale={30} />
-              <mesh name="base_02" geometry={nodes.base_02.geometry} material={nodes.base_02.material} position={[-1, 90, -29]} rotation={[0, Math.PI / 2, 0]} scale={[29, 29, 1]} />
-              <mesh name="base_02_1" geometry={nodes.base_02_1.geometry} material={nodes.base_02_1.material} position={[-31, 90, -1]} scale={[29, 29, 1]} />
-              <mesh name="base_03" geometry={nodes.base_03.geometry} material={nodes.base_03.material} position={[-1, 120, 0]} scale={[59.016, 1, 60]} />
-              <mesh name="base_03_1" geometry={nodes.base_03_1.geometry} material={nodes.base_03_1.material} position={[-30.5, 150, -59]} scale={[29.5, 29, 1]} />
-              <mesh name="base_03_2" geometry={nodes.base_03_2.geometry} material={nodes.base_03_2.material} position={[-59, 150, -29]} rotation={[0, Math.PI / 2, 0]} scale={[29, 29, 1]} />
+              <mesh name="base_floor" geometry={nodes.base_floor.geometry} material={materials['5_human']} scale={[60, 1, 60]} />
+              <mesh name="base_backwall" geometry={nodes.base_backwall.geometry} material={materials['04_yellow']} position={[0, 61, -59]} scale={[60, 60, 1]} />
+              <mesh name="base_01" geometry={nodes.base_01.geometry} material={materials['03_dark']} position={[30, 31, -30]} scale={30} />
+              <mesh name="base_01_1" geometry={nodes.base_01_1.geometry} material={materials['03_dark']} position={[-30, 31, -30]} scale={30} />
+              <mesh name="base_02" geometry={nodes.base_02.geometry} material={materials['03_dark']} position={[-1, 90, -29]} rotation={[0, Math.PI / 2, 0]} scale={[29, 29, 1]} />
+              <mesh name="base_02_1" geometry={nodes.base_02_1.geometry} material={materials['03_dark']} position={[-31, 90, -1]} scale={[29, 29, 1]} />
+              <mesh name="base_03" geometry={nodes.base_03.geometry} material={materials['03_dark']} position={[-1, 120, 0]} scale={[59.016, 1, 60]} />
+              <mesh name="base_03_1" geometry={nodes.base_03_1.geometry} material={materials['04_yellow']} position={[-30.5, 150, -59]} scale={[29.5, 29, 1]} />
+              <mesh name="base_03_2" geometry={nodes.base_03_2.geometry} material={materials['04_yellow']} position={[-59, 150, -29]} rotation={[0, Math.PI / 2, 0]} scale={[29, 29, 1]} />
             </SelectToZoom>
           </Bounds>
           <ContactShadows rotation-x={Math.PI / 2} position={[0, -35, 0]} opacity={0.2} width={200} height={200} blur={1} far={50} />
         </Suspense>
 
-        <mesh ref={terragraph_btn} onClick={() => toggle_terragraph(terragraph_btn.current)} name="Terragraph_btn" geometry={nodes.Terragraph_btn.geometry} material={greenMaterial} position={[27.336, 77.011, -18.853]} rotation={[Math.PI / 2, 0.777, -Math.PI / 2]} />
-        <mesh ref={terrazed_btn} onClick={() => toggle_terragraph(terrazed_btn.current)} name="Terrazed_btn001" geometry={nodes.Terrazed_btn001.geometry} material={greenMaterial} position={[27.336, 77.011, -36.036]} rotation={[Math.PI / 2, 0.777, -Math.PI / 2]} />
-        <mesh ref={rayban_btn} onClick={() => toggle_raybans(rayban_btn.current)} name="Rayban_btn002" geometry={nodes.Rayban_btn002.geometry} material={greenMaterial} position={[27.336, 77.011, -53.242]} rotation={[Math.PI / 2, 0.777, -Math.PI / 2]} />
+        {/* <mesh ref={terragraph_btn} onClick={() => toggle_terragraph(terragraph_btn.current)} name="Terragraph_btn" geometry={nodes.Terragraph_btn.geometry} material={greenMaterial} position={[27.336, 77.011, -18.853]} rotation={[Math.PI / 2, 0.777, -Math.PI / 2]} /> */}
+        {/* <mesh ref={terrazed_btn} onClick={() => toggle_terragraph(terrazed_btn.current)} name="Terrazed_btn001" geometry={nodes.Terrazed_btn001.geometry} material={greenMaterial} position={[27.336, 77.011, -36.036]} rotation={[Math.PI / 2, 0.777, -Math.PI / 2]} /> */}
+        {/* <mesh ref={rayban_btn} onClick={() => toggle_raybans(rayban_btn.current)} name="Rayban_btn002" geometry={nodes.Rayban_btn002.geometry} material={greenMaterial} position={[27.336, 77.011, -53.242]} rotation={[Math.PI / 2, 0.777, -Math.PI / 2]} /> */}
 
-        <mesh ref={rayban_stand} name="rayban_stand" geometry={nodes.rayban_stand.geometry} material={materials['SVGMat.003']} position={[28.297, 78.517, -27.069]} rotation={[0, Math.PI / 2, 0]} scale={104.388} />
-        <mesh ref={rayban_stand001} name="rayban_stand001" geometry={nodes.rayban_stand001.geometry} material={materials['SVGMat.003']} position={[28.297, 78.517, -27.069]} rotation={[0, Math.PI / 2, 0]} scale={104.388} />
-        <mesh ref={rayban_stand002} name="rayban_stand002" geometry={nodes.rayban_stand002.geometry} material={materials['SVGMat.003']} position={[28.297, 78.517, -27.069]} rotation={[0, Math.PI / 2, 0]} scale={104.388} />
-        <mesh ref={rayban_stand003} name="rayban_stand003" geometry={nodes.rayban_stand003.geometry} material={materials['SVGMat.003']} position={[28.297, 78.517, -27.069]} rotation={[0, Math.PI / 2, 0]} scale={104.388} />
-        <mesh ref={rayban_stand004} name="rayban_stand004" geometry={nodes.rayban_stand004.geometry} material={materials['SVGMat.003']} position={[28.297, 78.517, -27.069]} rotation={[0, Math.PI / 2, 0]} scale={104.388} />
-        <mesh ref={rayban_stand005} name="rayban_stand005" geometry={nodes.rayban_stand005.geometry} material={materials['SVGMat.003']} position={[28.297, 78.517, -27.069]} rotation={[0, Math.PI / 2, 0]} scale={104.388} />
-        <mesh ref={rayban_stand006} name="rayban_stand006" geometry={nodes.rayban_stand006.geometry} material={materials['SVGMat.003']} position={[28.297, 78.517, -27.069]} rotation={[0, Math.PI / 2, 0]} scale={104.388} />
-        <mesh ref={rayban_stand007} name="rayban_stand007" geometry={nodes.rayban_stand007.geometry} material={materials['SVGMat.003']} position={[28.297, 78.517, -27.069]} rotation={[0, Math.PI / 2, 0]} scale={104.388} />
-        <mesh ref={rayban_stand008} name="rayban_stand008" geometry={nodes.rayban_stand008.geometry} material={materials['SVGMat.003']} position={[28.297, 78.517, -27.069]} rotation={[0, Math.PI / 2, 0]} scale={104.388} />
 
+        <mesh ref={rayban_stand} name="rayban_stand" geometry={nodes.rayban_stand.geometry} material={materials['SVGMat.003']} position={[28.326, 78.517, -33.06]} scale={104.388} />
+        <mesh ref={rayban_stand001} name="rayban_stand001" geometry={nodes.rayban_stand001.geometry} material={materials['SVGMat.003']} position={[28.326, 78.517, -33.06]} scale={104.388} />
+        <mesh ref={rayban_stand002} name="rayban_stand002" geometry={nodes.rayban_stand002.geometry} material={materials['SVGMat.003']} position={[28.326, 78.517, -33.06]} scale={104.388} />
+        <mesh ref={rayban_stand003} name="rayban_stand003" geometry={nodes.rayban_stand003.geometry} material={materials['SVGMat.003']} position={[28.326, 78.517, -33.06]} scale={104.388} />
+        <mesh ref={rayban_stand004} name="rayban_stand004" geometry={nodes.rayban_stand004.geometry} material={materials['SVGMat.003']} position={[28.326, 78.517, -33.06]} scale={104.388} />
+        <mesh ref={rayban_stand005} name="rayban_stand005" geometry={nodes.rayban_stand005.geometry} material={materials['SVGMat.003']} position={[28.326, 78.517, -33.06]} scale={104.388} />
+        <mesh ref={rayban_stand006} name="rayban_stand006" geometry={nodes.rayban_stand006.geometry} material={materials['SVGMat.003']} position={[28.326, 78.517, -33.06]} scale={104.388} />
+        <mesh ref={rayban_stand007} name="rayban_stand007" geometry={nodes.rayban_stand007.geometry} material={materials['SVGMat.003']} position={[28.326, 78.517, -33.06]} scale={104.388} />
+        <mesh ref={rayban_stand008} name="rayban_stand008" geometry={nodes.rayban_stand008.geometry} material={materials['SVGMat.003']} position={[28.326, 78.517, -33.06]} scale={104.388} />
         {/* new model needs merging */}
-        <mesh name="base_floor" geometry={nodes.base_floor.geometry} material={materials['5_human']} scale={[60, 1, 60]} />
-        <mesh name="base_backwall" geometry={nodes.base_backwall.geometry} material={materials['04_yellow']} position={[0, 61, -59]} scale={[60, 60, 1]} />
-        <mesh name="base_01" geometry={nodes.base_01.geometry} material={materials['03_dark']} position={[30, 31, -30]} scale={30} />
-        <mesh name="base_01_1" geometry={nodes.base_01_1.geometry} material={materials['03_dark']} position={[-30, 31, -30]} scale={30} />
-        <mesh name="base_02" geometry={nodes.base_02.geometry} material={materials['03_dark']} position={[-1, 90, -29]} rotation={[0, Math.PI / 2, 0]} scale={[29, 29, 1]} />
-        <mesh name="base_02_1" geometry={nodes.base_02_1.geometry} material={materials['03_dark']} position={[-31, 90, -1]} scale={[29, 29, 1]} />
-        <mesh name="base_03" geometry={nodes.base_03.geometry} material={materials['03_dark']} position={[-1, 120, 0]} scale={[59.016, 1, 60]} />
-        <mesh name="base_03_1" geometry={nodes.base_03_1.geometry} material={materials['04_yellow']} position={[-30.5, 150, -59]} scale={[29.5, 29, 1]} />
-        <mesh name="base_03_2" geometry={nodes.base_03_2.geometry} material={materials['04_yellow']} position={[-59, 150, -29]} rotation={[0, Math.PI / 2, 0]} scale={[29, 29, 1]} />
+
         <mesh name="Projects" geometry={nodes.Projects.geometry} material={materials['01_numbers']} position={[6, 36, 3.05]} rotation={[Math.PI / 2, 0, 0]} scale={[10, 15, 10]} />
         <mesh name="01" geometry={nodes['01'].geometry} material={materials['01_numbers']} position={[6, 44, 3.4]} rotation={[Math.PI / 2, 0, 0]} scale={20} />
         <mesh name="01_bg" geometry={nodes['01_bg'].geometry} material={materials['03_dark.001']} position={[30, 31, 1]} scale={[30, 30, 1]} />
@@ -236,7 +228,6 @@ export default function Tower(props) {
         <mesh name="02" geometry={nodes['02'].geometry} material={materials['01_numbers']} position={[3.4, 104, -6]} rotation={[Math.PI / 2, 0, -Math.PI / 2]} scale={20} />
         <mesh name="Work" geometry={nodes.Work.geometry} material={materials['01_numbers']} position={[3.05, 96, -6]} rotation={[Math.PI / 2, 0, -Math.PI / 2]} scale={[10, 15, 10]} />
         <mesh name="02_bg" geometry={nodes['02_bg'].geometry} material={materials['03_dark.001']} position={[1, 90, -29]} rotation={[0, Math.PI / 2, 0]} scale={[29, 29, 1]} />
-        <mesh name="terragraph_base" geometry={nodes.terragraph_base.geometry} material={materials['04_yellow']} position={[10.357, 64, -6.423]} />
         <mesh name="city_building" geometry={nodes.city_building.geometry} material={materials['Material.015']} position={[21.508, 79.517, -17.574]} scale={[0.75, 1, 0.75]} />
         <mesh name="city_building001" geometry={nodes.city_building001.geometry} material={materials['Material.017']} position={[21.508, 79.207, -15.573]} scale={[0.75, 0.69, 0.75]} />
         <mesh name="round_city_building" geometry={nodes.round_city_building.geometry} material={materials['Material.016']} position={[19.493, 79.253, -17.588]} scale={0.736} />
@@ -284,7 +275,6 @@ export default function Tower(props) {
         <mesh name="radar_dish" geometry={nodes.radar_dish.geometry} material={materials.Material} position={[31.937, 79.718, -37.416]} rotation={[0, -Math.PI / 4, 0]} />
         <mesh name="radar_dish001" geometry={nodes.radar_dish001.geometry} material={materials.Material} position={[27.155, 79.718, -27.502]} rotation={[0, -Math.PI / 4, 0]} />
         <mesh name="radar_support" geometry={nodes.radar_support.geometry} material={materials.Color_M07} position={[27.167, 78.567, -27.511]} rotation={[0, -Math.PI / 4, 0]} scale={[0.25, 0.05, 0.25]} />
-        <mesh name="terrazed_base" geometry={nodes.terrazed_base.geometry} material={materials.Color_G07} position={[17.767, 64, -34.47]} rotation={[0, -Math.PI / 4, 0]} />
         <mesh name="tree015" geometry={nodes.tree015.geometry} material={materials.Color_G07} position={[21.26, 79.889, -32.887]} rotation={[0, -Math.PI / 4, 0]} scale={0.317} />
         <mesh name="tree016" geometry={nodes.tree016.geometry} material={materials.Color_G07} position={[20.153, 79.714, -34.62]} rotation={[0, -Math.PI / 4, 0]} scale={0.571} />
         <mesh name="tree017" geometry={nodes.tree017.geometry} material={materials.Color_G07} position={[20.954, 79.543, -33.001]} rotation={[0, -Math.PI / 4, 0]} scale={0.507} />
@@ -312,16 +302,7 @@ export default function Tower(props) {
         <mesh name="demo_stuff002" geometry={nodes.demo_stuff002.geometry} material={materials['Material.010']} position={[31.945, 78.612, -32.683]} rotation={[0, -Math.PI / 4, 0]} scale={[0.032, 0.095, 0.032]} />
         <mesh name="demo_left_screen" geometry={nodes.demo_left_screen.geometry} material={materials.Color_M08} position={[31.945, 78.803, -32.683]} rotation={[0, -Math.PI / 4, 0]} scale={[0.032, 0.095, 0.032]} />
         <mesh name="demo_stuff001" geometry={nodes.demo_stuff001.geometry} material={materials['Material.010']} position={[32.406, 78.612, -33.144]} rotation={[0, -Math.PI / 4, 0]} scale={[0.032, 0.095, 0.032]} />
-        <mesh name="rayban_base" geometry={nodes.rayban_base.geometry} material={materials['04_blue']} position={[42.069, 64, -51]} rotation={[0, -Math.PI / 2, 0]} />
-        <mesh name="rayban_stand" geometry={nodes.rayban_stand.geometry} material={materials['SVGMat.003']} position={[28.326, 78.517, -33.06]} scale={104.388} />
-        <mesh name="rayban_stand001" geometry={nodes.rayban_stand001.geometry} material={materials['SVGMat.003']} position={[28.326, 78.517, -33.06]} scale={104.388} />
-        <mesh name="rayban_stand002" geometry={nodes.rayban_stand002.geometry} material={materials['SVGMat.003']} position={[28.326, 78.517, -33.06]} scale={104.388} />
-        <mesh name="rayban_stand003" geometry={nodes.rayban_stand003.geometry} material={materials['SVGMat.003']} position={[28.326, 78.517, -33.06]} scale={104.388} />
-        <mesh name="rayban_stand004" geometry={nodes.rayban_stand004.geometry} material={materials['SVGMat.003']} position={[28.326, 78.517, -33.06]} scale={104.388} />
-        <mesh name="rayban_stand005" geometry={nodes.rayban_stand005.geometry} material={materials['SVGMat.003']} position={[28.326, 78.517, -33.06]} scale={104.388} />
-        <mesh name="rayban_stand006" geometry={nodes.rayban_stand006.geometry} material={materials['SVGMat.003']} position={[28.326, 78.517, -33.06]} scale={104.388} />
-        <mesh name="rayban_stand007" geometry={nodes.rayban_stand007.geometry} material={materials['SVGMat.003']} position={[28.326, 78.517, -33.06]} scale={104.388} />
-        <mesh name="rayban_stand008" geometry={nodes.rayban_stand008.geometry} material={materials['SVGMat.003']} position={[28.326, 78.517, -33.06]} scale={104.388} />
+
         <mesh name="pdf" geometry={nodes.pdf.geometry} material={materials.Color_G07} position={[37.933, 102.827, -58.325]} scale={[4.819, 3.855, 0.193]} />
         <mesh name="pdf001" geometry={nodes.pdf001.geometry} material={materials['04_blue']} position={[36.411, 106.755, -57.603]} rotation={[-0.066, 0, 0]} scale={[2.891, 3.855, 0.096]} />
         <mesh name="pdf002" geometry={nodes.pdf002.geometry} material={materials['5_human']} position={[39.69, 105.408, -56.933]} scale={[2.891, 3.855, 0.096]} />
@@ -335,7 +316,6 @@ export default function Tower(props) {
         <mesh name="frisbee" geometry={nodes.frisbee.geometry} material={materials['04_yellow']} position={[-50.76, 123.403, -14.532]} scale={2.403} />
         <mesh name="frisbee001" geometry={nodes.frisbee001.geometry} material={materials.Color_G07} position={[-52.341, 123.767, -11.797]} rotation={[0.097, -0.036, 0.03]} scale={2.403} />
         <mesh name="frisbee002" geometry={nodes.frisbee002.geometry} material={materials['5_human']} position={[-52.81, 124.172, -17.331]} rotation={[0, 0, -1.168]} scale={2.403} />
-        <mesh name="desk" geometry={nodes.desk.geometry} material={materials.wood} position={[-26.566, 135.697, -46.857]} scale={[14.26, 0.437, 7.998]} />
         <mesh name="desk001" geometry={nodes.desk001.geometry} material={materials.wood} position={[-17.296, 128.218, -49.17]} scale={0.713} />
         <mesh name="desk003" geometry={nodes.desk003.geometry} material={materials.wood} position={[-37.261, 128.13, -49.17]} scale={[0.713, 7.13, 3.779]} />
         <mesh name="desk005" geometry={nodes.desk005.geometry} material={materials.wood} position={[-37.261, 129.344, -49.17]} scale={[0.713, 7.13, 0.713]} />

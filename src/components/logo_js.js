@@ -30,10 +30,10 @@ export default function HutModel(props) {
     })
 
     return (
-        <group {...props} ref={logo_ref} dispose={null} rotation={[0, 0, 0]} scale={4} >
-            <group ref={mesh_ref} position={[.01, 0, -.03]}>
-                <mesh geometry={nodes.Cube.geometry} material={materials['Material.001']} position={[-0.01, 0, 0.03]} rotation={[-0.36, 1.53, 0.35]} scale={[0.84, 1, 1]} />
-                <mesh geometry={nodes.Text.geometry} material={materials['Material.002']} position={[0, -0.05, 0]} rotation={[1.57, 0.01, -3.11]} scale={0.1} />
+        <group {...props} ref={logo_ref} dispose={null} rotation={[0, 0, 0]} scale={50} >
+            <group ref={mesh_ref} position={[.02, 0, .01]}>
+                <mesh geometry={nodes.Cube.geometry} material={materials['Material.001']} position={[-0.01, 0, 0.00]} rotation={[-0.36, 1.53, 0.35]} scale={[0.84, 1, 1]} />
+                <mesh geometry={nodes.Text.geometry} material={materials['Material.002']} position={[0, -0.05, -.03]} rotation={[1.57, 0.01, -3.11]} scale={0.1} />
             </group>
         </group>
     );

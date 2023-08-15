@@ -23,7 +23,7 @@ export default function HutModel(props) {
 
     useFrame(({ clock }) => {
         const a = clock.getElapsedTime();
-        mesh_ref.current.rotation.y = a;
+        mesh_ref.current.rotation.y = -a;
     });
 
     const open_github = () => {
@@ -31,11 +31,11 @@ export default function HutModel(props) {
     }
 
     return (
-        <group {...props} scale={.35}>
+        <group {...props} scale={5}>
             {/* <animated.mesh scale={scale} onClick={() => open_github()} ref={py_logo}> */}
             <group ref={mesh_ref} dispose={null} rotation={[.1, 0, 0]} >
-                <mesh geometry={nodes.D.geometry} material={materials.orange} position={[-0.03, 0.29, 0]} rotation={[-Math.PI / 2, 0, Math.PI]} scale={1.76} />
-                <mesh geometry={nodes.Top_snake.geometry} material={materials.blue} position={[0.01, -0.08, 0]} rotation={[Math.PI / 2, 0, 0]} scale={1.76} />
+                <mesh geometry={nodes.D.geometry} material={materials.orange} position={[-0.0, 0.29, .02]} rotation={[-Math.PI / 2, 0, Math.PI]} scale={1.76} />
+                <mesh geometry={nodes.Top_snake.geometry} material={materials.blue} position={[0.01, -0.08, .02]} rotation={[Math.PI / 2, 0, 0]} scale={1.76} />
             </group>
             {/* </animated.mesh > */}
         </group >

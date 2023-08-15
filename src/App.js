@@ -139,18 +139,15 @@ export default function App() {
         <color attach="background" args={['black']} onClick={() => setFocus(4)} />
         <group position={[0, 0, 0]}>
 
-
           <Tower />
-
-
-
-
 
           <BakeShadows />
 
           <Drone />
           <RayBans />
-          <LogoGithub position={[0, 0, 0]} />
+          <LogoGithub position={[-5, 0, 1]} scale={10} />
+          <LogoJS position={[-2, 5, 7]} />
+          <LogoPY position={[-13, 5, 15]} />
 
           {/* Temp Tower Stuff */}
           {/* <pointLight position={[5, 10, 5]} intensity={.1} /> */}

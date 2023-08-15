@@ -45,17 +45,7 @@ export default function HutModel(props) {
 
     return (
         <group {...props} ref={logo_ref} dispose={null} >
-            <SpotLight
-                ref={spotlight_ref}
-                position={[.5, 3, 0]}
-                intensity={1}
-                angle={Math.PI / 7}
-                penumbra={1}
-                decay={1}
-                distance={7}
-                color="white"
-                target={spotlightTarget} // Point the spotlight at the mesh_ref
-            />
+
             <group rotation={[0, Math.PI / 4, 0]} scale={[.04, .1, 0.04]} position={[2, .7, 2]}>
                 <mesh geometry={nodes.Github_logo.geometry} material={nodes.Github_logo.material}>
                     <meshPhongMaterial color={github_color} />
