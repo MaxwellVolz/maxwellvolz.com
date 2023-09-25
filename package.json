@@ -1,0 +1,17 @@
+{
+  "name": "maxwellvolz.com",
+  "version": "1.0.0",
+  "description": "- [About](#about) - [Tech](#tech) - [Pros \\& Cons](#pros--cons)   - [Pros](#pros)   - [Cons](#cons)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.1464.0",
+    "markdown-it": "^13.0.1"
+  },
+  "type": "module"
+}
