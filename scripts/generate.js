@@ -25,7 +25,7 @@
 import fs from 'fs/promises';
 import path from 'path';
 import MarkdownIt from 'markdown-it';
-import { parseFileName, generateBreadcrumb, formatDateToHumanReadable, monthNumberToName, generateArchiveHtml, groupPostsByYearAndMonth } from './util.js';
+import { generateBreadcrumb, formatDateToHumanReadable, monthNumberToName, generateArchiveHtmlgenerateArchiveHtml, groupPostsByYearAndMonth } from './util.js';
 
 const md = new MarkdownIt();
 const inputDir = path.join(process.cwd(), '/articles');
@@ -36,127 +36,76 @@ async function writeHtmlFile(filePath, content) {
     console.log(`Generated: ${filePath}`);
 }
 
-async function generatePosts() {
-    const files = await fs.readdir(inputDir);
-    let allPosts = [];
-    let recentPosts = [];
-
-
-    const postPromises = files.filter(file => path.extname(file) === '.md').map(async file => {
-        const filePath = path.join(inputDir, file);
-        const data = await fs.readFile(filePath, 'utf8');
-        const parsedInfo = parseFileName(path.basename(file, '.md'));
-
-        const result = md.render(data);
-        const breadcrumb = generateBreadcrumb(parsedInfo);
-
-        const articleContent = `<main><div class="article">${result}</div></main>`;
-        const fullHTML = await wrapContentWithLayout(breadcrumb + articleContent);
-
-        // Create a nested directory structure to match breadcrumb
-        const nestedDir = path.join(outputDir, parsedInfo.year.toString(), parsedInfo.month.toString());
-
-        await fs.mkdir(nestedDir, { recursive: true });
-
-        const outputFilePath = path.join(nestedDir, `${parsedInfo.title}.html`);
-        await writeHtmlFile(outputFilePath, fullHTML);
-
-        const date = new Date(parsedInfo.year, parsedInfo.month - 1, parsedInfo.day);
-        const formattedDate = formatDateToHumanReadable(date);
-        const postObject = {
-            year: parsedInfo.year,
-            month: parsedInfo.month,
-            title: parsedInfo.title,
-            link: `/${parsedInfo.year}/${parsedInfo.month}/${parsedInfo.title}.html`
-        };
-
-        allPosts.push(postObject);
-        recentPosts.push(postObject);
-    });
-
-    await Promise.all(postPromises);
-
-    // return recentPosts.sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 5);
+function parseFileName(fileName) {
+    const [title, month, day, year] = fileName.split('_');
+    const fullYear = year.length === 2 ? `20${year}` : year; // Ensure the year is in 4-digit format
     return {
-        recentPosts: recentPosts.sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 5),
-        allPosts
+        year: fullYear,
+        month: parseInt(month, 10),
+        day: parseInt(day, 10),
+        title
     };
 }
 
-async function updateHomepage(recentPosts) {
-    const indexPath = path.join(process.cwd(), '/www/index.html');
-    const outputIndexPath = path.join(outputDir, '/index.html');
-    const data = await fs.readFile(indexPath, 'utf8');
+async function generateArticles() {
+    const articleFileNames = await fs.readdir(inputDir);
+    const allPosts = [];
 
-    const recentPostsHTML = recentPosts.map(post => `
-        <div class="post" >
-          <a href="${post.link}">
-            <h2>${post.title}</h2>
-          </a>
-          <p>${post.date}</p>
-        </div>
-    `).join('');
+    for (const fileName of articleFileNames) {
+        const articlePath = path.join(inputDir, fileName);
+        const markdownContent = await fs.readFile(articlePath, 'utf-8');
 
-    const newHomePageHTML = data.replace('<!-- Recent posts will go here -->', recentPostsHTML);
-    await writeHtmlFile(outputIndexPath, newHomePageHTML);
-}
+        // Get metadata from the file name
+        const { year, month, day, title } = parseFileName(fileName);
 
-async function copyStyles() {
-    const sourcePath = path.join(process.cwd(), '/www/style.css');
-    const destinationPath = path.join(process.cwd(), '/dist/style.css');
-    await fs.copyFile(sourcePath, destinationPath);
-    console.log('styles.css copied to /dist');
-}
+        const breadcrumb = generateBreadcrumb(year, month, day, title);
 
-async function wrapContentWithLayout(content) {
-    const layout = await fs.readFile(path.join(process.cwd(), '/www/index.html'), 'utf8');
-    return layout.replace('<!-- Content will go here -->', content);
-}
+        const date = new Date(year, month - 1, day);
+        const humanReadableDate = formatDateToHumanReadable(date);
 
-async function generateArchivePage(allPosts) {
-    const groupedByYear = groupPostsByYearAndMonth(allPosts);
 
-    for (const [year, months] of Object.entries(groupedByYear)) {
-        const yearDir = path.join(outputDir, year);
-        await fs.mkdir(yearDir, { recursive: true });
+        // Convert markdown to HTML
+        const htmlContent = md.render(markdownContent);
 
-        const yearBreadcrumb = generateBreadcrumb({ year }); // Assuming your breadcrumb function is updated
-        let yearHtml = `${yearBreadcrumb}<h1>${year}</h1>`;
+        const articleHtml = `
+            ${breadcrumb}
+            <h2>${title}</h2>
+            <span>${humanReadableDate}</span>
+            <div>
+                ${htmlContent}
+            </div>
+        `;
 
-        for (const [month, posts] of Object.entries(months)) {
-            const monthDir = path.join(yearDir, month);
-            await fs.mkdir(monthDir, { recursive: true });
+        // Write the article HTML to the output directory
+        const articleOutputPath = path.join(outputDir, String(year), String(month), title, 'index.html');
+        await writeHtmlFile(articleOutputPath, articleHtml);
 
-            const monthName = monthNumberToName(parseInt(month));
-            yearHtml += `<h2><a href="/${year}/${month}/">${monthName}</a></h2>`;
-            yearHtml += '<ul>';
-
-            const monthBreadcrumb = generateBreadcrumb({ year, month }); // Assuming your breadcrumb function is updated
-            let monthHtml = `${monthBreadcrumb}<h1>${monthName}</h1><ul>`;
-
-            posts.forEach(post => {
-                yearHtml += `<li><a href="/${post.year}/${post.month}/${post.title}.html">${post.title}</a></li>`;
-                monthHtml += `<li><a href="/${post.year}/${post.month}/${post.title}.html">${post.title}</a></li>`;
-            });
-
-            yearHtml += '</ul>';
-            monthHtml += `</ul>`;
-            await writeHtmlFile(path.join(monthDir, 'index.html'), monthHtml);
-        }
-
-        await writeHtmlFile(path.join(yearDir, 'index.html'), yearHtml);
+        // Collect post info for archive and homepage
+        allPosts.push({ year, month, day, title, articleOutputPath });
     }
+
+    // Group posts by year and month, then generate archive pages
+    const groupedPosts = groupPostsByYearAndMonth(allPosts);
+    for (const [year, months] of Object.entries(groupedPosts)) {
+        for (const [month, posts] of Object.entries(months)) {
+            const archiveHtml = generateArchiveHtml(posts);
+            const archiveOutputPath = path.join(outputDir, year, month, 'index.html');
+            await writeHtmlFile(archiveOutputPath, archiveHtml);
+        }
+    }
+}
+
+
+async function updateHomepage() {
+    // Placeholder: implement this function to update the homepage with the 5 most recent articles
 }
 
 async function main() {
-    try {
-        await copyStyles();
-        const { recentPosts, allPosts } = await generatePosts();
-        await updateHomepage(recentPosts);
-        await generateArchivePage(allPosts);
-    } catch (err) {
-        console.error(err);
-    }
+    await penguinRandomHouse();
+    await updateHomepage();
 }
 
-main();
+// Run the main function
+main().catch(err => {
+    console.error('An error occurred:', err);
+});

@@ -1,18 +1,33 @@
 
 
 - [About](#about)
+- [How to Run](#how-to-run)
 - [Tech](#tech)
 - [Pros \& Cons](#pros--cons)
   - [Pros](#pros)
   - [Cons](#cons)
+- [Markdown Breakdown](#markdown-breakdown)
+  - [How to write](#how-to-write)
+- [Article Formatting](#article-formatting)
+  - [Placeholders](#placeholders)
+  - [Example](#example)
   
 ## About
 Static website. KISS DICE.
 
 NodeJS stack. Write markdown. Publish formatted html with images and code snippets. Breadcrumb navigation. KISS DICE.
 
-“Keep It Stupidly Simple.” "Documented, Isolated, Configurable, Efficient"
 
+> “Keep It Stupidly Simple.” 
+
+> "Documented, Isolated, Configurable, Efficient"
+
+## How to Run
+
+```sh
+git clone https://github.com/MaxwellVolz/maxwellvolz.com.git
+
+```
 ## Tech
 
 1. Markdown: Content formatting.
@@ -39,3 +54,21 @@ NodeJS stack. Write markdown. Publish formatted html with images and code snippe
 2. **No CMS:** Content updates may be less user-friendly for non-technical users.
 3. **Manual Organization:** Folder management is manual.
 4. **SEO:** Dynamic content SEO can be challenging.
+
+## Markdown Breakdown
+
+### How to write
+
+## Article Formatting
+
+### Placeholders
+Breadcrumbs
+Title
+Date - Wordcount - Estimated Read Time
+Article Body
+Copyright
+
+### Example
+~ ~/archive ~/tags ~/about  :these are links
+
+
