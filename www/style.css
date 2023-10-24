@@ -561,13 +561,15 @@ nav.navigation a:hover {
     color: var(--primary)
 }
 
-#aboutme {
+#aboutme,
+#article {
     max-width: 580px;
     margin: 0 auto;
     padding: 0 12px
 }
 
-#aboutme h3 {
+#aboutme h3,
+#article h3 {
     color: var(--primary);
     font-weight: 800
 }

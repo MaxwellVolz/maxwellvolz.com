@@ -1,7 +1,7 @@
 # Hello Python
 
-## Tags: py
-## Date: 10/1/23
+@@Tags: py
+@@Date: 10/1/23
 
 ## Hey
 

@@ -4,14 +4,22 @@
   "description": "- [About](#about) - [Tech](#tech) - [Pros \\& Cons](#pros--cons)   - [Pros](#pros)   - [Cons](#cons)",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "generate": "node scripts/gen.js",
+    "watch": "nodemon --watch articles -e md,json,yaml --exec 'npm run generate'",
+    "serve": "npx serve dist",
+    "start": "concurrently 'npm run watch' 'npm run serve'"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "aws-sdk": "^2.1464.0",
-    "markdown-it": "^13.0.1"
+    "markdown-it": "^13.0.2"
   },
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "concurrently": "^8.2.1",
+    "nodemon": "^3.0.1"
+  }
 }

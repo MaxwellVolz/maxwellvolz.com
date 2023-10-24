@@ -1,16 +1,17 @@
 
 
 - [About](#about)
-- [How to Run](#how-to-run)
+- [How to Use](#how-to-use)
 - [Tech](#tech)
+- [To Implement (TODO)](#to-implement-todo)
 - [Pros \& Cons](#pros--cons)
   - [Pros](#pros)
   - [Cons](#cons)
 - [Markdown Breakdown](#markdown-breakdown)
-  - [How to write](#how-to-write)
-- [Article Formatting](#article-formatting)
-  - [Placeholders](#placeholders)
+- [Markdown Article Formatting](#markdown-article-formatting)
   - [Example](#example)
+- [Links](#links)
+- [When we generate](#when-we-generate)
   
 ## About
 Static website. KISS DICE.
@@ -22,12 +23,12 @@ NodeJS stack. Write markdown. Publish formatted html with images and code snippe
 
 > "Documented, Isolated, Configurable, Efficient"
 
-## How to Run
+## How to Use
 
 ```sh
-git clone https://github.com/MaxwellVolz/maxwellvolz.com.git
 
 ```
+
 ## Tech
 
 1. Markdown: Content formatting.
@@ -36,6 +37,20 @@ git clone https://github.com/MaxwellVolz/maxwellvolz.com.git
 4. AWS: Hosting with S3, SDK and CLI for operations.
 5. Git: Version control.
 6. VSCode: Editting text.
+
+
+## To Implement (TODO)
+
+- [light-dark css](https://www.bram.us/2023/10/09/the-future-of-css-easy-light-dark-mode-color-switching-with-light-dark/)
+- drop-shadow
+
+```css
+background-color: #F5A9B8;
+border: solid black;
+box-shadow: 6px 6px 0px #5BCEFA;
+display: inline-block;
+padding: 0em 2em;
+```
 
 ## Pros & Cons
 
@@ -57,18 +72,31 @@ git clone https://github.com/MaxwellVolz/maxwellvolz.com.git
 
 ## Markdown Breakdown
 
-### How to write
+## Markdown Article Formatting
 
-## Article Formatting
-
-### Placeholders
-Breadcrumbs
-Title
-Date - Wordcount - Estimated Read Time
-Article Body
-Copyright
+Title from (#)
+Date - Wordcount - Estimated Read Time' (how to deliniate)
+tl;dr (how to deliniate)
+Article Body  (standard markdown formatting)
+Tags
+Copyright (static)
 
 ### Example
-~ ~/archive ~/tags ~/about  :these are links
+~ ~/archive ~/tags ~/about
+Hello World
+Oct 1, 2023 - 420 words - (words / 230) minutes
+A bunch of words and text that make up the article with formatting for codeblocks and markdown
+C Copyright 2023 - MaxwellVolz
 
+## Links
 
+~ : homepage, root - shows 3 latest articles with tl;dr
+~/archive : all articles in list in order by time, grouped by year (year as subheading), with tags
+~/tags: all tags from articles listed alphabetically, selecting a tag opens archive/tags/{tag}, all articles with tag in list in order by time, grouped by year, with tags
+~/about : personal page, has top section with logo and stuff
+
+## When we generate
+
+1. all markdown in /articles should be parsed into a clean data structure
+2. each page will be generated in entirety within its own function using the json from articles
+   1. uses a template .html file for general page formatting

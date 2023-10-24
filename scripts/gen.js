@@ -1,237 +1,99 @@
-// gen.js
+import { readFileSync, readdirSync } from 'fs';
+import { fileURLToPath } from 'url';
+import { join, dirname } from 'path';
 
-import fs from 'fs/promises';
-import path from 'path';
-import { parseMarkdownFile, writeHtmlFile, readAndReplace, formatDate, generateHeader } from './util.js';
+// Get the current file's URL and convert it to a directory path
+const currentFilePath = fileURLToPath(import.meta.url);
+const currentDir = dirname(currentFilePath);
 
-const inputDir = path.join(process.cwd(), '/articles');
-const outputDir = path.join(process.cwd(), '/dist');
-const indexPath = path.join(process.cwd(), '/www/index.html');
+// Navigate to the parent directory of the current directory
+const parentDir = dirname(currentDir);
 
-let allPosts = []
+// Specify the 'articles' folder path relative to the parent directory
+const articlesFolder = join(parentDir, 'articles');
 
-const header_placeholder = "<!-- Header will go here -->"
+function parseMarkdownFile(filePath) {
+    // Read the Markdown file
+    const markdownContent = readFileSync(filePath, 'utf-8');
 
-async function generateArticles(tagsMap, articlesArray) {  // Renamed tagsSet to tagsMap
-    const articleFileNames = await fs.readdir(inputDir);
+    // Split the Markdown content by lines
+    const lines = markdownContent.split('\n');
 
-    for (const fileName of articleFileNames) {
-        const articlePath = path.join(inputDir, fileName);
-        const { htmlContent, title, tags, date, tl_dr } = await parseMarkdownFile(articlePath);
+    // Initialize variables for extracting information
+    let title = ''; // Initialize title
+    let date = ''; // Initialize date
+    let wordCount = 0; // Initialize wordCount
+    let estimatedReadTime = 0; // Initialize estimatedReadTime
+    let tlDr = ''; // Initialize tlDr
+    let articleBody = ''; // Initialize articleBody
+    let tags = []; // Initialize tags
 
-        const [month, day, year] = date.split('/').map(part => part.trim());
-        const fullYear = year.length === 2 ? `20${year}` : year;
-        const yearDir = path.join(outputDir, 'posts', fullYear);
-
-        tags.forEach(tag => {
-            if (!tagsMap.has(tag)) {
-                tagsMap.set(tag, 0);  // Initialize if the tag doesn't exist
-            }
-            tagsMap.set(tag, tagsMap.get(tag) + 1);  // Increment the count
-        });
-
-        articlesArray.push({
-            year: fullYear,
-            date: `${month}/${day}`,
-            fullDate: new Date(fullYear, month - 1, day),
-            title,
-            tags
-        });
-
-        const outputPath = path.join(yearDir, `${title.replace(/ /g, "-")}.html`);
-
-        // Create directory if it doesn't exist
-        await fs.mkdir(yearDir, { recursive: true });
-        await writeHtmlFile(outputPath, htmlContent);
-
-        allPosts.push({ fullYear, title, date, tags, tl_dr });
-    }
-
-    await updateHomepage(allPosts);
-}
-
-
-async function generateArchiveIndex(articlesArray) {
-    const headerHtml = generateHeader();
-    articlesArray.sort((a, b) => new Date(b.fullDate) - new Date(a.fullDate));
-
-    let lastYear = null;
-    let archiveHtml = '<section id="archive">';
-    let yearGroupOpen = false;
-
-    for (const article of articlesArray) {
-        if (lastYear !== article.year) {
-            if (yearGroupOpen) {
-                archiveHtml += '</div>';  // Close previous year-group if any
-            }
-            archiveHtml += '<div class="group">';  // Open a new year-group
-            archiveHtml += `<h3 class="year-group">${article.year}</h3>`;
-            lastYear = article.year;
-            yearGroupOpen = true;
+    // Loop through the lines to extract information
+    for (const line of lines) {
+        // Extract the title from the first heading
+        if (line.startsWith('# ')) {
+            title = line.replace('#', '').trim();
         }
-
-        const articleLink = `/posts/${article.year}/${article.title.replace(/ /g, '-')}.html`;
-
-        let tagsHtml = '';
-        article.tags.forEach(tag => {
-            tagsHtml += `<a href="/tags/${tag}">${tag}</a> `;
-        });
-
-        archiveHtml += `
-        <div class="headline">
-            <div class="date">${formatDate(article.date)}</div> 
-            <div class="title">
-                <a href="${articleLink}">${article.title}</a> 
-            </div> 
-            <div class="tags">
-                ${tagsHtml}
-            </div>
-        </div> 
-        `;
-    }
-
-    if (yearGroupOpen) {
-        archiveHtml += '</div>';  // Close the last year-group
-    }
-
-    archiveHtml += '</section>'
-
-    const placeholder = '<!-- Recent posts will go here -->';
-    let archiveContent = await readAndReplace('www/index.html', placeholder, archiveHtml);
-    archiveContent = archiveContent.replace(header_placeholder, headerHtml);
-
-    await writeHtmlFile('dist/archive/index.html', archiveContent);
-}
-
-async function generateTagsIndex(tagsMap) {
-    let tagsHtml = '<section id="tags">'
-    tagsHtml += Array.from(tagsMap.entries())
-        .map(([tag, count]) => `<span class="tag"><a href="/tags/${tag}/">${tag} (${count})</a></span>`)
-        .join('\n');
-    tagsHtml += '</section>'
-
-    const placeholder = '<!-- Recent posts will go here -->';
-    const tagsIndexContent = await readAndReplace('www/index.html', placeholder, tagsHtml);
-    await writeHtmlFile('dist/tags/index.html', tagsIndexContent);
-}
-
-async function generateTagPages(tagsMap) {  // Added tagsMap as a parameter
-    const headerHtml = generateHeader();
-
-    for (const post of allPosts) {
-        for (const tag of post.tags) {
-            if (!tagsMap.has(tag)) {
-                tagsMap.set(tag, 0);  // Initialize if the tag doesn't exist
-            }
-            tagsMap.set(tag, tagsMap.get(tag) + 1);  // Increment the count
+        // Extract the date from the 'Date:' line
+        if (line.startsWith('@@Date:')) {
+            date = line.replace('@@Date:', '').trim();
+            date = convertDate(date);
         }
-    }
-
-    for (const [tag, posts] of Object.entries(tagsMap)) {
-        let tagHtml = "<h1>Articles tagged with " + tag + "</h1>";
-        for (const post of posts) {
-            // console.log(`Debug: post.fullYear: ${post.fullYear}`);
-
-            tagHtml += `
-                <div>
-                    <a href="/posts/${post.fullYear}/${post.title.replace(/ /g, '-')}.html">${post.title}</a>
-                </div>`;
+        // Extract the tl;dr from the 'tl;dr:' line
+        if (line.startsWith('tl;dr:')) {
+            tlDr = line.replace('tl;dr:', '').trim();
         }
-        const tagPagePath = path.join(outputDir, 'tags', `${tag.replace(/ /g, '-')}.html`);
-        await fs.mkdir(path.dirname(tagPagePath), { recursive: true });
-        await writeHtmlFile(tagPagePath, tagHtml);
-    }
-}
-
-async function generateAboutPage() {
-    const { htmlContent } = await parseMarkdownFile('www/about.md');
-
-    const headerHtml = generateHeader();
-
-    let aboutPageHtml = await fs.readFile('www/about.html', 'utf-8');
-    aboutPageHtml = aboutPageHtml.replace("<!-- Header will go here -->", headerHtml);
-    aboutPageHtml = aboutPageHtml.replace("<!-- About content will go here -->", htmlContent);
-
-    await writeHtmlFile('dist/about/index.html', aboutPageHtml);
-}
-
-
-async function updateHomepage() {
-
-    const headerHtml = generateHeader();
-
-    let latestPostsHtml = "<div id='list-page'>";
-    const latestPosts = allPosts.sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 3);
-
-    for (const post of latestPosts) {
-        let tagLinks = post.tags.map(tag => `<a href="/tags/${tag.replace(/ /g, '-')}/">${tag}</a>`).join(", ");
-        console.log(post)
-        const [month, day, year] = post.date.split('/').map(Number);
-        const date = new Date(Date.UTC(year + 2000, month - 1, day));
-        let isoString = date.toISOString().replace(/\.\d{3}Z$/, '');
-        isoString += " +0000 UTC";
-
-        latestPostsHtml += `
-            <div class="headline">
-                <h2 class="title">
-                <a href="/posts/${post.fullYear}/${post.title.replace(/ /g, '-')}.html">${post.title}</a>
-                </h2>
-                <div class="date">
-                <time datetime="${isoString}">${post.date}</time>
-                
-                </div>
-                <div class="summary">${post.tl_dr}</div>
-
-            </div>
-        `;
-        // Tags: ${tagLinks}
-
-    }
-    latestPostsHtml += "</div>";
-
-    // Read the www/index.html file and replace the placeholder with the latest posts
-    let homepageHtml = await fs.readFile(path.join(process.cwd(), 'www', 'index.html'), 'utf-8');
-    homepageHtml = homepageHtml.replace("<!-- Recent posts will go here -->", latestPostsHtml);
-    homepageHtml = homepageHtml.replace(header_placeholder, headerHtml);
-
-    await writeHtmlFile(path.join(outputDir, 'index.html'), homepageHtml);
-}
-
-async function copyStyles() {
-    try {
-        // Copy style.css to /dist
-        await fs.copyFile('www/style.css', 'dist/style.css');
-
-        // Create the /dist/css directory if it doesn't exist
-        await fs.mkdir('dist/css', { recursive: true });
-
-        // Copy all files from css/ to /dist/css
-        const files = await fs.readdir('css');
-        for (const file of files) {
-            const sourcePath = path.join('css', file);
-            const destPath = path.join('dist/css', file);
-            await fs.copyFile(sourcePath, destPath);
+        // Extract tags from the 'Tags:' line
+        if (line.startsWith('@@Tags:')) {
+            tags = line.replace('@@Tags:', '').split(',').map(tag => tag.trim());
         }
+        // Calculate the word count based on article body
+        articleBody += line + '\n'; // Reconstruct the article body
+        wordCount = articleBody.split(/\s+/).filter(Boolean).length; // Count words
+    }
 
-        console.log('Styles copied successfully.');
-    } catch (err) {
-        console.error(`Failed to copy styles: ${err}`);
+    // Calculate the estimated reading time based on word count (using a formula)
+    estimatedReadTime = `${wordCount} words - (${Math.ceil(wordCount / 230)} minutes)`;
+
+    // Return the extracted information as an object
+    return {
+        title,
+        date,
+        wordCount,
+        estimatedReadTime,
+        tlDr,
+        articleBody,
+        tags,
+    };
+}
+
+function convertDate(dateString) {
+    const [month, day, year] = dateString.split('/').map(part => part.trim());
+
+    // Assuming that the year is in 2-digit format, we convert it to 4-digit format
+    const fullYear = year.length === 2 ? `20${year}` : year;
+
+    // Define an array of month names
+    const monthNames = [
+        'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+    ];
+
+    // Get the month name based on the month number (assuming 1-based index)
+    const monthName = monthNames[parseInt(month, 10) - 1];
+
+    // Construct the formatted date string
+    return `${monthName} ${day}, ${fullYear}`;
+}
+
+
+// Example usage: Loop through all Markdown files in the 'articles' folder above the current directory
+const articleFiles = readdirSync(articlesFolder);
+
+for (const fileName of articleFiles) {
+    if (fileName.endsWith('.md')) {
+        const filePath = join(articlesFolder, fileName);
+        const articleData = parseMarkdownFile(filePath);
+        console.log(articleData);
     }
 }
-
-async function main() {
-    const tagsMap = new Map();  // Changed from Set to Map
-    const articlesArray = [];
-
-    await generateArticles(tagsMap, articlesArray);  // Adjusted function name and arguments as needed
-    await generateArchiveIndex(articlesArray);
-    await generateTagsIndex(tagsMap);
-    await generateTagPages(tagsMap);  // Pass tagsMap as argument
-    await generateAboutPage();
-    await updateHomepage();
-    await copyStyles();
-}
-
-main().catch(err => {
-    console.error('An error occurred:', err);
-});

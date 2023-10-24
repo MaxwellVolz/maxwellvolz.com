@@ -1,118 +1,3 @@
-
-# Until we move to Github Issues
-
-## **To-Do List with Time Estimates**
-
-1. **NodeJS Project Setup** - 1 hour
-2. **S3 Setup & Config** - 2 hours
-3. **Markdown to HTML Script** - 4 hours
-4. **Image & Code Handling** - 3 hours
-5. **HTML/CSS Templates** - 4 hours
-6. **Breadcrumb Nav** - 2 hours
-7. **S3 Deployment Script** - 3 hours
-8. **Workflow Testing** - 2 hours
-
-Total: ~21 hours
-
-## Random TODOs
-
-- Dev
-  - Folder Setup
-  - Markdown -> HTML
-  - Dependencies
-  - Codeblock Copy block
-- Design
-  - Homepage
-  - Navigation
-  - Colors
-  - Fonts
-  - Codeblock Style
-
-1. Breadcrumb Navigation
-Integrate breadcrumb navigation in the generated HTML files. This can be done by modifying the result string before writing it to the file.
-Time Estimate: 1-2 hours
-1. Style Customization
-Add a link to a CSS stylesheet in the generated HTML, so the articles have a consistent style.
-Time Estimate: 1 hour
-1. Image Handling
-If your Markdown files reference images, make sure they are moved to the dist folder and that the paths in the HTML are correct.
-Time Estimate: 2-3 hours
-1. Code Snippets
-If your Markdown includes code snippets, you might want to add syntax highlighting through a JavaScript library like PrismJS.
-Time Estimate: 1-2 hours
-1. File Watcher
-Add a file watcher to automatically generate HTML when a Markdown file is added, removed, or modified.
-Time Estimate: 2 hours
-1. Deploy Script
-Write a script to automatically deploy your static website to an S3 bucket on AWS.
-Time Estimate: 2-3 hours
-
-4 main pages
-
-~/
-~/archive
-~/about
-~/tags
-
-these will have cooresponding templates in the www/ folder...contents will be markdown
-articles will be stored in articles/
-current timestamping is great lets stay with that:
-
-directory:
-.
-./posts
-./css
-./css/dark.css
-./css/light.css
-./dist
-./dist/index.html
-./dist/posts
-./dist/posts/2023
-./dist/archive
-./dist/archive/index.html
-./dist/css
-./dist/css/dark.css
-./dist/css/light.css
-./dist/about
-./dist/about/index.html
-./dist/tags
-./dist/tags/python.html
-./dist/tags/index.html
-./dist/tags/nodejs.html
-./dist/tags/js.html
-./dist/tags/py.html
-./dist/style.css
-./articles
-./articles/hello_world_2.md
-./articles/blur_object.md
-./articles/hello_python.md
-./articles/hello_python_again.md
-./articles/hello_js.md
-./TODO.md
-./www
-./www/index.html
-./www/about.html
-./www/article.html
-./www/style.css
-./www/_oldstyle.css
-./www/about.md
-./README.md
-./.gitignore
-./package-lock.json
-./package.json
-./old_dist
-./old_dist/2023
-./old_dist/2023/index.html
-./old_dist/2023/9
-./old_dist/index.html
-./old_dist/style.css
-./scripts
-./scripts/util.js
-./scripts/generate.js
-./scripts/gen.js
-./scripts/deploy.js
-
-
 // gen.js
 
 import fs from 'fs/promises';
@@ -125,57 +10,8 @@ const indexPath = path.join(process.cwd(), '/www/index.html');
 
 let allPosts = []
 
-const header_placeholder = "<!-- Header will go here -->"
-
-async function generateArticles(tagsMap, articlesArray) {  // Renamed tagsSet to tagsMap
-    const articleFileNames = await fs.readdir(inputDir);
-    const headerHtml = generateHeader();
-
-    for (const fileName of articleFileNames) {
-        const articlePath = path.join(inputDir, fileName);
-        const { htmlContent, title, tags, date, tl_dr } = await parseMarkdownFile(articlePath);
-
-        const [month, day, year] = date.split('/').map(part => part.trim());
-        const fullYear = year.length === 2 ? `20${year}` : year;
-        const yearDir = path.join(outputDir, 'posts', fullYear);
-
-        tags.forEach(tag => {
-            if (!tagsMap.has(tag)) {
-                tagsMap.set(tag, 0);  // Initialize if the tag doesn't exist
-            }
-            tagsMap.set(tag, tagsMap.get(tag) + 1);  // Increment the count
-        });
-
-        articlesArray.push({
-            year: fullYear,
-            date: `${month}/${day}`,
-            fullDate: new Date(fullYear, month - 1, day),
-            title,
-            tags
-        });
-
-        const outputPath = path.join(yearDir, `${title.replace(/ /g, "-")}.html`);
-
-        // Create directory if it doesn't exist
-        await fs.mkdir(yearDir, { recursive: true });
-
-        let articleHtml = await fs.readFile('www/article.html', 'utf-8');
-        articleHtml = articleHtml.replace("<!-- Header will go here -->", headerHtml);
-        articleHtml = articleHtml.replace("<!-- Article content will go here -->", htmlContent);
-
-        await writeHtmlFile(outputPath, articleHtml);
-
-
-
-        allPosts.push({ fullYear, title, date, tags, tl_dr });
-    }
-
-    await updateHomepage(allPosts);
-}
-
-
-async function generateArchiveIndex(articlesArray) {
-    const headerHtml = generateHeader();
+const header_placeholder = "<!-- Header -->"
+function generateArchiveHtml(articlesArray) {
     articlesArray.sort((a, b) => new Date(b.fullDate) - new Date(a.fullDate));
 
     let lastYear = null;
@@ -217,14 +53,54 @@ async function generateArchiveIndex(articlesArray) {
         archiveHtml += '</div>';  // Close the last year-group
     }
 
-    archiveHtml += '</section>'
+    archiveHtml += '</section>';
 
-    const placeholder = '<!-- Recent posts will go here -->';
-    let archiveContent = await readAndReplace('www/index.html', placeholder, archiveHtml);
-    archiveContent = archiveContent.replace(header_placeholder, headerHtml);
-
-    await writeHtmlFile('dist/archive/index.html', archiveContent);
+    return archiveHtml;
 }
+
+
+async function generateArticleHtml(headerHtml, contentHtml) {
+    let articleHtmlTemplate = await fs.readFile('www/article.html', 'utf-8');
+    articleHtmlTemplate = articleHtmlTemplate.replace(header_placeholder, headerHtml);
+    articleHtmlTemplate = articleHtmlTemplate.replace("<!-- Content -->", contentHtml);
+    return articleHtmlTemplate;
+}
+
+async function generateArticlePages(tagsMap, articlesArray) {
+    const articleFileNames = await fs.readdir(inputDir);
+    const headerHtml = generateHeader();
+    const allPosts = [];
+
+    for (const fileName of articleFileNames) {
+        const articlePath = path.join(inputDir, fileName);
+        const { htmlContent, title, tags, date, tl_dr } = await parseMarkdownFile(articlePath);
+        const [month, day, year] = date.split('/').map(part => part.trim());
+        const fullYear = year.length === 2 ? `20${year}` : year;
+        const yearDir = path.join(outputDir, 'posts', fullYear);
+
+        for (const tag of tags) {
+            tagsMap.set(tag, (tagsMap.get(tag) || 0) + 1); // Increment the tag count
+        }
+
+        const outputPath = path.join(yearDir, `${title.replace(/ /g, "-")}.html`);
+
+        // Create directory if it doesn't exist
+        await fs.mkdir(yearDir, { recursive: true });
+
+        // Generate article HTML
+        const articleHtml = await generateArticleHtml(headerHtml, htmlContent);
+
+        // Write HTML file
+        await writeHtmlFile(outputPath, articleHtml);
+
+        allPosts.push({ fullYear, title, date, tags, tl_dr });
+    }
+
+    // Update the homepage with latest posts
+    await updateHomepage(allPosts);
+}
+
+
 
 async function generateTagsIndex(tagsMap) {
     let tagsHtml = '<section id="tags">'
@@ -233,8 +109,8 @@ async function generateTagsIndex(tagsMap) {
         .join('\n');
     tagsHtml += '</section>'
 
-    const placeholder = '<!-- Recent posts will go here -->';
-    const tagsIndexContent = await readAndReplace('www/index.html', placeholder, tagsHtml);
+    const placeholder = '<!-- Content -->';
+    const tagsIndexContent = await readAndReplace('www/tags.html', placeholder, tagsHtml);
     await writeHtmlFile('dist/tags/index.html', tagsIndexContent);
 }
 
@@ -266,14 +142,25 @@ async function generateTagPages(tagsMap) {  // Added tagsMap as a parameter
     }
 }
 
+async function generateArchivePage(articlesArray) {
+    const archiveHtml = generateArchiveHtml(articlesArray);
+    const headerHtml = generateHeader();
+
+    const placeholder = '<!-- Content -->';
+    let archiveContent = await readAndReplace('www/index.html', placeholder, archiveHtml);
+    archiveContent = archiveContent.replace(header_placeholder, headerHtml);
+
+    await writeHtmlFile('dist/archive/index.html', archiveContent);
+}
+
 async function generateAboutPage() {
     const { htmlContent } = await parseMarkdownFile('www/about.md');
 
     const headerHtml = generateHeader();
 
     let aboutPageHtml = await fs.readFile('www/about.html', 'utf-8');
-    aboutPageHtml = aboutPageHtml.replace("<!-- Header will go here -->", headerHtml);
-    aboutPageHtml = aboutPageHtml.replace("<!-- About content will go here -->", htmlContent);
+    aboutPageHtml = aboutPageHtml.replace("<!-- Header -->", headerHtml);
+    aboutPageHtml = aboutPageHtml.replace("<!-- Content -->", htmlContent);
 
     await writeHtmlFile('dist/about/index.html', aboutPageHtml);
 }
@@ -314,7 +201,7 @@ async function updateHomepage() {
 
     // Read the www/index.html file and replace the placeholder with the latest posts
     let homepageHtml = await fs.readFile(path.join(process.cwd(), 'www', 'index.html'), 'utf-8');
-    homepageHtml = homepageHtml.replace("<!-- Recent posts will go here -->", latestPostsHtml);
+    homepageHtml = homepageHtml.replace("<!-- Content -->", latestPostsHtml);
     homepageHtml = homepageHtml.replace(header_placeholder, headerHtml);
 
     await writeHtmlFile(path.join(outputDir, 'index.html'), homepageHtml);
@@ -343,13 +230,13 @@ async function copyStyles() {
 }
 
 async function main() {
-    const tagsMap = new Map();  // Changed from Set to Map
+    const tagsMap = new Map();
     const articlesArray = [];
 
-    await generateArticles(tagsMap, articlesArray);  // Adjusted function name and arguments as needed
-    await generateArchiveIndex(articlesArray);
+    await generateArticlePages(tagsMap, articlesArray);
+    await generateArchivePage(articlesArray);
     await generateTagsIndex(tagsMap);
-    await generateTagPages(tagsMap);  // Pass tagsMap as argument
+    await generateTagPages(tagsMap);
     await generateAboutPage();
     await updateHomepage();
     await copyStyles();
