@@ -1,5 +1,5 @@
 @@Title: Big O No
-@@URL: template_url
+@@URL: big_o_no
 @@Date: 11/14/23
 @@TLDR: optimized optimizing is optimal...
 @@Tags: programming

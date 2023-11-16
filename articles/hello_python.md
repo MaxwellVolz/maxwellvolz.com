@@ -1,20 +1,10 @@
+@@Title: Hello Python
+@@URL: hello_python
+@@Tags: py
+@@Date: 10/2/23
+
 # Hello Python
 
-@@Tags: py
-@@Date: 10/1/23
-
-## Hey
-
-- list item
-- list item 2
-- list item 3
-
-
-```js
-# Javascript
-let a = 5;
-```
-
 ```py
-print("Heyo!")
+a = 5
 ```
