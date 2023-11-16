@@ -11,7 +11,7 @@
 
 
 ```js
-# Javascript
+# Javascripts
 let a = 5;
 ```
 

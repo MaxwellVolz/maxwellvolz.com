@@ -1,12 +1,13 @@
 # Lab Leak
 
 @@Date: 10/1/23
+@@TLDR: 
 
+My knowledge on this subject is surface level at best. Please keep in mind that this is coming from a self-taught software engineer with zero serious background in chemistry or biology.
 
-tl;dr: My knowledge on this subject is surface level at best. Please keep in mind that this is coming from a self-taught software engineer with zero serious background in chemistry or biology.
 ****
 > “Gain-of-function research, as you know, is juicing up naturally occurring animal viruses to infect humans...” 
-> - Rand Paul
+> - Rand Paul 
 > 
 Dr. Fauci, the nation’s top infectious disease expert, flatly rejected the claim: 
 > “Senator Paul, with all due respect, you are entirely and completely incorrect, that the N.I.H. has not ever and does not now fund gain-of-function research in the Wuhan Institute.”

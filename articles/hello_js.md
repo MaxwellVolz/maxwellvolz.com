@@ -2,7 +2,7 @@
 
 @@Tags: js
 @@Date: 10/2/23
-## tl;dr: super short description of the article - tweet length
+@@TLDR: short description of the article - tweet length
 
 
 - list item

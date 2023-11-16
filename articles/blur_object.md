@@ -2,7 +2,7 @@
 
 @@Tags: video
 @@Date: 10/11/23
-## tl;dr: import a video, blur an object with tracking, export to modern video formats
+@@TLDR: import a video, blur an object with tracking, export to modern video formats
 
 ## Downloads Links
 

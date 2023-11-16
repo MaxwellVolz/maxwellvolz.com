@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "generate": "node scripts/gen.js",
+    "generate": "node scripts/generate.js",
     "watch": "nodemon --watch articles -e md,json,yaml --exec 'npm run generate'",
     "serve": "npx serve dist",
     "start": "concurrently 'npm run watch' 'npm run serve'"

@@ -3,15 +3,12 @@
 - [About](#about)
 - [How to Use](#how-to-use)
 - [Tech](#tech)
-- [To Implement (TODO)](#to-implement-todo)
-- [Pros \& Cons](#pros--cons)
-  - [Pros](#pros)
-  - [Cons](#cons)
 - [Markdown Breakdown](#markdown-breakdown)
-- [Markdown Article Formatting](#markdown-article-formatting)
+  - [Markdown Article Formatting](#markdown-article-formatting)
   - [Example](#example)
 - [Links](#links)
 - [When we generate](#when-we-generate)
+- [Example Process:](#example-process)
   
 ## About
 Static website. KISS DICE.
@@ -38,41 +35,9 @@ NodeJS stack. Write markdown. Publish formatted html with images and code snippe
 5. Git: Version control.
 6. VSCode: Editting text.
 
-
-## To Implement (TODO)
-
-- [light-dark css](https://www.bram.us/2023/10/09/the-future-of-css-easy-light-dark-mode-color-switching-with-light-dark/)
-- drop-shadow
-
-```css
-background-color: #F5A9B8;
-border: solid black;
-box-shadow: 6px 6px 0px #5BCEFA;
-display: inline-block;
-padding: 0em 2em;
-```
-
-## Pros & Cons
-
-### Pros
-
-1. Speed: Static websites load quickly.
-2. Low Maintenance: Static site generators require minimal upkeep.
-3. Cost-Effective: S3 hosting is affordable.
-4. Scalability: Easy to scale on AWS, everyone knows this!
-5. Version Control: Markdown allows easy versioning.
-6. Ease of Writing: Markdown simplifies content creation.
-
-### Cons
-
-1. **Limited Functionality:** Real-time interactions or complex server-side logic are not supported.
-2. **No CMS:** Content updates may be less user-friendly for non-technical users.
-3. **Manual Organization:** Folder management is manual.
-4. **SEO:** Dynamic content SEO can be challenging.
-
 ## Markdown Breakdown
 
-## Markdown Article Formatting
+### Markdown Article Formatting
 
 Title from (#)
 Date - Wordcount - Estimated Read Time' (how to deliniate)
@@ -100,3 +65,29 @@ C Copyright 2023 - MaxwellVolz
 1. all markdown in /articles should be parsed into a clean data structure
 2. each page will be generated in entirety within its own function using the json from articles
    1. uses a template .html file for general page formatting
+
+
+## Example Process:
+
+1. For each .html in /pages
+   1. Find and Replace "<!-- INSERT: head -->" with /components/head.html
+   2. Find and Replace "<!-- INSERT: foot -->" with /components/foot.html
+2. For each .md in /articles
+   1. if article contains "@@Tags: video"
+      1. atleast one tag required, multiple will be separated by a commas
+   2. and article contains "@@Date: 10/24/23"
+      1. format is as shown
+   3. then parse the markdown data for tags and archive pages
+3. For Tags Page
+   1. Find and Replace "<!-- INSERT: tags -->" with a collection of divs like <a href="/tags/video/index.html">video (3)</a>
+   2. create tags pages by replacing <!-- INSERT: content --> from archive.html in appropiate locations
+   3. tags pages will list all articles
+4. For Archive
+   1. Find and Replace <!-- INSERT: content --> from archive.html with links to articles ordered by date and grouped by year
+
+The follow page structure should exist:
+
+/index.html
+/archive/index.html - article link and tldr, ordered by date and grouped by year
+/archive/2023/article-name-with-dashes/index.html - 
+

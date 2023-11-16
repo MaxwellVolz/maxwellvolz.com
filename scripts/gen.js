@@ -21,18 +21,23 @@ function parseMarkdownFile(filePath) {
 
     // Initialize variables for extracting information
     let title = ''; // Initialize title
+    let url = ''; // Initialize title
     let date = ''; // Initialize date
     let wordCount = 0; // Initialize wordCount
     let estimatedReadTime = 0; // Initialize estimatedReadTime
-    let tlDr = ''; // Initialize tlDr
+    let tldr = ''; // Initialize tldr
     let articleBody = ''; // Initialize articleBody
     let tags = []; // Initialize tags
 
     // Loop through the lines to extract information
     for (const line of lines) {
         // Extract the title from the first heading
-        if (line.startsWith('# ')) {
-            title = line.replace('#', '').trim();
+        if (line.startsWith('@@Title:')) {
+            title = line.replace('@@Title:', '').trim();
+        }
+        // Extract the title from the first heading
+        if (line.startsWith('@@URL:')) {
+            title = line.replace('@@URL:', '').trim();
         }
         // Extract the date from the 'Date:' line
         if (line.startsWith('@@Date:')) {
@@ -40,8 +45,8 @@ function parseMarkdownFile(filePath) {
             date = convertDate(date);
         }
         // Extract the tl;dr from the 'tl;dr:' line
-        if (line.startsWith('tl;dr:')) {
-            tlDr = line.replace('tl;dr:', '').trim();
+        if (line.startsWith('@@TLDR')) {
+            tldr = line.replace('@@TLDR', '').trim();
         }
         // Extract tags from the 'Tags:' line
         if (line.startsWith('@@Tags:')) {
@@ -58,10 +63,11 @@ function parseMarkdownFile(filePath) {
     // Return the extracted information as an object
     return {
         title,
+        url,
         date,
+        tldr,
         wordCount,
         estimatedReadTime,
-        tlDr,
         articleBody,
         tags,
     };
@@ -86,7 +92,6 @@ function convertDate(dateString) {
     return `${monthName} ${day}, ${fullYear}`;
 }
 
-
 // Example usage: Loop through all Markdown files in the 'articles' folder above the current directory
 const articleFiles = readdirSync(articlesFolder);
 
@@ -94,6 +99,6 @@ for (const fileName of articleFiles) {
     if (fileName.endsWith('.md')) {
         const filePath = join(articlesFolder, fileName);
         const articleData = parseMarkdownFile(filePath);
-        console.log(articleData);
+        console.log(articleData.title);
     }
 }
