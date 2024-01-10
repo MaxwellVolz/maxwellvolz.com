@@ -6,9 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "generate": "node scripts/static_site_generator.js",
-    "watch": "nodemon --watch articles -e md,json,yaml --exec 'npm run generate'",
+    "watch": "nodemon --watch articles -e md,json,yaml --exec \"npm run generate\"",
     "serve": "npx serve dist",
-    "start": "concurrently 'npm run watch' 'npm run serve'"
+    "start": "concurrently \"npm run watch\" \"npm run serve\""
+
   },
   "keywords": [],
   "author": "",

@@ -10,12 +10,15 @@
 ## What is it?
 
 - Big O Notation describes the time complexity of programming algorithms
+- AKA how efficient is the solution to the problem?
 
-## Shorter, Faster, more Succinct
+## The Goal is:
 
-- How efficient is the solution to the problem
+- Shorter
+- Faster
+- Succinct
 
-## Dumber, Slower, EZ-mode
+## Slowly at first
 
 > Problem: 10 times 10
 > Solution:
