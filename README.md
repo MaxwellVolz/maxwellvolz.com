@@ -58,7 +58,7 @@ C Copyright 2023 - MaxwellVolz
 ~ : homepage, root - shows 3 latest articles with tl;dr
 ~/archive : all articles in list in order by time, grouped by year (year as subheading), with tags
 ~/tags: all tags from articles listed alphabetically, selecting a tag opens archive/tags/{tag}, all articles with tag in list in order by time, grouped by year, with tags
-~/about : personal page, has top section with logo and stuff
+~/about : personal page, has top section with logo
 
 ## When we generate
 

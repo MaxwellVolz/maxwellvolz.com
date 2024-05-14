@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Three.js App</title>
+  
+</head>
+<body>
+  <div id="container"></div>
+  <div id="blocker"></div>
+
+  <div id="buttonContainer">
+    <button type="button" id="closeupBtn">Close Up</button>
+    <button type="button" id="overviewBtn">Overview</button>
+    <button type="button" id="zoomoutBtn">Zoom Out</button>
+  </div>
+
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "/js/libs/three.module.js",
+        "three/addons/": "/js/libs/jsm/",
+        "gsap": "/js/libs/gsap.js"
+      }
+    }
+  </script>
+  <script type="module" src="/js/main.js"></script>
+  <link rel="stylesheet" type="text/css" href="/css/index.css"></style>
+</body>
+</html>
