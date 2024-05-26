@@ -62,6 +62,8 @@ function zoomToSanFrancisco() {
 function addMarker(coordinates) {
     const [x, y] = projection(coordinates);
 
+    const [x_offset, y_offset] = [-126, -125]
+
     // Group for marker elements
     const markerGroup = svg.append('g')
         .attr('class', 'marker-group')
@@ -76,10 +78,10 @@ function addMarker(coordinates) {
         .attr('stroke-width', 2);
 
     const textBox = markerGroup.append('rect')
-        .attr('x', 15)
-        .attr('y', -20)
+        .attr('x', 15 + x_offset)
+        .attr('y', -20 + y_offset)
         .attr('width', 216)
-        .attr('height', 120)
+        .attr('height', 115)
         .attr('fill', 'rgba(0, 0, 0, 0.8)')
         .attr('stroke', 'black')
         .attr('stroke-width', 1)
@@ -87,13 +89,13 @@ function addMarker(coordinates) {
         .attr('ry', 5);
 
     const text = markerGroup.append('text')
-        .attr('x', 20)
-        .attr('y', -5)
+        .attr('x', 20 + x_offset)
+        .attr('y', -5 + y_offset)
         .attr('fill', 'white')
         .style('font-size', '16px')
         .style('font-family', 'Roboto, sans-serif');
 
-    const text_x = 30
+    const text_x = 30 + x_offset
     text.append('tspan')
         .attr('x', text_x)
         .attr('dy', '1.2em')
@@ -102,7 +104,7 @@ function addMarker(coordinates) {
     text.append('tspan')
         .attr('x', text_x)
         .attr('dy', '1.2em')
-        .text('-122.4194, 37.7749');
+        .text('-122.419, 37.774');
 
     text.append('tspan')
         .attr('x', text_x)
