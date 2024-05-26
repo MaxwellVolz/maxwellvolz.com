@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Blog - Free Bulma template</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon.png">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <!-- Bulma Version 1-->
+    <link rel="stylesheet" href="https://unpkg.com/bulma@1.0.0/css/bulma.min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/blog.css">
+    <link rel="stylesheet" href="../css/styles.css">
+
+</head>
+
+<body>
+    <!-- START NAV -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-brand">
+                <a class="navbar-item" href="../">
+                    <img src="../images/bulma.png" alt="Logo">
+                </a>
+                <span class="navbar-burger burger" data-target="navbarMenu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </span>
+            </div>
+            <div id="navbarMenu" class="navbar-menu">
+                <div class="navbar-end">
+                    <a class="navbar-item is-active">
+                        Home
+                    </a>
+                    <a class="navbar-item" href="https://www.intervolz.com">
+                        Blog
+                    </a>
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a class="navbar-link">
+                            Links
+                        </a>
+                        <div class="navbar-dropdown">
+                            <a class="navbar-item" href="../data/resume.pdf">
+                                Resume
+                            </a>
+                            <a class="navbar-item" href="https://github.com/MaxwellVolz">
+                                Github
+                            </a>
+                            <a class="navbar-item" href="https://www.linkedin.com/in/maxwellvolz">
+                                LinkedIn
+                            </a>
+                            <hr class="navbar-divider">
+                            <div class="navbar-item">
+                                Logout
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- END NAV -->
+
+    <div id="app"></div>
+
+
+    <section class="hero is-info is-medium is-bold">
+        <div class="hero-body">
+
+        </div>
+    </section>
+
+
+    <div class="container">
+        <!-- START ARTICLE FEED -->
+        <section class="articles">
+            <div class="column is-8 is-offset-2">
+                <!-- START ARTICLE -->
+                <div class="card article">
+                    <div class="card-content">
+                        <div class="media">
+                            <div class="media-center">
+                                <img src="./images/profile.webp" class="author-image" alt="Placeholder image">
+                            </div>
+                            <div class="media-content has-text-centered">
+                                <p class="title article-title">Hello, my name is Maxwell Volz.<br>I live in San
+                                    Francisco and I like making things.<br>
+                                    Check out my blog: <a href="https://intervolz.com">InterVolz</a>
+                                </p>
+                                <div class="tags has-addons level-item">
+                                    <span class="tag is-rounded is-info">@maxwellwhatever</span>
+                                    <span class="tag is-rounded">Month XX, 20XX</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content article-body">
+                            <p></p>
+                        </div>
+                    </div>
+                </div>
+                <!-- END ARTICLE -->
+
+            </div>
+
+        </section>
+        <!-- END ARTICLE FEED -->
+    </div>
+    <script async type="text/javascript" src="../js/bulma.js"></script>
+
+    <script src="bundle.js"></script>
+</body>
+
+</html>

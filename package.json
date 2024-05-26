@@ -1,26 +1,23 @@
 {
   "name": "maxwellvolz.com",
+  "description": "simple static site",
   "version": "1.0.0",
-  "description": "- [About](#about) - [Tech](#tech) - [Pros \\& Cons](#pros--cons)   - [Pros](#pros)   - [Cons](#cons)",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "generate": "node scripts/static_site_generator.js",
-    "watch": "nodemon --watch articles -e md,json,yaml --exec \"npm run generate\"",
-    "serve": "npx serve dist",
-    "start": "concurrently \"npm run watch\" \"npm run serve\""
-
+    "start": "webpack serve --config webpack.config.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "aws-sdk": "^2.1464.0",
-    "markdown-it": "^13.0.2"
-  },
-  "type": "module",
   "devDependencies": {
-    "concurrently": "^8.2.1",
-    "nodemon": "^3.0.1"
+    "webpack": "^5.91.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.0.4"
+  },
+  "dependencies": {
+    "d3": "^7.9.0",
+    "d3-geo": "^3.1.1",
+    "topojson-client": "^3.1.0"
   }
 }
