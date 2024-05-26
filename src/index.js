@@ -1,5 +1,12 @@
 import * as d3 from 'd3';
 import { feature } from 'topojson-client';
+// import './css/main.css';
+// import './css/blog.css';
+import './js/bulma.js';
+import land_data from './data/land-110m.json';
+
+const dataPath = './data/land-110m.json';
+
 
 // Dimensions and projection
 let width = window.innerWidth, height = window.innerHeight;
@@ -18,7 +25,7 @@ const svg = d3.select('#app').append('svg')
     .style('background', 'radial-gradient(circle, rgba(48,16,255,1) 0%, rgba(0,0,0,1) 100%)'); // Space skybox effect
 
 // Load and display the World
-d3.json('/data/land-110m.json').then(world => {
+d3.json(dataPath).then(world => {
     svg.selectAll('path')
         .data(feature(world, world.objects.land).features)
         .enter().append('path')
