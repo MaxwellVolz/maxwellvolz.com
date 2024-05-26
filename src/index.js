@@ -102,7 +102,7 @@ function addMarker(coordinates) {
     text.append('tspan')
         .attr('x', text_x)
         .attr('dy', '1.2em')
-        .text('34M-SF-76-210');
+        .text('-122.4194, 37.7749');
 
     text.append('tspan')
         .attr('x', text_x)
