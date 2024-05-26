@@ -3,7 +3,7 @@ html,body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
     font-size: 14px;
     background: #000000;
-        overflow: hidden;
+    overflow: hidden;
   
   }
   .navbar.is-white {
@@ -18,7 +18,7 @@ html,body {
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  height: 500px;
+  height: 20vh;
   }
   .articles {
     margin: 5rem 0;
