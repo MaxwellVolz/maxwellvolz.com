@@ -19,7 +19,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying to Nginx...'
-                sh 'cp -R dist/* /var/www/intervolz.com/html'
+                sh 'cp -R dist/* /var/www/maxwellvolz.com/html'
             }
         }
     }
