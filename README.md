@@ -2,6 +2,7 @@
 
 - [About](#about)
 - [How to Use](#how-to-use)
+- [Tips and Tricks](#tips-and-tricks)
 - [Tech](#tech)
 - [Markdown Breakdown](#markdown-breakdown)
   - [Markdown Article Formatting](#markdown-article-formatting)
@@ -11,20 +12,21 @@
 - [Example Process:](#example-process)
   
 ## About
-Static website. KISS DICE.
 
-NodeJS stack. Write markdown. Publish formatted html with images and code snippets. Breadcrumb navigation. KISS DICE.
-
-
-> “Keep It Stupidly Simple.” 
-
-> "Documented, Isolated, Configurable, Efficient"
+NodeJS stack. Write markdown. Publish formatted html with images and code snippets. Breadcrumb navigation.
 
 ## How to Use
 
 ```sh
 
 ```
+
+## Tips and Tricks
+
+```sh
+sudo chown -R jenkins:jenkins /var/www/maxwellvolz.com/html
+```
+
 
 ## Tech
 
